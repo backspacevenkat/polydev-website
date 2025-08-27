@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Sparkles, Github, Mail, ArrowLeft, Eye, EyeOff } from 'lucide-react'
+import { Sparkles, Github, ArrowLeft, Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
 import { signInWithEmail, signUpWithEmail, signInWithGithub, signInWithGoogle } from '@/lib/auth'
 import { useRouter } from 'next/navigation'

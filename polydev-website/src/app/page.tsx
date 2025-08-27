@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Zap, Shield, BarChart3, Sparkles, Brain, Code2, Users } from 'lucide-react'
+import { ArrowRight, Zap, Shield, BarChart3, Sparkles, Brain } from 'lucide-react'
 import Link from 'next/link'
 
 export default function HomePage() {

@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
-  User, 
   Key, 
   BarChart3, 
   Settings, 
@@ -19,11 +18,15 @@ import { Database } from '@/lib/supabase'
 type Profile = Database['public']['Tables']['profiles']['Row']
 
 interface DashboardClientProps {
-  user: any
+  user: {
+    id: string
+    email?: string
+    user_metadata?: Record<string, unknown>
+  }
   profile: Profile
 }
 
-export function DashboardClient({ user, profile }: DashboardClientProps) {
+export function DashboardClient({ profile }: DashboardClientProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'api-keys' | 'analytics' | 'settings'>('overview')
 
   const handleSignOut = async () => {
@@ -86,7 +89,7 @@ export function DashboardClient({ user, profile }: DashboardClientProps) {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as 'overview' | 'api-keys' | 'analytics' | 'settings')}
               className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? 'bg-white text-black'
