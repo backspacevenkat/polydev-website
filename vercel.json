@@ -2,6 +2,5 @@
   "buildCommand": "cd polydev-website && npm run build",
   "outputDirectory": "polydev-website/.next",
   "installCommand": "cd polydev-website && npm install",
-  "devCommand": "cd polydev-website && npm run dev",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./polydev-website/"
+  "devCommand": "cd polydev-website && npm run dev"
 }
