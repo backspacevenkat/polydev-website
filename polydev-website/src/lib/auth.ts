@@ -1,8 +1,7 @@
-import { createBrowserClient, createServerClient } from './supabase'
+import { supabase } from './supabase'
 import { redirect } from 'next/navigation'
 
 export async function signInWithEmail(email: string, password: string) {
-  const supabase = createBrowserClient()
   
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -17,7 +16,6 @@ export async function signInWithEmail(email: string, password: string) {
 }
 
 export async function signUpWithEmail(email: string, password: string, fullName: string) {
-  const supabase = createBrowserClient()
   
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -37,7 +35,6 @@ export async function signUpWithEmail(email: string, password: string, fullName:
 }
 
 export async function signInWithGithub() {
-  const supabase = createBrowserClient()
   
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
@@ -52,7 +49,6 @@ export async function signInWithGithub() {
 }
 
 export async function signInWithGoogle() {
-  const supabase = createBrowserClient()
   
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -67,7 +63,6 @@ export async function signInWithGoogle() {
 }
 
 export async function signOut() {
-  const supabase = createBrowserClient()
   
   const { error } = await supabase.auth.signOut()
   
@@ -77,7 +72,6 @@ export async function signOut() {
 }
 
 export async function getUser() {
-  const supabase = createServerClient()
   
   const { data: { user }, error } = await supabase.auth.getUser()
   
@@ -99,7 +93,6 @@ export async function requireAuth() {
 }
 
 export async function createUserProfile(userId: string, email: string, fullName?: string) {
-  const supabase = createServerClient()
   
   const { data, error } = await supabase
     .from('profiles')
@@ -122,7 +115,6 @@ export async function createUserProfile(userId: string, email: string, fullName?
 }
 
 export async function getUserProfile(userId: string) {
-  const supabase = createServerClient()
   
   const { data, error } = await supabase
     .from('profiles')
