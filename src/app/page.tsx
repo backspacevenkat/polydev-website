@@ -105,28 +105,28 @@ export default function Home() {
   }, [currentWordIndex])
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/20 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600/5 to-purple-600/8"></div>
+      <section className="relative overflow-hidden bg-white dark:bg-slate-900">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-32">
           <div className="text-center">
-            <div className="inline-flex items-center bg-violet-100/80 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-violet-200/60 dark:border-violet-700/60">
-              <span className="w-2 h-2 bg-violet-500 rounded-full mr-2 animate-pulse"></span>
+            <div className="inline-flex items-center bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-slate-200 dark:border-slate-700">
+              <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
               Model Context Protocol (MCP) Server
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600">
-                Never get stuck again
+            <h1 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
+              Never get stuck again —{' '}
+              <span className="text-blue-600">
+                bring perspectives
               </span>{' '}
-              — bring perspectives to every agent
+              to every agent
             </h1>
             
-            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
+            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed">
               When your AI agent hits a roadblock, Polydev fans out to GPT-4, Claude, Gemini, and more — delivering diverse perspectives instantly to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600 font-medium">
+              <span className="text-blue-600 font-medium">
                 {typedText}
                 <span className="animate-pulse">|</span>
               </span>
@@ -199,7 +199,7 @@ export default function Home() {
           <div className="text-center mb-24">
             <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
               The MCP server that{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600">
+              <span className="text-blue-600">
                 never gives up
               </span>
             </h2>
@@ -213,9 +213,8 @@ export default function Home() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group relative bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 rounded-3xl p-8 hover:shadow-2xl hover:shadow-violet-500/20 transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm"
+                className="group relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-50/30 via-blue-50/20 to-cyan-50/30 dark:from-violet-900/10 dark:via-blue-900/10 dark:to-cyan-900/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative">
                   <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
@@ -224,7 +223,7 @@ export default function Home() {
                   <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                     {feature.description}
                   </p>
-                  <div className="inline-flex items-center text-sm font-medium text-violet-700 dark:text-violet-300 bg-violet-50 dark:bg-violet-900/30 px-3 py-1.5 rounded-lg border border-violet-100 dark:border-violet-800/50">
+                  <div className="inline-flex items-center text-sm font-medium text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 px-3 py-1.5 rounded-lg border border-blue-100 dark:border-blue-800/50">
                     {feature.highlight}
                   </div>
                 </div>
@@ -233,7 +232,7 @@ export default function Home() {
           </div>
 
           {/* MCP Clients Section */}
-          <div className="mt-24 bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 md:p-12">
+          <div className="mt-24 bg-slate-50 dark:bg-slate-800 rounded-3xl p-8 md:p-12 border border-slate-200 dark:border-slate-700">
             <div className="text-center mb-12">
               <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
                 Works with all major MCP clients
@@ -304,12 +303,12 @@ export default function Home() {
       </section>
 
       {/* Demo Section */}
-      <section className="py-32 bg-gradient-to-br from-violet-50 via-blue-50/50 to-cyan-50/30 dark:from-slate-900 dark:via-indigo-900/20 dark:to-slate-900">
+      <section className="py-32 bg-slate-50 dark:bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
               Watch the magic{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              <span className="text-blue-600">
                 happen
               </span>
             </h2>
@@ -416,7 +415,7 @@ export default function Home() {
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
               Built by developers,{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              <span className="text-blue-600">
                 for developers
               </span>
             </h2>
@@ -429,12 +428,11 @@ export default function Home() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="group relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1"
+                className="group relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30 dark:from-blue-900/5 dark:to-purple-900/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative">
                   <div className="flex items-center mb-6">
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg">
+                    <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg">
                       {testimonial.avatar}
                     </div>
                     <div>
@@ -466,12 +464,12 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-32 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/20 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <section className="py-32 bg-slate-50 dark:bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
               Simple{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              <span className="text-blue-600">
                 message-based
               </span>{' '}
               pricing
@@ -645,7 +643,7 @@ export default function Home() {
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
               Built for{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              <span className="text-blue-600">
                 developers
               </span>
             </h2>
@@ -733,7 +731,7 @@ export default function Home() {
 
             {/* Quick Start Examples */}
             <div className="lg:col-span-2">
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50/30 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8">
+              <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700">
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
                   Quick Start Examples
                 </h3>
@@ -830,20 +828,19 @@ return implementSolution(breakthrough);`}
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+      <section className="py-32 bg-slate-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-8">
-            <div className="inline-flex items-center bg-white/10 text-white px-4 py-2 rounded-full text-sm font-medium mb-6 border border-white/20">
+            <div className="inline-flex items-center bg-slate-800 text-slate-200 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-slate-700">
               <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
               Join 500+ developers already shipping faster
             </div>
             
             <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tight">
               Stop getting{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400">
+              <span className="text-blue-400">
                 stuck
               </span>
             </h2>
@@ -858,17 +855,17 @@ return implementSolution(breakthrough);`}
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
             <Link
               href="/auth"
-              className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-medium text-slate-900 bg-white rounded-2xl hover:bg-slate-100 transition-all duration-200 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
+              className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-slate-900 bg-white rounded-lg hover:bg-slate-100 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
-              <span className="mr-3">Start building for free</span>
-              <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="mr-2">Start building for free</span>
+              <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
             
             <Link
               href="/docs"
-              className="group inline-flex items-center justify-center px-10 py-5 text-xl font-medium text-white bg-white/10 border-2 border-white/30 rounded-2xl hover:bg-white/20 hover:border-white/40 transition-all duration-200 backdrop-blur-sm"
+              className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-slate-200 border border-slate-600 rounded-lg hover:bg-slate-800 hover:border-slate-500 transition-all duration-200"
             >
               View integration docs
             </Link>

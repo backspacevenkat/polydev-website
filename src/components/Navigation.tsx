@@ -41,8 +41,8 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center group">
-              <span className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent group-hover:from-purple-600 group-hover:to-indigo-600 transition-all duration-300">Polydev</span>
-              <span className="text-2xl font-bold text-slate-900 dark:text-white ml-1 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors duration-300">AI</span>
+              <span className="text-2xl font-bold text-blue-600 group-hover:text-blue-700 transition-colors duration-200">Polydev</span>
+              <span className="text-2xl font-bold text-slate-900 dark:text-white ml-1 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors duration-200">AI</span>
             </Link>
           </div>
 
@@ -55,7 +55,7 @@ export default function Navigation() {
                   href={item.href}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-200'
+                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
                       : 'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
                   }`}
                 >
@@ -94,7 +94,7 @@ export default function Navigation() {
                 </Link>
                 <Link
                   href="/auth"
-                  className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   Get Started
                 </Link>
@@ -144,7 +144,7 @@ export default function Navigation() {
                   onClick={() => setIsOpen(false)}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-200'
+                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
                       : 'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
                   }`}
                 >
@@ -187,7 +187,7 @@ export default function Navigation() {
                     <Link
                       href="/auth"
                       onClick={() => setIsOpen(false)}
-                      className="block px-3 py-2 rounded-md text-base font-medium bg-violet-600 text-white hover:bg-violet-700"
+                      className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700"
                     >
                       Get Started
                     </Link>
