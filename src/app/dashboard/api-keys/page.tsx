@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../../../hooks/useAuth'
 import { createClient } from '../../utils/supabase/client'
 import { Plus, Eye, EyeOff, Edit3, Trash2, Settings, TrendingUp, AlertCircle, Check } from 'lucide-react'
 
