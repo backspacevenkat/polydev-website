@@ -6,40 +6,40 @@ import Link from 'next/link'
 
 const features = [
   {
-    icon: '🔌',
-    title: 'One Key, Many Models',
-    description: 'Single Polydev API key (managed credits) or link your own provider keys across all MCP clients',
-    highlight: 'Universal bridge'
+    icon: '🚫',
+    title: 'Never Get Stuck',
+    description: 'When your agent hits a wall, instantly get diverse perspectives from multiple AI models to break through',
+    highlight: 'Breakthrough guaranteed'
   },
   {
-    icon: '🏠',
-    title: 'No Creds? No Problem',
-    description: 'Trigger your local CLIs (Claude/Gemini) and collect answers—no provider API keys needed',
-    highlight: 'Local CLI support'
+    icon: '⚡',
+    title: 'Instant Perspectives',
+    description: 'Parallel queries to GPT-4, Claude, Gemini, and more — get N viewpoints in under 2 seconds',
+    highlight: 'Sub-2s response'
+  },
+  {
+    icon: '🔌',
+    title: 'Universal MCP Tool',
+    description: 'Single get_perspectives tool works across Claude Desktop, Cursor, Continue, Cline, and any MCP client',
+    highlight: 'One tool everywhere'
   },
   {
     icon: '🧠',
-    title: 'Context-Aware (Optional)',
-    description: 'Include recent conversation and top-K project snippets for better perspectives',
+    title: 'Project-Aware',
+    description: 'Include your codebase context automatically — perspectives understand your specific problem',
     highlight: 'Smart context'
   },
   {
-    icon: '🎯',
-    title: 'Agent-First',
-    description: 'We don\'t judge or merge; your agent decides what to do with N raw perspectives',
-    highlight: 'Raw responses'
+    icon: '🔑',
+    title: 'Your Keys, Your Control',
+    description: 'Use your own API keys for full access to 20+ providers, or use managed keys for quick start',
+    highlight: 'Complete flexibility'
   },
   {
-    icon: '💰',
-    title: 'Predictable Costs',
-    description: 'Freemium, then pay by messages (per model reply). Transparent pricing.',
-    highlight: 'Message-based'
-  },
-  {
-    icon: '🔗',
-    title: 'Universal MCP',
-    description: 'Plugs into any MCP client the same way you add other MCP servers',
-    highlight: 'Open protocol'
+    icon: '💡',
+    title: 'Raw Insights',
+    description: 'Get unfiltered perspectives from each model — your agent decides which insight leads to breakthrough',
+    highlight: 'Pure perspectives'
   }
 ]
 
@@ -118,15 +118,14 @@ export default function Home() {
             </div>
             
             <h1 className="text-6xl md:text-8xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
-              Bring second opinions to{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600">
-                every agent
+                Never get stuck again
               </span>{' '}
-              — with one key
+              — bring perspectives to every agent
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
-              Polydev is an MCP server (bridge) that takes your current task, fans out to multiple LLMs in parallel, and returns N raw perspectives back to{' '}
+              When your AI agent hits a roadblock, Polydev fans out to GPT-4, Claude, Gemini, and more — delivering diverse perspectives instantly to{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-medium">
                 {typedText}
                 <span className="animate-pulse">|</span>
@@ -134,7 +133,7 @@ export default function Home() {
             </p>
             
             <div className="mb-12 text-lg text-slate-500 dark:text-slate-400">
-              <span className="font-medium">Add Polydev once; carry it everywhere.</span>
+              <span className="font-medium">One MCP tool. Multiple AI minds. Instant breakthroughs.</span>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">

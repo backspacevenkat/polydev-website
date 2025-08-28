@@ -74,33 +74,94 @@ export default function Documentation() {
       case 'getting-started':
         return (
           <div className="prose max-w-none">
-            <h1>Getting Started with Polydev Perspectives</h1>
+            <h1>Polydev Perspectives MCP Server</h1>
             
             <h2 id="introduction">Introduction</h2>
             <p>
-              Polydev Perspectives is an MCP (Model Context Protocol) router that fans out queries to multiple 
-              LLMs in parallel. When your AI agent gets stuck or needs diverse perspectives, our single 
-              <code>get_perspectives</code> tool consults GPT-4, Claude, Gemini, and other models simultaneously.
+              <strong>Never get stuck again.</strong> Polydev Perspectives is an MCP (Model Context Protocol) server that 
+              eliminates agent roadblocks by providing instant access to multiple AI perspectives. When your agent encounters 
+              a difficult problem, decision paralysis, or complex challenge, our <code>get_perspectives</code> tool fans out 
+              queries to GPT-4, Claude 3.5 Sonnet, Gemini Pro, and 20+ other models in parallel, returning diverse expert 
+              viewpoints to help break through.
             </p>
             
-            <h3>Key Features</h3>
-            <ul>
-              <li><strong>MCP Router</strong>: Single tool that queries multiple LLMs in parallel</li>
-              <li><strong>Universal Compatibility</strong>: Works with Claude Desktop, Cursor, Continue, Cline</li>
-              <li><strong>Diverse Perspectives</strong>: Get viewpoints from GPT-4, Claude, Gemini, and more</li>
-              <li><strong>Project Memory</strong>: Include your codebase context for better insights</li>
-              <li><strong>Agent Integration</strong>: Perfect for when AI agents encounter roadblocks</li>
-            </ul>
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6 my-8">
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">Why Multiple AI Perspectives?</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-blue-800 font-medium mb-2">Different models have different strengths:</p>
+                  <ul className="space-y-1 text-blue-700">
+                    <li>• <strong>GPT-4</strong>: Strong reasoning and code generation</li>
+                    <li>• <strong>Claude 3.5 Sonnet</strong>: Excellent analysis and explanations</li>
+                    <li>• <strong>Gemini Pro</strong>: Creative solutions and alternatives</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-blue-800 font-medium mb-2">By consulting multiple models, agents can:</p>
+                  <ul className="space-y-1 text-blue-700">
+                    <li>✅ Break through decision paralysis</li>
+                    <li>✅ Get diverse approaches to complex problems</li>
+                    <li>✅ Validate solutions across different AI perspectives</li>
+                    <li>✅ Discover blind spots in reasoning</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
 
-            <h2 id="quick-start">Quick Start</h2>
-            <p>Get multiple AI perspectives in your MCP client in 3 steps:</p>
+            <h2 id="quick-start">Quick Start Guide</h2>
             
-            <h3>1. Add to Your MCP Configuration</h3>
-            <pre><code>{`{
+            <h3>Step 1: Set Up Your API Keys</h3>
+            
+            <h4>Option A: Your Own API Keys (Recommended)</h4>
+            <ol className="list-decimal list-inside space-y-3">
+              <li>Create a free account at <a href="/auth" className="text-blue-600 hover:underline font-semibold">polydev.ai/auth</a></li>
+              <li>Visit <a href="/dashboard/api-keys" className="text-blue-600 hover:underline font-semibold">Dashboard → API Keys</a></li>
+              <li>Add API keys for providers you want to use:
+                <div className="ml-6 mt-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div className="bg-gray-50 p-3 rounded">
+                    <strong className="text-gray-900">Core Providers:</strong>
+                    <ul className="mt-1 space-y-1">
+                      <li>• <strong>OpenAI</strong>: GPT-4o, GPT-4, GPT-3.5-turbo</li>
+                      <li>• <strong>Anthropic</strong>: Claude 3.5 Sonnet, Opus, Haiku</li>
+                      <li>• <strong>Google AI</strong>: Gemini 1.5 Pro/Flash</li>
+                      <li>• <strong>Groq</strong>: Llama 3.1 70B/8B, Mixtral</li>
+                    </ul>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded">
+                    <strong className="text-gray-900">Specialized Providers:</strong>
+                    <ul className="mt-1 space-y-1">
+                      <li>• <strong>Perplexity</strong>: Web-search enabled models</li>
+                      <li>• <strong>Together AI</strong>: Llama 3.1 405B, Qwen2.5</li>
+                      <li>• <strong>Cohere</strong>: Command R+</li>
+                      <li>• <strong>16+ more providers</strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>Configure custom endpoints, budgets, and rate limits per provider</li>
+              <li><strong>Sign in to authenticate</strong> - this enables user_keys mode for full model access</li>
+            </ol>
+
+            <h4>Option B: MCP Tokens (Legacy - Limited)</h4>
+            <ol className="list-decimal list-inside space-y-2">
+              <li>Visit <a href="/dashboard/mcp-tools" className="text-blue-600 hover:underline">Dashboard → MCP Tools</a></li>
+              <li>Generate an MCP access token</li>
+              <li>Use the token in your tool calls with <code>mode: "managed"</code></li>
+            </ol>
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 my-4">
+              <p className="text-amber-800 text-sm">⚠️ <strong>Token mode limitations:</strong> Only includes basic models (GPT-4, Claude 3 Sonnet, Gemini Pro) with shared rate limits. Use your own API keys for full access to 20+ providers.</p>
+            </div>
+
+            <h3>Step 2: Add to Your MCP Configuration</h3>
+            <p>Configure your MCP client to connect to Polydev Perspectives:</p>
+
+            <h4>Claude Desktop</h4>
+            <p>Edit <code>~/.config/claude/claude_desktop_config.json</code> (macOS) or <code>%APPDATA%/Claude/claude_desktop_config.json</code> (Windows):</p>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
   "mcpServers": {
     "polydev-perspectives": {
       "command": "node",
-      "args": ["/path/to/polydev-mcp/server.js"],
+      "args": ["/path/to/polydev/mcp/server.js"],
       "env": {
         "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
       }
@@ -108,92 +169,362 @@ export default function Documentation() {
   }
 }`}</code></pre>
 
-            <h3>2. Configure Your API Keys</h3>
-            <p>Visit <a href="/dashboard/api-keys" className="text-blue-600 hover:underline">Dashboard → API Keys</a> to add:</p>
-            <ul>
-              <li>OpenAI API key (for GPT-4, GPT-3.5)</li>
-              <li>Anthropic API key (for Claude models)</li>
-              <li>Google AI key (for Gemini models)</li>
-              <li>And 16+ other providers</li>
-            </ul>
+            <h4>Continue.dev</h4>
+            <p>Add to <code>.continue/config.json</code>:</p>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+  "mcpServers": {
+    "polydev-perspectives": {
+      "command": "node",
+      "args": ["/path/to/polydev/mcp/server.js"],
+      "env": {
+        "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
+      }
+    }
+  }
+}`}</code></pre>
 
-            <h3>3. Use the Tool in Your Agent</h3>
-            <pre><code>{`{
+            <h4>Cursor</h4>
+            <p>Add to your Cursor settings → MCP servers:</p>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+  "mcp": {
+    "servers": {
+      "polydev-perspectives": {
+        "command": "node",
+        "args": ["/path/to/polydev/mcp/server.js"],
+        "env": {
+          "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
+        }
+      }
+    }
+  }
+}`}</code></pre>
+
+            <h4>Cline (VS Code Extension)</h4>
+            <p>Configure MCP servers in Cline extension settings with similar configuration.</p>
+
+            <h3>Step 3: Test the Integration</h3>
+            <p>Restart your MCP client and test the <code>get_perspectives</code> tool:</p>
+            
+            <h4>With Your Own API Keys (Recommended):</h4>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
   "name": "get_perspectives",
   "arguments": {
-    "prompt": "I'm debugging a React performance issue but can't find the cause",
+    "prompt": "I'm debugging a React performance issue. The component re-renders excessively but I can't pinpoint why. Help me identify potential causes and solutions.",
     "mode": "user_keys",
-    "models": ["gpt-4", "claude-3-sonnet", "gemini-pro"],
+    "models": ["gpt-4", "claude-3.5-sonnet", "gemini-1.5-pro", "llama-3.1-70b-versatile"],
     "project_memory": "light"
   }
 }`}</code></pre>
 
-            <p>That's it! Your agent now has access to multiple AI perspectives when it gets stuck.</p>
+            <h4>With MCP Token (Legacy):</h4>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+  "name": "get_perspectives",
+  "arguments": {
+    "prompt": "I'm debugging a React performance issue...",
+    "user_token": "poly_your_token_here",
+    "mode": "managed",
+    "models": ["gpt-4", "claude-3-sonnet", "gemini-pro"]
+  }
+}`}</code></pre>
 
-            <h2 id="installation">MCP Server Setup</h2>
-            <p>The Polydev MCP server integrates with all major MCP clients:</p>
-
-            <h3>Claude Desktop</h3>
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <pre><code>{`# Add to ~/.config/claude/claude_desktop_config.json
-{
-  "mcpServers": {
-    "polydev-perspectives": {
-      "command": "node",
-      "args": ["/path/to/polydev-mcp-server/index.js"],
-      "env": {
-        "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
+            <h3>Complete Tool Schema</h3>
+            <p>The <code>get_perspectives</code> tool accepts these parameters:</p>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+  "name": "get_perspectives",
+  "description": "Get multiple AI perspectives on a problem to break through roadblocks",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string", 
+        "description": "The problem or question to get perspectives on"
+      },
+      "mode": {
+        "type": "string",
+        "enum": ["user_keys", "managed"],
+        "description": "user_keys (your API keys) or managed (MCP token)"
+      },
+      "models": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "List of models to query in parallel"
+      },
+      "user_token": {
+        "type": "string",
+        "description": "Required for managed mode only"
+      },
+      "temperature": {
+        "type": "number",
+        "description": "Temperature for responses (0.1-1.0, default: 0.7)"
+      },
+      "project_memory": {
+        "type": "string",
+        "enum": ["none", "light", "full"],
+        "description": "Include project context: none, light (recent files), full (similarity search)"
+      },
+      "project_context": {
+        "type": "object",
+        "description": "Project path and file patterns for context"
       }
-    }
+    },
+    "required": ["prompt"]
   }
 }`}</code></pre>
-            </div>
 
-            <h3>Continue.dev (VS Code)</h3>
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <pre><code>{`# Add to .continue/config.json
-{
-  "mcp": {
-    "polydev-perspectives": {
-      "command": "node",
-      "args": ["/path/to/polydev-mcp-server/index.js"]
-    }
-  }
-}`}</code></pre>
-            </div>
-
-            <h3>Cursor & Cline</h3>
-            <p>Follow similar MCP server configuration patterns for these editors.</p>
-
-            <h2 id="authentication">Authentication</h2>
-            <p>Two modes available: using your own API keys (recommended) or MCP tokens (limited).</p>
+            <h2 id="authentication">Authentication Details</h2>
             
-            <h3>Using Your API Keys (Recommended)</h3>
-            <ol>
-              <li>Sign in to your Polydev account</li>
-              <li>Go to <a href="/dashboard/api-keys" className="text-blue-600">Dashboard → API Keys</a></li>
-              <li>Add your LLM provider keys (OpenAI, Anthropic, Google, etc.)</li>
-              <li>Use <code>mode: "user_keys"</code> in tool calls</li>
+            <h3>User Keys Mode (Recommended)</h3>
+            <p>When using your own API keys, you get:</p>
+            <ul className="space-y-2">
+              <li>✅ <strong>Full model access</strong>: 20+ providers with all their models</li>
+              <li>✅ <strong>Your rate limits</strong>: Use your own quotas and limits</li>
+              <li>✅ <strong>Custom configurations</strong>: Set budgets, rate limits per provider</li>
+              <li>✅ <strong>Best performance</strong>: Direct API access without shared bottlenecks</li>
+            </ul>
+            
+            <p>To use user keys mode:</p>
+            <ol className="list-decimal list-inside space-y-2">
+              <li>Sign in to your Polydev account in the MCP client</li>
+              <li>Add your API keys via the dashboard</li>
+              <li>Use <code>"mode": "user_keys"</code> in your tool calls</li>
+              <li>No token required - authentication handled by your signed-in session</li>
             </ol>
-            <p>Benefits: Access to all 20+ providers, custom rate limits, transparent pricing</p>
 
-            <h3>MCP Tokens (Legacy)</h3>
-            <ol>
-              <li>Go to <a href="/dashboard/mcp-tools" className="text-blue-600">Dashboard → MCP Tools</a></li>
-              <li>Generate an MCP token</li>
-              <li>Use <code>user_token: "poly_..."</code> in tool calls</li>
-            </ol>
-            <p>Limitations: Only basic models, shared rate limits</p>
+            <h3>MCP Token Mode (Legacy)</h3>
+            <p>Limited access with managed keys:</p>
+            <ul className="space-y-2">
+              <li>⚠️ <strong>Basic models only</strong>: GPT-4, Claude 3 Sonnet, Gemini Pro</li>
+              <li>⚠️ <strong>Shared rate limits</strong>: May hit limits during peak usage</li>
+              <li>⚠️ <strong>No customization</strong>: Fixed configuration</li>
+            </ul>
 
-            <h3>Using API Keys</h3>
-            <pre><code>{`# In headers
-Authorization: Bearer YOUR_API_KEY
+            <h3>Project Memory Integration</h3>
+            <p>Enhance perspectives with your project context:</p>
+            <ul className="space-y-2">
+              <li><strong>none</strong>: No project context (fastest)</li>
+              <li><strong>light</strong>: Include recently modified files</li>
+              <li><strong>full</strong>: TF-IDF similarity matching for most relevant code</li>
+            </ul>
 
-# As query parameter (not recommended for production)
-?api_key=YOUR_API_KEY
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+  "prompt": "How can I optimize this database query performance?",
+  "mode": "user_keys",
+  "project_memory": "full",
+  "project_context": {
+    "root_path": "/workspace/myapp",
+    "includes": ["**/*.sql", "**/*.js", "**/*.ts"],
+    "excludes": ["node_modules/**", "dist/**", "*.log"]
+  }
+}`}</code></pre>
 
-# Environment variable
-export POLYDEV_API_KEY=YOUR_API_KEY`}</code></pre>
+            <h2 id="usage-examples">Real-World Agent Use Cases</h2>
+            
+            <h3>🐛 Debugging Roadblocks</h3>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 my-4">
+              <h4 className="font-semibold text-red-900 mb-2">Scenario: SQL Performance Mystery</h4>
+              <p className="text-red-800 text-sm mb-3">Your agent is stuck - the SQL query has indexes but is still slow despite standard optimizations.</p>
+              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+  "name": "get_perspectives",
+  "arguments": {
+    "prompt": "My SQL query is slow despite having indexes. I've tried standard optimizations but performance is still poor. The query joins 3 tables and filters by date range. What advanced optimizations am I missing?",
+    "mode": "user_keys",
+    "models": ["gpt-4", "claude-3.5-sonnet", "gemini-1.5-pro"],
+    "project_memory": "full",
+    "temperature": 0.3
+  }
+}`}</code></pre>
+            </div>
+
+            <h3>🏗️ Architecture Decisions</h3>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 my-4">
+              <h4 className="font-semibold text-blue-900 mb-2">Scenario: Microservices vs Monolith</h4>
+              <p className="text-blue-800 text-sm mb-3">Your agent needs expert perspectives on architectural trade-offs for a fintech application.</p>
+              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+  "name": "get_perspectives",
+  "arguments": {
+    "prompt": "I'm choosing between microservices and monolith architecture for a fintech app that needs to handle payments, user management, and compliance reporting. I need multiple expert perspectives on trade-offs, security implications, and scalability considerations.",
+    "mode": "user_keys",
+    "models": ["gpt-4", "claude-3-opus", "llama-3.1-405b-reasoning"],
+    "temperature": 0.4
+  }
+}`}</code></pre>
+            </div>
+
+            <h3>🔍 Code Review & Security</h3>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 my-4">
+              <h4 className="font-semibold text-green-900 mb-2">Scenario: Authentication Security Review</h4>
+              <p className="text-green-800 text-sm mb-3">Your agent wants multiple security-focused perspectives on an authentication module.</p>
+              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+  "name": "get_perspectives",
+  "arguments": {
+    "prompt": "Review this authentication module for security vulnerabilities and suggest improvements. I want multiple security-focused perspectives on JWT handling, password policies, and session management.",
+    "mode": "user_keys",
+    "models": ["gpt-4", "claude-3.5-sonnet", "gemini-1.5-pro"],
+    "project_memory": "full",
+    "project_context": {
+      "root_path": "/workspace/auth-service",
+      "includes": ["**/*.js", "**/*.ts", "**/auth/**", "**/middleware/**"],
+      "excludes": ["node_modules/**", "tests/**", "*.log"]
+    },
+    "temperature": 0.2
+  }
+}`}</code></pre>
+            </div>
+
+            <h3>🔧 Problem-Solving Stuck Points</h3>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 my-4">
+              <h4 className="font-semibold text-yellow-900 mb-2">Scenario: OAuth2 Implementation Issues</h4>
+              <p className="text-yellow-800 text-sm mb-3">Your agent is stuck with cryptic OAuth2 PKCE errors and unclear documentation.</p>
+              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+  "name": "get_perspectives",
+  "arguments": {
+    "prompt": "I'm implementing OAuth2 PKCE flow but getting 'invalid_request' errors. The documentation is unclear about parameter encoding, code_challenge generation, and redirect URI handling. Help me troubleshoot step by step.",
+    "mode": "user_keys",
+    "models": ["gpt-4", "claude-3.5-sonnet", "gemini-1.5-pro", "llama-3.1-sonar-large-128k-online"],
+    "temperature": 0.3
+  }
+}`}</code></pre>
+            </div>
+
+            <h2 id="response-format">Response Format</h2>
+            <p>Polydev returns formatted perspectives that your agent can directly process:</p>
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 my-4">
+              <pre className="text-sm"><code>{`# Multiple AI Perspectives
+
+Got 3 perspectives in 1247ms using 892 tokens.
+
+## GPT-4 Perspective
+
+The performance issue likely stems from unnecessary re-renders caused by objects being recreated on every render. Here are the key areas to investigate:
+
+1. **Inline object creation in JSX**: Check if you're creating objects directly in render methods
+2. **useEffect dependencies**: Ensure dependency arrays don't contain objects that change reference
+3. **Context value changes**: If using React Context, make sure the value isn't recreated each render
+
+*Tokens: 234, Latency: 1100ms*
+
+---
+
+## CLAUDE-3.5-SONNET Perspective
+
+Looking at React performance optimization, I'd focus on these systematic approaches:
+
+1. **Profiler analysis**: Use React DevTools Profiler to identify which components re-render
+2. **Memoization strategy**: Apply React.memo, useMemo, and useCallback strategically
+3. **State structure**: Consider if state is normalized and properly scoped
+
+The root cause is often improper memoization or state management patterns.
+
+*Tokens: 198, Latency: 987ms*
+
+---
+
+## GEMINI-1.5-PRO Perspective
+
+From a different angle, consider these React optimization strategies:
+
+1. **Component tree analysis**: Look for parent components that re-render unnecessarily
+2. **Props drilling**: Check if you're passing down props that frequently change
+3. **Virtual DOM overhead**: Sometimes splitting components can reduce reconciliation work
+
+I'd recommend starting with the React Profiler to get concrete data before optimizing.
+
+*Tokens: 156, Latency: 892ms*`}</code></pre>
+            </div>
+
+            <h2 id="best-practices">Best Practices for Agents</h2>
+            
+            <h3>1. Be Specific in Prompts</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <h4 className="font-semibold text-red-900 mb-2">❌ Too Generic</h4>
+                <code className="text-sm text-red-800">"Help me with this code"</code>
+              </div>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h4 className="font-semibold text-green-900 mb-2">✅ Specific & Actionable</h4>
+                <code className="text-sm text-green-800">"This React component re-renders on every state change even with useMemo. Help me identify why the memoization isn't working."</code>
+              </div>
+            </div>
+
+            <h3>2. Choose the Right Models</h3>
+            <ul className="space-y-3">
+              <li><strong>All models</strong> - For diverse perspectives and creative solutions</li>
+              <li><strong>GPT-4 + Claude 3.5 Sonnet</strong> - For technical accuracy and analysis</li>
+              <li><strong>Gemini + Perplexity Sonar</strong> - For research and latest information</li>
+              <li><strong>Llama 3.1 405B</strong> - For complex reasoning and mathematical problems</li>
+            </ul>
+
+            <h3>3. Use Project Memory Strategically</h3>
+            <ul className="space-y-2">
+              <li><strong>none</strong>: For general questions not tied to your codebase</li>
+              <li><strong>light</strong>: For debugging issues in recently modified files</li>
+              <li><strong>full</strong>: For complex architectural decisions requiring deep context</li>
+            </ul>
+
+            <h3>4. Handle Responses Intelligently</h3>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`// Agent logic example
+const perspectives = await getPerspectives({
+  prompt: "How do I fix this memory leak?",
+  models: ["gpt-4", "claude-3.5-sonnet", "gemini-1.5-pro"]
+});
+
+// Extract common themes across responses
+const commonSolutions = findCommonAdvice(perspectives.responses);
+const quickWins = findImmediateSolutions(perspectives.responses);
+
+// Prioritize solutions mentioned by multiple models
+if (commonSolutions.length > 0) {
+  return implementSolution(commonSolutions[0]);
+} else if (quickWins.length > 0) {
+  return implementSolution(quickWins[0]);
+}
+
+// If no consensus, ask for more specific guidance
+return requestMoreSpecificHelp();`}</code></pre>
+
+            <h2 id="troubleshooting">Troubleshooting</h2>
+            
+            <h3>Common Issues</h3>
+            
+            <div className="space-y-4">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <h4 className="font-semibold text-red-900 mb-2">❌ "Authentication failed"</h4>
+                <ul className="text-red-800 text-sm space-y-1">
+                  <li>• Generate new token at <a href="/dashboard/mcp-tools" className="underline">dashboard/mcp-tools</a></li>
+                  <li>• Check token isn't expired</li>
+                  <li>• Ensure proper token format (<code>poly_...</code>)</li>
+                  <li>• For user_keys mode: Make sure you're signed in</li>
+                </ul>
+              </div>
+
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <h4 className="font-semibold text-yellow-900 mb-2">⚠️ "No perspectives received"</h4>
+                <ul className="text-yellow-800 text-sm space-y-1">
+                  <li>• Check internet connectivity</li>
+                  <li>• Verify prompt isn't empty</li>
+                  <li>• Try with default models: <code>["gpt-4", "claude-3-sonnet"]</code></li>
+                  <li>• Check if you've hit rate limits</li>
+                </ul>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-900 mb-2">🔧 "Project memory not working"</h4>
+                <ul className="text-blue-800 text-sm space-y-1">
+                  <li>• Ensure root_path exists and is accessible</li>
+                  <li>• Check file patterns include target files</li>
+                  <li>• Verify sufficient disk space for caching</li>
+                  <li>• Try with <code>project_memory: "light"</code> first</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3>Debug Mode</h3>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`# Enable debug logging in MCP server
+export POLYDEV_DEBUG=1
+node /path/to/polydev/mcp/server.js
+
+# Check MCP client logs
+tail -f ~/.config/claude/mcp_debug.log`}</code></pre>
           </div>
         )
 
