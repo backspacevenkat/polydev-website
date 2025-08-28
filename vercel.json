@@ -3,10 +3,5 @@
   "buildCommand": "cd polydev-website && npm run build",
   "outputDirectory": "polydev-website/.next",
   "installCommand": "cd polydev-website && npm install",
-  "devCommand": "cd polydev-website && npm run dev",
-  "functions": {
-    "polydev-website/src/app/api/**/*.ts": {
-      "maxDuration": 60
-    }
-  }
+  "devCommand": "cd polydev-website && npm run dev"
 }
