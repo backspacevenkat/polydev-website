@@ -74,95 +74,116 @@ export default function Documentation() {
       case 'getting-started':
         return (
           <div className="prose max-w-none">
-            <h1>Getting Started with Polydev AI</h1>
+            <h1>Getting Started with Polydev Perspectives</h1>
             
             <h2 id="introduction">Introduction</h2>
             <p>
-              Polydev AI is an advanced Model Context Protocol (MCP) platform that enables seamless integration 
-              with multiple language models, OAuth bridges, and comprehensive tooling for AI development.
+              Polydev Perspectives is an MCP (Model Context Protocol) router that fans out queries to multiple 
+              LLMs in parallel. When your AI agent gets stuck or needs diverse perspectives, our single 
+              <code>get_perspectives</code> tool consults GPT-4, Claude, Gemini, and other models simultaneously.
             </p>
             
             <h3>Key Features</h3>
             <ul>
-              <li><strong>Multi-LLM Integration</strong>: Connect to OpenAI, Anthropic, Google AI, and more</li>
-              <li><strong>Model Context Protocol</strong>: Industry-standard for AI tool integration</li>
-              <li><strong>OAuth Bridges</strong>: Secure authentication flows</li>
-              <li><strong>Real-time Analytics</strong>: Monitor usage, costs, and performance</li>
-              <li><strong>Developer Tools</strong>: API explorer, SDKs, and documentation</li>
+              <li><strong>MCP Router</strong>: Single tool that queries multiple LLMs in parallel</li>
+              <li><strong>Universal Compatibility</strong>: Works with Claude Desktop, Cursor, Continue, Cline</li>
+              <li><strong>Diverse Perspectives</strong>: Get viewpoints from GPT-4, Claude, Gemini, and more</li>
+              <li><strong>Project Memory</strong>: Include your codebase context for better insights</li>
+              <li><strong>Agent Integration</strong>: Perfect for when AI agents encounter roadblocks</li>
             </ul>
 
             <h2 id="quick-start">Quick Start</h2>
-            <p>Get started with Polydev AI in just a few steps:</p>
+            <p>Get multiple AI perspectives in your MCP client in 3 steps:</p>
             
-            <h3>1. Create an Account</h3>
-            <pre><code>{`# Sign up at https://polydev.ai
-# Verify your email address
-# Complete onboarding`}</code></pre>
+            <h3>1. Add to Your MCP Configuration</h3>
+            <pre><code>{`{
+  "mcpServers": {
+    "polydev-perspectives": {
+      "command": "node",
+      "args": ["/path/to/polydev-mcp/server.js"],
+      "env": {
+        "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
+      }
+    }
+  }
+}`}</code></pre>
 
-            <h3>2. Install the CLI</h3>
-            <pre><code>{`npm install -g @polydev/cli
-# or
-yarn global add @polydev/cli
-# or  
-pip install polydev-cli`}</code></pre>
+            <h3>2. Configure Your API Keys</h3>
+            <p>Visit <a href="/dashboard/api-keys" className="text-blue-600 hover:underline">Dashboard → API Keys</a> to add:</p>
+            <ul>
+              <li>OpenAI API key (for GPT-4, GPT-3.5)</li>
+              <li>Anthropic API key (for Claude models)</li>
+              <li>Google AI key (for Gemini models)</li>
+              <li>And 16+ other providers</li>
+            </ul>
 
-            <h3>3. Authenticate</h3>
-            <pre><code>{`polydev auth login
-# Follow the browser authentication flow`}</code></pre>
+            <h3>3. Use the Tool in Your Agent</h3>
+            <pre><code>{`{
+  "name": "get_perspectives",
+  "arguments": {
+    "prompt": "I'm debugging a React performance issue but can't find the cause",
+    "mode": "user_keys",
+    "models": ["gpt-4", "claude-3-sonnet", "gemini-pro"],
+    "project_memory": "light"
+  }
+}`}</code></pre>
 
-            <h3>4. Make Your First API Call</h3>
-            <pre><code>{`curl -X POST https://api.polydev.ai/v1/chat/completions \\
-  -H "Authorization: Bearer YOUR_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "model": "gpt-4",
-    "messages": [
-      {"role": "user", "content": "Hello, Polydev!"}
-    ]
-  }'`}</code></pre>
+            <p>That's it! Your agent now has access to multiple AI perspectives when it gets stuck.</p>
 
-            <h2 id="installation">Installation</h2>
-            <p>Multiple ways to get started with Polydev AI:</p>
+            <h2 id="installation">MCP Server Setup</h2>
+            <p>The Polydev MCP server integrates with all major MCP clients:</p>
 
-            <h3>CLI Installation</h3>
+            <h3>Claude Desktop</h3>
             <div className="bg-gray-100 p-4 rounded-lg">
-              <pre><code>{`# Node.js
-npm install -g @polydev/cli
-
-# Python
-pip install polydev-cli
-
-# Go
-go install github.com/polydev-ai/cli@latest
-
-# Docker
-docker run -it polydev/cli`}</code></pre>
+              <pre><code>{`# Add to ~/.config/claude/claude_desktop_config.json
+{
+  "mcpServers": {
+    "polydev-perspectives": {
+      "command": "node",
+      "args": ["/path/to/polydev-mcp-server/index.js"],
+      "env": {
+        "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
+      }
+    }
+  }
+}`}</code></pre>
             </div>
 
-            <h3>SDK Installation</h3>
+            <h3>Continue.dev (VS Code)</h3>
             <div className="bg-gray-100 p-4 rounded-lg">
-              <pre><code>{`# JavaScript/TypeScript
-npm install @polydev/sdk
-
-# Python
-pip install polydev-python
-
-# Go
-go get github.com/polydev-ai/go-sdk
-
-# Rust
-cargo add polydev`}</code></pre>
+              <pre><code>{`# Add to .continue/config.json
+{
+  "mcp": {
+    "polydev-perspectives": {
+      "command": "node",
+      "args": ["/path/to/polydev-mcp-server/index.js"]
+    }
+  }
+}`}</code></pre>
             </div>
+
+            <h3>Cursor & Cline</h3>
+            <p>Follow similar MCP server configuration patterns for these editors.</p>
 
             <h2 id="authentication">Authentication</h2>
-            <p>Polydev AI uses API keys for authentication. You can create and manage API keys in your dashboard.</p>
+            <p>Two modes available: using your own API keys (recommended) or MCP tokens (limited).</p>
             
-            <h3>API Key Types</h3>
-            <ul>
-              <li><strong>Development</strong>: Rate-limited, for testing and development</li>
-              <li><strong>Production</strong>: Full access, for production applications</li>
-              <li><strong>Read-only</strong>: Limited to read operations, for analytics</li>
-            </ul>
+            <h3>Using Your API Keys (Recommended)</h3>
+            <ol>
+              <li>Sign in to your Polydev account</li>
+              <li>Go to <a href="/dashboard/api-keys" className="text-blue-600">Dashboard → API Keys</a></li>
+              <li>Add your LLM provider keys (OpenAI, Anthropic, Google, etc.)</li>
+              <li>Use <code>mode: "user_keys"</code> in tool calls</li>
+            </ol>
+            <p>Benefits: Access to all 20+ providers, custom rate limits, transparent pricing</p>
+
+            <h3>MCP Tokens (Legacy)</h3>
+            <ol>
+              <li>Go to <a href="/dashboard/mcp-tools" className="text-blue-600">Dashboard → MCP Tools</a></li>
+              <li>Generate an MCP token</li>
+              <li>Use <code>user_token: "poly_..."</code> in tool calls</li>
+            </ol>
+            <p>Limitations: Only basic models, shared rate limits</p>
 
             <h3>Using API Keys</h3>
             <pre><code>{`# In headers
@@ -853,30 +874,6 @@ polydev mcp install my-custom-server`}</code></pre>
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900">
-                Polydev AI
-              </Link>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/dashboard" className="text-gray-500 hover:text-gray-900">Dashboard</Link>
-              <Link href="/docs" className="text-blue-600 font-medium">Documentation</Link>
-              <Link href="/api-explorer" className="text-gray-500 hover:text-gray-900">API Explorer</Link>
-              <Link href="/pricing" className="text-gray-500 hover:text-gray-900">Pricing</Link>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                Sign In
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-8">
           {/* Sidebar */}

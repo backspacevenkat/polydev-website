@@ -188,31 +188,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900">
-                Polydev AI
-              </Link>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/dashboard" className="text-blue-600 font-medium">Dashboard</Link>
-              <Link href="/dashboard/api-keys" className="text-gray-500 hover:text-gray-900">API Keys</Link>
-              <Link href="/dashboard/mcp-tools" className="text-gray-500 hover:text-gray-900">MCP Tools</Link>
-              <Link href="/docs" className="text-gray-500 hover:text-gray-900">Documentation</Link>
-              <Link href="/api-explorer" className="text-gray-500 hover:text-gray-900">API Explorer</Link>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                Sign In
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* User Welcome & Real-time Status */}
         <div className="mb-8">
