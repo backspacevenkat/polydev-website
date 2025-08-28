@@ -6,69 +6,69 @@ import Link from 'next/link'
 
 const features = [
   {
-    icon: '🤖',
-    title: 'Multi-LLM Chat',
-    description: 'Compare responses from GPT-4, Claude, Gemini, and more in real-time',
-    highlight: 'Side-by-side comparison'
+    icon: '🧠',
+    title: 'Multi-Model Perspectives',
+    description: 'When agents get stuck, get diverse perspectives from 22+ AI models simultaneously',
+    highlight: 'GPT-4, Claude, Gemini, Groq+'
   },
   {
-    icon: '🔧',
-    title: 'MCP Integration',
-    description: 'Advanced Model Context Protocol with 50+ tools and integrations',
-    highlight: 'GitHub, Linear, Supabase'
+    icon: '🔗',
+    title: 'MCP Native',
+    description: 'Purpose-built MCP server for Model Context Protocol agent frameworks',
+    highlight: 'Claude Code, Cursor, Codex'
   },
   {
     icon: '⚡',
-    title: 'Real-time Analytics',
-    description: 'Track usage, costs, and performance across all your AI interactions',
-    highlight: 'Live dashboard'
+    title: 'Agent Breakthrough',
+    description: 'Help agents overcome roadblocks with collective AI intelligence',
+    highlight: 'Parallel processing'
   },
   {
-    icon: '🔒',
-    title: 'Enterprise Security',
-    description: 'OAuth 2.0, role-based access, and comprehensive audit logs',
-    highlight: 'SOC 2 compliant'
+    icon: '🔑',
+    title: 'Comprehensive Keys',
+    description: 'Support for 22+ providers with custom endpoints and budget controls',
+    highlight: 'All major providers'
   },
   {
-    icon: '🚀',
-    title: 'API Explorer',
-    description: 'Interactive testing environment with comprehensive documentation',
-    highlight: 'OpenAPI 3.0 spec'
+    icon: '🎯',
+    title: 'Context-Aware',
+    description: 'TF-IDF project memory for contextual debugging assistance',
+    highlight: 'Smart context selection'
   },
   {
     icon: '📊',
-    title: 'Cost Optimization',
-    description: 'Smart routing and caching to minimize AI API costs by up to 40%',
-    highlight: 'Automatic savings'
+    title: 'Agent Analytics',
+    description: 'Track which perspectives help agents most effectively',
+    highlight: 'Success metrics'
   }
 ]
 
 const testimonials = [
   {
-    name: 'Sarah Chen',
-    role: 'AI Engineer at TechCorp',
-    avatar: 'SC',
-    quote: 'Polydev AI has revolutionized how we compare and deploy AI models. The multi-LLM interface saves us hours of manual testing.'
+    name: 'Alex Chen',
+    role: 'AI Agent Developer',
+    avatar: 'AC',
+    quote: 'My Claude Code agent was stuck on a complex React issue. Polydev gave it 3 different expert perspectives and it immediately found the solution.'
   },
   {
-    name: 'Marcus Johnson',
-    role: 'CTO at StartupXYZ',
-    avatar: 'MJ',
-    quote: 'The MCP integration is game-changing. We\'ve connected our entire toolchain and reduced development time by 60%.'
+    name: 'Marcus Rivera',
+    role: 'Senior Engineer',
+    avatar: 'MR',
+    quote: 'Our Cursor agents are 3x more effective now. When they hit roadblocks, Polydev\'s multi-model bridge gets them unstuck instantly.'
   },
   {
-    name: 'Elena Rodriguez',
-    role: 'Data Scientist',
-    avatar: 'ER',
-    quote: 'Best AI platform I\'ve used. The analytics dashboard gives us insights we never had before.'
+    name: 'Sam Thompson',
+    role: 'DevOps Engineer',
+    avatar: 'ST',
+    quote: 'Perfect for agentic workflows. My agents call Polydev whenever they need diverse AI perspectives to solve complex problems.'
   }
 ]
 
 const stats = [
-  { value: '10M+', label: 'API Calls Processed' },
-  { value: '500+', label: 'Active Developers' },
-  { value: '99.9%', label: 'Uptime SLA' },
-  { value: '< 200ms', label: 'Avg Response Time' }
+  { value: '10M+', label: 'Agent Queries Resolved' },
+  { value: '500+', label: 'Connected Clients' },
+  { value: '22+', label: 'AI Providers Supported' },
+  { value: '< 2s', label: 'Multi-Model Response Time' }
 ]
 
 export default function Home() {
@@ -76,7 +76,7 @@ export default function Home() {
   const [typedText, setTypedText] = useState('')
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   
-  const words = ['developers', 'teams', 'enterprises', 'innovators']
+  const words = ['AI agents', 'agentic workflows', 'Claude Code', 'Cursor AI', 'agent developers']
   
   useEffect(() => {
     const word = words[currentWordIndex]
@@ -112,7 +112,7 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-8">
-              AI Platform for{' '}
+              MCP Bridge for{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                 {typedText}
                 <span className="animate-pulse">|</span>
@@ -120,8 +120,8 @@ export default function Home() {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
-              Compare multiple AI models in real-time, integrate with 50+ tools through MCP, 
-              and build faster with comprehensive analytics and cost optimization.
+              When AI agents get stuck, Polydev bridges the gap with diverse perspectives from 22+ models. 
+              Purpose-built MCP server for agentic workflows and agent breakthroughs.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
@@ -180,11 +180,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Everything you need to build with AI
+              When agents get stuck, we bridge the gap
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              From prototype to production, Polydev AI provides the tools and infrastructure 
-              to accelerate your AI development workflow.
+              Polydev Perspectives is the MCP server that helps AI agents overcome roadblocks 
+              with diverse perspectives from multiple frontier models.
             </p>
           </div>
 
@@ -215,10 +215,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              See it in action
+              Agent breakthrough in action
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-12">
-              Watch how Polydev AI helps you compare models, integrate tools, and optimize costs in real-time.
+              See how agents call our MCP tool to get multiple expert perspectives when stuck on complex problems.
             </p>
           </div>
 
@@ -230,17 +230,17 @@ export default function Home() {
                   <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 </div>
-                <div className="ml-4 text-gray-400">Multi-LLM Chat Interface</div>
+                <div className="ml-4 text-gray-400">Agent MCP Tool Call</div>
               </div>
               <div className="space-y-3">
-                <div className="text-blue-400">$ polydev chat --models gpt-4,claude-3,gemini-pro</div>
-                <div className="text-green-400">✓ Connected to 3 models</div>
-                <div className="text-white">User: Explain quantum computing</div>
-                <div className="text-purple-400">GPT-4: Quantum computing leverages quantum mechanical phenomena...</div>
-                <div className="text-cyan-400">Claude: Quantum computers use qubits instead of classical bits...</div>
-                <div className="text-yellow-400">Gemini: At its core, quantum computing exploits superposition...</div>
-                <div className="text-green-400">✓ Responses generated in 1.2s</div>
-                <div className="text-gray-400">Cost: $0.023 | Tokens: 847</div>
+                <div className="text-blue-400">Agent: Calling get_perspectives MCP tool...</div>
+                <div className="text-green-400">✓ Connected to Polydev Perspectives server</div>
+                <div className="text-white">Prompt: "React component re-renders excessively, can't find cause"</div>
+                <div className="text-purple-400">GPT-4: Check useMemo dependencies and props spreading...</div>
+                <div className="text-cyan-400">Claude: Look for object recreations in parent components...</div>
+                <div className="text-yellow-400">Groq: Consider React.memo and callback optimization...</div>
+                <div className="text-green-400">✓ Agent breakthrough achieved in 1.8s</div>
+                <div className="text-gray-400">3 perspectives | 847 tokens | $0.023</div>
               </div>
             </div>
           </div>

@@ -5,13 +5,14 @@ import Link from 'next/link'
 import { useAuth } from '../../hooks/useAuth'
 import { createClient } from '../utils/supabase/client'
 
-interface MCPServer {
+interface MCPClient {
   id: string
   name: string
   description: string
-  status: 'connected' | 'disconnected' | 'error'
-  tools: number
-  lastUsed?: string
+  status: 'connected' | 'disconnected' | 'idle'
+  lastActivity?: string
+  connectionTime?: string
+  toolCalls: number
 }
 
 interface LLMProvider {
@@ -94,38 +95,42 @@ export default function Dashboard() {
     )
   }
   
-  const mcpServers: MCPServer[] = [
+  const mcpClients: MCPClient[] = [
     {
-      id: 'github',
-      name: 'GitHub MCP',
-      description: 'GitHub repository management and code analysis',
+      id: 'claude-code',
+      name: 'Claude Code',
+      description: 'Anthropic\'s official CLI for Claude - connected via MCP',
       status: 'connected',
-      tools: 25,
-      lastUsed: '2 mins ago'
+      toolCalls: 247,
+      lastActivity: '2 mins ago',
+      connectionTime: '2 hours ago'
     },
     {
-      id: 'supabase',
-      name: 'Supabase MCP',
-      description: 'Database operations and real-time subscriptions',
+      id: 'cursor',
+      name: 'Cursor AI',
+      description: 'AI-first code editor using our perspectives MCP tool',
       status: 'connected',
-      tools: 18,
-      lastUsed: '5 mins ago'
+      toolCalls: 156,
+      lastActivity: '15 mins ago',
+      connectionTime: '4 hours ago'
     },
     {
-      id: 'vercel',
-      name: 'Vercel MCP',
-      description: 'Deployment and serverless function management',
-      status: 'connected',
-      tools: 12,
-      lastUsed: '1 hour ago'
+      id: 'codex-cli',
+      name: 'Codex CLI',
+      description: 'Command-line interface connected to Polydev MCP server',
+      status: 'idle',
+      toolCalls: 89,
+      lastActivity: '1 hour ago',
+      connectionTime: '6 hours ago'
     },
     {
-      id: 'anthropic',
-      name: 'Anthropic MCP',
-      description: 'Claude model integration and conversation management',
-      status: 'error',
-      tools: 8,
-      lastUsed: '30 mins ago'
+      id: 'continue-dev',
+      name: 'Continue.dev',
+      description: 'VS Code extension using our multi-model perspectives',
+      status: 'disconnected',
+      toolCalls: 34,
+      lastActivity: '3 hours ago',
+      connectionTime: '1 day ago'
     }
   ]
 
@@ -169,6 +174,8 @@ export default function Dashboard() {
       case 'connected':
       case 'active':
         return 'text-green-600 bg-green-100'
+      case 'idle':
+        return 'text-yellow-600 bg-yellow-100'
       case 'disconnected':
       case 'inactive':
         return 'text-gray-600 bg-gray-100'
@@ -214,7 +221,7 @@ export default function Dashboard() {
               <h1 className="text-3xl font-bold text-gray-900">
                 Welcome back{user?.email ? `, ${user.email.split('@')[0]}` : ''}!
               </h1>
-              <p className="text-gray-600 mt-2">Monitor your MCP servers, LLM usage, and system health</p>
+              <p className="text-gray-600 mt-2">Monitor connected MCP clients, LLM usage, and system health</p>
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
@@ -305,7 +312,7 @@ export default function Dashboard() {
         {/* Tabs */}
         <div className="border-b border-gray-200 mb-8">
           <nav className="-mb-px flex space-x-8">
-            {['overview', 'mcp-servers', 'llm-providers', 'analytics'].map((tab) => (
+            {['overview', 'mcp-clients', 'llm-providers', 'analytics'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -336,7 +343,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Active MCP Servers</p>
+                    <p className="text-sm font-medium text-gray-600">Connected MCP Clients</p>
                     <p className="text-2xl font-semibold text-gray-900">3</p>
                   </div>
                 </div>
@@ -440,42 +447,76 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* MCP Servers Tab */}
-        {activeTab === 'mcp-servers' && (
+        {/* MCP Clients Tab */}
+        {activeTab === 'mcp-clients' && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-900">MCP Servers</h2>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                Add New Server
-              </button>
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900">Connected MCP Clients</h2>
+                <p className="text-gray-600 mt-1">AI agents and tools connected to your Polydev MCP server</p>
+              </div>
+              <div className="text-sm text-gray-500">
+                Total tool calls: {mcpClients.reduce((sum, client) => sum + client.toolCalls, 0)}
+              </div>
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {mcpServers.map((server) => (
-                <div key={server.id} className="bg-white rounded-lg shadow">
+              {mcpClients.map((client) => (
+                <div key={client.id} className="bg-white rounded-lg shadow">
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-medium text-gray-900">{server.name}</h3>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(server.status)}`}>
-                        {server.status}
+                      <h3 className="text-lg font-medium text-gray-900">{client.name}</h3>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(client.status)}`}>
+                        {client.status}
                       </span>
                     </div>
-                    <p className="text-gray-600 mb-4">{server.description}</p>
-                    <div className="flex items-center justify-between text-sm text-gray-500">
-                      <span>{server.tools} tools</span>
-                      {server.lastUsed && <span>Last used: {server.lastUsed}</span>}
+                    <p className="text-gray-600 mb-4">{client.description}</p>
+                    <div className="space-y-2 text-sm text-gray-500">
+                      <div className="flex justify-between">
+                        <span>Tool calls:</span>
+                        <span className="font-medium">{client.toolCalls}</span>
+                      </div>
+                      {client.lastActivity && (
+                        <div className="flex justify-between">
+                          <span>Last activity:</span>
+                          <span>{client.lastActivity}</span>
+                        </div>
+                      )}
+                      {client.connectionTime && (
+                        <div className="flex justify-between">
+                          <span>Connected:</span>
+                          <span>{client.connectionTime}</span>
+                        </div>
+                      )}
                     </div>
                     <div className="mt-4 flex space-x-2">
                       <button className="flex-1 bg-blue-50 text-blue-600 py-2 px-4 rounded-lg hover:bg-blue-100">
-                        Configure
+                        View Activity
                       </button>
                       <button className="flex-1 bg-gray-50 text-gray-600 py-2 px-4 rounded-lg hover:bg-gray-100">
-                        View Tools
+                        Debug Connection
                       </button>
                     </div>
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-blue-800">Connect New MCP Client</h3>
+                  <p className="text-sm text-blue-700 mt-1">
+                    Add our MCP server configuration to your agent's config to start using Polydev perspectives. 
+                    <a href="/docs/mcp-integration" className="underline hover:no-underline ml-1">View integration guide</a>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         )}

@@ -18,16 +18,14 @@ export default function Navigation() {
   ]
 
   const authenticatedNavigation = [
+    { name: 'Home', href: '/' },
     { name: 'Dashboard', href: '/dashboard' },
-    { name: 'Perspectives', href: '/settings/perspectives' },
-    { name: 'API Explorer', href: '/explorer' },
+    { name: 'API Keys', href: '/dashboard/api-keys' },
     { name: 'Chat', href: '/chat' },
     { name: 'Settings', href: '/settings' },
   ]
 
-  const navigation = isAuthenticated 
-    ? [...publicNavigation.slice(0, 1), ...authenticatedNavigation, ...publicNavigation.slice(1)]
-    : publicNavigation
+  const navigation = isAuthenticated ? authenticatedNavigation : publicNavigation
 
   const isActive = (href: string) => {
     if (href === '/') {
