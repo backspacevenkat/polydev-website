@@ -110,99 +110,98 @@ export default function Documentation() {
 
             <h2 id="quick-start">Quick Start Guide</h2>
             
-            <h3>Step 1: Set Up Your API Keys</h3>
+            <h3>Step 1: Install the MCP Server</h3>
+            <p>Install Polydev Perspectives globally via npm:</p>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`npm install -g @polydev/perspectives-mcp`}</code></pre>
             
-            <h4>Option A: Your Own API Keys (Recommended)</h4>
-            <ol className="list-decimal list-inside space-y-3">
-              <li>Create a free account at <a href="/auth" className="text-blue-600 hover:underline font-semibold">polydev.ai/auth</a></li>
-              <li>Visit <a href="/dashboard/api-keys" className="text-blue-600 hover:underline font-semibold">Dashboard → API Keys</a></li>
-              <li>Add API keys for providers you want to use:
-                <div className="ml-6 mt-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div className="bg-gray-50 p-3 rounded">
-                    <strong className="text-gray-900">Core Providers:</strong>
-                    <ul className="mt-1 space-y-1">
-                      <li>• <strong>OpenAI</strong>: GPT-4o, GPT-4, GPT-3.5-turbo</li>
-                      <li>• <strong>Anthropic</strong>: Claude 3.5 Sonnet, Opus, Haiku</li>
-                      <li>• <strong>Google AI</strong>: Gemini 1.5 Pro/Flash</li>
-                      <li>• <strong>Groq</strong>: Llama 3.1 70B/8B, Mixtral</li>
-                    </ul>
-                  </div>
-                  <div className="bg-gray-50 p-3 rounded">
-                    <strong className="text-gray-900">Specialized Providers:</strong>
-                    <ul className="mt-1 space-y-1">
-                      <li>• <strong>Perplexity</strong>: Web-search enabled models</li>
-                      <li>• <strong>Together AI</strong>: Llama 3.1 405B, Qwen2.5</li>
-                      <li>• <strong>Cohere</strong>: Command R+</li>
-                      <li>• <strong>16+ more providers</strong></li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-              <li>Configure custom endpoints, budgets, and rate limits per provider</li>
-              <li><strong>Sign in to authenticate</strong> - this enables user_keys mode for full model access</li>
-            </ol>
-
-            <h4>Option B: MCP Tokens (Legacy - Limited)</h4>
-            <ol className="list-decimal list-inside space-y-2">
-              <li>Visit <a href="/dashboard/mcp-tools" className="text-blue-600 hover:underline">Dashboard → MCP Tools</a></li>
-              <li>Generate an MCP access token</li>
-              <li>Use the token in your tool calls with <code>mode: "managed"</code></li>
-            </ol>
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 my-4">
-              <p className="text-amber-800 text-sm">⚠️ <strong>Token mode limitations:</strong> Only includes basic models (GPT-4, Claude 3 Sonnet, Gemini Pro) with shared rate limits. Use your own API keys for full access to 20+ providers.</p>
+            <h3>Step 2: Configure Your Authentication</h3>
+            <p>Set up your authentication using the configuration wizard:</p>
+            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`polydev-perspectives --config`}</code></pre>
+            
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 my-6">
+              <h4 className="font-semibold text-blue-900 mb-3">🔐 Authentication Options</h4>
+              
+              <div className="mb-4">
+                <h5 className="font-medium text-blue-800 mb-2">Option A: Your Own API Keys (Recommended)</h5>
+                <ol className="list-decimal list-inside space-y-2 text-blue-700 text-sm ml-4">
+                  <li>Create account at <a href="/auth" className="underline font-medium">polydev.ai/auth</a></li>
+                  <li>Add API keys via <a href="/dashboard/api-keys" className="underline font-medium">Dashboard → API Keys</a></li>
+                  <li>Sign in during configuration to enable user_keys mode</li>
+                  <li>Get access to 20+ providers with your own rate limits</li>
+                </ol>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-blue-800 mb-2">Option B: MCP Token (Limited)</h5>
+                <ol className="list-decimal list-inside space-y-2 text-blue-700 text-sm ml-4">
+                  <li>Generate token at <a href="/dashboard/mcp-tools" className="underline font-medium">Dashboard → MCP Tools</a></li>
+                  <li>Enter token during configuration</li>
+                  <li>⚠️ Limited to basic models with shared rate limits</li>
+                </ol>
+              </div>
             </div>
 
-            <h3>Step 2: Add to Your MCP Configuration</h3>
-            <p>Configure your MCP client to connect to Polydev Perspectives:</p>
+            <h3>Step 3: Add to Your MCP Client</h3>
+            <p>Configure your MCP client to use the installed server:</p>
 
-            <h4>Claude Desktop</h4>
-            <p>Edit <code>~/.config/claude/claude_desktop_config.json</code> (macOS) or <code>%APPDATA%/Claude/claude_desktop_config.json</code> (Windows):</p>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
+                <h4 className="font-semibold text-gray-900 mb-3">🖥️ Claude Desktop</h4>
+                <p className="text-sm text-gray-600 mb-3">Edit your configuration file:</p>
+                <code className="text-xs text-gray-500 block mb-2">~/.config/claude/claude_desktop_config.json</code>
+                <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
   "mcpServers": {
     "polydev-perspectives": {
-      "command": "node",
-      "args": ["/path/to/polydev/mcp/server.js"],
-      "env": {
-        "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
-      }
+      "command": "polydev-perspectives"
     }
   }
 }`}</code></pre>
+              </div>
 
-            <h4>Continue.dev</h4>
-            <p>Add to <code>.continue/config.json</code>:</p>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+              <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
+                <h4 className="font-semibold text-gray-900 mb-3">🔄 Continue.dev</h4>
+                <p className="text-sm text-gray-600 mb-3">Add to your config:</p>
+                <code className="text-xs text-gray-500 block mb-2">.continue/config.json</code>
+                <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
   "mcpServers": {
     "polydev-perspectives": {
-      "command": "node",
-      "args": ["/path/to/polydev/mcp/server.js"],
-      "env": {
-        "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
-      }
+      "command": "polydev-perspectives"
     }
   }
 }`}</code></pre>
+              </div>
 
-            <h4>Cursor</h4>
-            <p>Add to your Cursor settings → MCP servers:</p>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+              <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
+                <h4 className="font-semibold text-gray-900 mb-3">🎯 Cursor</h4>
+                <p className="text-sm text-gray-600 mb-3">Configure MCP servers:</p>
+                <code className="text-xs text-gray-500 block mb-2">Settings → MCP servers</code>
+                <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
   "mcp": {
     "servers": {
       "polydev-perspectives": {
-        "command": "node",
-        "args": ["/path/to/polydev/mcp/server.js"],
-        "env": {
-          "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
-        }
+        "command": "polydev-perspectives"
       }
     }
   }
 }`}</code></pre>
+              </div>
 
-            <h4>Cline (VS Code Extension)</h4>
-            <p>Configure MCP servers in Cline extension settings with similar configuration.</p>
+              <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
+                <h4 className="font-semibold text-gray-900 mb-3">🛠️ Cline (VSCode)</h4>
+                <p className="text-sm text-gray-600 mb-3">Extension settings:</p>
+                <code className="text-xs text-gray-500 block mb-2">MCP Server Configuration</code>
+                <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+  "command": "polydev-perspectives"
+}`}</code></pre>
+              </div>
+            </div>
 
-            <h3>Step 3: Test the Integration</h3>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+              <h4 className="font-semibold text-green-900 mb-2">💡 Pro Tip</h4>
+              <p className="text-green-800 text-sm">The global installation approach means no path configuration needed! The <code>polydev-perspectives</code> command is available system-wide after installation.</p>
+            </div>
+
+            <h3>Step 4: Test the Integration</h3>
             <p>Restart your MCP client and test the <code>get_perspectives</code> tool:</p>
             
             <h4>With Your Own API Keys (Recommended):</h4>
@@ -638,51 +637,78 @@ server.registerResource({
       case 'multi-llm':
         return (
           <div className="prose max-w-none">
-            <h1>Multi-LLM Integration</h1>
+            <h1>Multi-LLM Provider Support</h1>
 
-            <h2 id="supported-models">Supported Models</h2>
-            <p>Polydev AI supports all major language model providers:</p>
+            <h2 id="supported-providers">20+ Provider Ecosystem</h2>
+            <p>Polydev Perspectives supports an extensive ecosystem of LLM providers. Use your own API keys for direct access to any combination of models:</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose">
-              <div className="bg-white border rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">OpenAI</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 not-prose mb-6">
+              <div className="bg-white border rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">🏆 OpenAI</h3>
                 <ul className="text-sm text-gray-600 space-y-1">
                   <li>• GPT-4o</li>
                   <li>• GPT-4 Turbo</li>
+                  <li>• GPT-4</li>
                   <li>• GPT-3.5 Turbo</li>
-                  <li>• DALL-E 3</li>
+                  <li>• o1-preview</li>
+                  <li>• o1-mini</li>
                 </ul>
               </div>
               
-              <div className="bg-white border rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Anthropic</h3>
+              <div className="bg-white border rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">🧠 Anthropic</h3>
                 <ul className="text-sm text-gray-600 space-y-1">
                   <li>• Claude 3.5 Sonnet</li>
                   <li>• Claude 3 Opus</li>
                   <li>• Claude 3 Haiku</li>
-                  <li>• Claude Instant</li>
+                  <li>• Claude 3.5 Haiku</li>
                 </ul>
               </div>
               
-              <div className="bg-white border rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Google AI</h3>
+              <div className="bg-white border rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">🌟 Google AI</h3>
                 <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Gemini 1.5 Pro</li>
+                  <li>• Gemini 1.5 Flash</li>
                   <li>• Gemini Pro</li>
-                  <li>• Gemini Ultra</li>
-                  <li>• PaLM 2</li>
-                  <li>• Bard</li>
+                  <li>• Gemini Flash</li>
                 </ul>
               </div>
               
-              <div className="bg-white border rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Meta</h3>
+              <div className="bg-white border rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">⚡ Groq</h3>
                 <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Llama 3.1 70B</li>
-                  <li>• Llama 3.1 8B</li>
-                  <li>• Code Llama</li>
-                  <li>• Llama Guard</li>
+                  <li>• Llama 3.1 70B Versatile</li>
+                  <li>• Llama 3.1 8B Instant</li>
+                  <li>• Mixtral 8x7B</li>
+                  <li>• Gemma 2 9B</li>
                 </ul>
               </div>
+              
+              <div className="bg-white border rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">🔍 Perplexity</h3>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Sonar Large 128k Online</li>
+                  <li>• Sonar Small 128k Online</li>
+                  <li>• Llama 3.1 Sonar Large</li>
+                  <li>• Llama 3.1 Sonar Small</li>
+                </ul>
+              </div>
+              
+              <div className="bg-white border rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">🤝 Together AI</h3>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Llama 3.1 405B</li>
+                  <li>• Llama 3.1 70B</li>
+                  <li>• Qwen 2.5 72B</li>
+                  <li>• DeepSeek Coder</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <h4 className="font-semibold text-blue-900 mb-2">💡 16+ More Providers Supported</h4>
+              <p className="text-blue-800 text-sm">Including Cohere, Mistral, Replicate, Hugging Face, Azure OpenAI, AWS Bedrock, Vertex AI, and more. Add any provider's API key in your dashboard.</p>
             </div>
 
             <h2 id="model-orchestration">Model Orchestration</h2>
@@ -778,29 +804,32 @@ const cacheConfig = {
 
 // Response caching reduces costs by ~60%`}</code></pre>
 
-            <h3>Model Selection</h3>
-            <pre><code>{`// Cost-aware model selection
-const costOptimization = {
-  budget_daily: 100.00,
-  prefer_cheaper: true,
-  quality_threshold: 0.8,
-  escalation_rules: [
-    {
-      trigger: 'daily_cost > budget_daily * 0.8',
-      action: 'switch_to_cheaper_model'
-    }
-  ]
-}`}</code></pre>
+            <h3>Smart Usage Tips</h3>
+            <div className="space-y-3">
+              <div className="bg-white border border-gray-200 rounded-lg p-3">
+                <p className="text-sm"><strong>💡 Start Small:</strong> Begin with 2-3 providers (OpenAI + Anthropic + Groq) to see what works best for your use cases.</p>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-lg p-3">
+                <p className="text-sm"><strong>⚡ Speed vs Cost:</strong> Use Groq for fast iterations, premium models (GPT-4, Claude Opus) for critical decisions.</p>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-lg p-3">
+                <p className="text-sm"><strong>📊 Track Usage:</strong> Monitor your dashboard to understand which models provide the best value for your specific workflows.</p>
+              </div>
+            </div>
           </div>
         )
 
       case 'api-reference':
         return (
           <div className="prose max-w-none">
-            <h1>API Reference</h1>
+            <h1>MCP Tool Reference</h1>
+            <p>Polydev Perspectives provides a single powerful MCP tool for getting multiple AI perspectives. Here's the complete tool specification:</p>
 
-            <h2 id="rest-api">REST API</h2>
-            <p>The Polydev AI REST API provides HTTP endpoints for all platform features.</p>
+            <h2 id="get-perspectives-tool">get_perspectives Tool</h2>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">🎯 Core Purpose</h3>
+              <p className="text-blue-800">Fan out a single prompt to multiple LLM providers simultaneously and get back diverse perspectives. Perfect for breaking through agent roadblocks and decision paralysis.</p>
+            </div>
 
             <h3>Base URL</h3>
             <pre><code>https://api.polydev.ai/v1</code></pre>
