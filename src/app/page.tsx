@@ -6,40 +6,40 @@ import Link from 'next/link'
 
 const features = [
   {
+    icon: '🔌',
+    title: 'One Key, Many Models',
+    description: 'Single Polydev API key (managed credits) or link your own provider keys across all MCP clients',
+    highlight: 'Universal bridge'
+  },
+  {
+    icon: '🏠',
+    title: 'No Creds? No Problem',
+    description: 'Trigger your local CLIs (Claude/Gemini) and collect answers—no provider API keys needed',
+    highlight: 'Local CLI support'
+  },
+  {
     icon: '🧠',
-    title: 'Multi-Model Perspectives',
-    description: 'When agents get stuck, get diverse perspectives from 22+ AI models simultaneously',
-    highlight: 'GPT-4, Claude, Gemini, Groq+'
-  },
-  {
-    icon: '🔗',
-    title: 'MCP Native',
-    description: 'Purpose-built MCP server for Model Context Protocol agent frameworks',
-    highlight: 'Claude Code, Cursor, Codex'
-  },
-  {
-    icon: '⚡',
-    title: 'Agent Breakthrough',
-    description: 'Help agents overcome roadblocks with collective AI intelligence',
-    highlight: 'Parallel processing'
-  },
-  {
-    icon: '🔑',
-    title: 'Comprehensive Keys',
-    description: 'Support for 22+ providers with custom endpoints and budget controls',
-    highlight: 'All major providers'
+    title: 'Context-Aware (Optional)',
+    description: 'Include recent conversation and top-K project snippets for better perspectives',
+    highlight: 'Smart context'
   },
   {
     icon: '🎯',
-    title: 'Context-Aware',
-    description: 'TF-IDF project memory for contextual debugging assistance',
-    highlight: 'Smart context selection'
+    title: 'Agent-First',
+    description: 'We don\'t judge or merge; your agent decides what to do with N raw perspectives',
+    highlight: 'Raw responses'
   },
   {
-    icon: '📊',
-    title: 'Agent Analytics',
-    description: 'Track which perspectives help agents most effectively',
-    highlight: 'Success metrics'
+    icon: '💰',
+    title: 'Predictable Costs',
+    description: 'Freemium, then pay by messages (per model reply). Transparent pricing.',
+    highlight: 'Message-based'
+  },
+  {
+    icon: '🔗',
+    title: 'Universal MCP',
+    description: 'Plugs into any MCP client the same way you add other MCP servers',
+    highlight: 'Open protocol'
   }
 ]
 
@@ -48,27 +48,27 @@ const testimonials = [
     name: 'Alex Chen',
     role: 'AI Agent Developer',
     avatar: 'AC',
-    quote: 'My Claude Code agent was stuck on a complex React issue. Polydev gave it 3 different expert perspectives and it immediately found the solution.'
+    quote: 'Added Polydev MCP server once to Claude Desktop. Now every agent can get second opinions from multiple models with one tool call.'
   },
   {
     name: 'Marcus Rivera',
     role: 'Senior Engineer',
     avatar: 'MR',
-    quote: 'Our Cursor agents are 3x more effective now. When they hit roadblocks, Polydev\'s multi-model bridge gets them unstuck instantly.'
+    quote: 'Polydev bridges the gap perfectly. Same get_perspectives tool works in Cursor, Continue, and Cline—one key, all clients.'
   },
   {
     name: 'Sam Thompson',
     role: 'DevOps Engineer',
     avatar: 'ST',
-    quote: 'Perfect for agentic workflows. My agents call Polydev whenever they need diverse AI perspectives to solve complex problems.'
+    quote: 'Game changer for our team. Agents stay in control but get N raw perspectives to choose from. No hidden judging or merging.'
   }
 ]
 
 const stats = [
-  { value: '10M+', label: 'Agent Queries Resolved' },
-  { value: '500+', label: 'Connected Clients' },
+  { value: '100K+', label: 'Perspectives Generated' },
+  { value: '500+', label: 'MCP Clients Connected' },
   { value: '22+', label: 'AI Providers Supported' },
-  { value: '< 2s', label: 'Multi-Model Response Time' }
+  { value: '< 2s', label: 'Bridge Response Time' }
 ]
 
 export default function Home() {
@@ -76,7 +76,7 @@ export default function Home() {
   const [typedText, setTypedText] = useState('')
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   
-  const words = ['AI agents', 'agentic workflows', 'Claude Code', 'Cursor AI', 'agent developers']
+  const words = ['Claude Desktop', 'Cursor', 'Continue', 'Cline', 'Gemini CLI', 'your MCP client']
   
   useEffect(() => {
     const word = words[currentWordIndex]
@@ -114,25 +114,28 @@ export default function Home() {
           <div className="text-center">
             <div className="inline-flex items-center bg-blue-100/60 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-blue-200/60 dark:border-blue-700/60">
               <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
-              Ship faster with Multiple AI
+              Model Context Protocol (MCP) Server
             </div>
             
             <h1 className="text-6xl md:text-8xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
-              Never get{' '}
+              Bring second opinions to{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600">
-                stuck
+                every agent
               </span>{' '}
-              again
+              — with one key
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
-              The open-source MCP server that gives AI agents breakthrough perspectives. 
-              When stuck, get diverse solutions from{' '}
+              Polydev is an MCP server (bridge) that takes your current task, fans out to multiple LLMs in parallel, and returns N raw perspectives back to{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-medium">
                 {typedText}
                 <span className="animate-pulse">|</span>
               </span>
             </p>
+            
+            <div className="mb-12 text-lg text-slate-500 dark:text-slate-400">
+              <span className="font-medium">Add Polydev once; carry it everywhere.</span>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
               {isAuthenticated ? (
@@ -230,40 +233,71 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Integration Preview */}
+          {/* MCP Clients Section */}
           <div className="mt-24 bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 md:p-12">
             <div className="text-center mb-12">
               <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                One MCP server, endless possibilities
+                Works with all major MCP clients
               </h3>
-              <p className="text-lg text-slate-600 dark:text-slate-400">
-                Integrate with any MCP-compatible client in minutes
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
+                One setup. Universal compatibility. Bring Polydev to any MCP-enabled environment.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🤖</span>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+              <div className="group text-center">
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+                  <span className="text-2xl font-bold text-orange-600">C</span>
                 </div>
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Claude Code</h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Desktop AI assistant</p>
+                <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Claude Desktop</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">MCP native</p>
               </div>
               
-              <div className="text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">⚡</span>
+              <div className="group text-center">
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+                  <span className="text-2xl">🖱️</span>
                 </div>
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Cursor AI</h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Code editor agent</p>
+                <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Cursor</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">AI Code Editor</p>
               </div>
               
-              <div className="text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-4">
+              <div className="group text-center">
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+                  <span className="text-2xl font-bold text-blue-600">→</span>
+                </div>
+                <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Continue</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">VS Code extension</p>
+              </div>
+              
+              <div className="group text-center">
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+                  <span className="text-2xl font-bold text-green-600">C</span>
+                </div>
+                <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Cline</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">VS Code agent</p>
+              </div>
+              
+              <div className="group text-center">
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+                  <span className="text-2xl font-bold text-purple-600">G</span>
+                </div>
+                <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Gemini CLI</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Command line</p>
+              </div>
+              
+              <div className="group text-center">
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
                   <span className="text-2xl">🛠️</span>
                 </div>
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Your Agent</h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Custom MCP client</p>
+                <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Your Client</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Custom MCP</p>
+              </div>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <div className="inline-flex items-center text-sm text-slate-600 dark:text-slate-400 bg-white/50 dark:bg-slate-700/50 px-4 py-2 rounded-full">
+                <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                MCP protocol by Anthropic — open source, vendor neutral
               </div>
             </div>
           </div>
@@ -428,6 +462,370 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-32 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/20 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
+              Simple{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                message-based
+              </span>{' '}
+              pricing
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto font-light">
+              Pay only for what you use. No tokens to count. No complex calculations. Just messages.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Free Tier */}
+            <div className="relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Starter</h3>
+                <div className="mb-6">
+                  <span className="text-5xl font-bold text-slate-900 dark:text-white">$0</span>
+                  <span className="text-slate-600 dark:text-slate-400">/month</span>
+                </div>
+                <ul className="text-slate-600 dark:text-slate-400 space-y-4 mb-8">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    100 messages/month
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    3 models per query
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Basic models included
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    All MCP clients
+                  </li>
+                </ul>
+                <Link
+                  href="/auth"
+                  className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                >
+                  Get started free
+                </Link>
+              </div>
+            </div>
+
+            {/* Pro Tier */}
+            <div className="relative bg-white dark:bg-slate-800 border-2 border-blue-500 rounded-3xl p-8 shadow-2xl shadow-blue-500/20 transform scale-105">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-blue-500 text-white px-4 py-1.5 rounded-full text-sm font-medium">
+                  Most Popular
+                </span>
+              </div>
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Pro</h3>
+                <div className="mb-6">
+                  <span className="text-5xl font-bold text-slate-900 dark:text-white">$15</span>
+                  <span className="text-slate-600 dark:text-slate-400">/month</span>
+                </div>
+                <ul className="text-slate-600 dark:text-slate-400 space-y-4 mb-8">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    2,500 messages/month
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Up to 5 models per query
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Premium models (GPT-4, Claude)
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    BYO API keys option
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Priority support
+                  </li>
+                </ul>
+                <Link
+                  href="/auth"
+                  className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-colors"
+                >
+                  Start Pro trial
+                </Link>
+              </div>
+            </div>
+
+            {/* Enterprise Tier */}
+            <div className="relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Enterprise</h3>
+                <div className="mb-6">
+                  <span className="text-3xl font-bold text-slate-900 dark:text-white">Custom</span>
+                </div>
+                <ul className="text-slate-600 dark:text-slate-400 space-y-4 mb-8">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Unlimited messages
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Custom model routing
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Private deployments
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Dedicated support
+                  </li>
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    SLA guarantees
+                  </li>
+                </ul>
+                <Link
+                  href="/contact"
+                  className="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                >
+                  Contact sales
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-16">
+            <p className="text-slate-600 dark:text-slate-400 mb-4">
+              All plans include access to all supported MCP clients and basic models.
+            </p>
+            <p className="text-sm text-slate-500 dark:text-slate-500">
+              Messages counted per model response. Query with 3 models = 3 messages consumed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Developer Documentation Section */}
+      <section className="py-32 bg-white dark:bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
+              Built for{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                developers
+              </span>
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto font-light">
+              Simple MCP tool schema. Clean JSON responses. Comprehensive documentation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            {/* Tool Schema */}
+            <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">MCP Tool Schema</h3>
+              <div className="bg-slate-900 dark:bg-slate-950 rounded-xl overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 bg-slate-800 dark:bg-slate-900 border-b border-slate-700">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  <span className="text-xs text-slate-400">get_perspectives</span>
+                </div>
+                <pre className="p-6 text-sm text-slate-300 font-mono leading-relaxed overflow-x-auto">
+{`{
+  "name": "get_perspectives",
+  "description": "Get diverse perspectives from multiple LLMs",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "Problem description or question"
+      },
+      "models": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Models to query (optional)"
+      },
+      "user_token": {
+        "type": "string", 
+        "description": "Polydev auth token"
+      }
+    },
+    "required": ["prompt", "user_token"]
+  }
+}`}
+                </pre>
+              </div>
+            </div>
+
+            {/* Response Format */}
+            <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Response Format</h3>
+              <div className="bg-slate-900 dark:bg-slate-950 rounded-xl overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 bg-slate-800 dark:bg-slate-900 border-b border-slate-700">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  <span className="text-xs text-slate-400">JSON response</span>
+                </div>
+                <pre className="p-6 text-sm text-slate-300 font-mono leading-relaxed overflow-x-auto">
+{`{
+  "perspectives": [
+    {
+      "model": "gpt-4",
+      "response": "Your React component is likely...",
+      "tokens": 156,
+      "latency": 1200
+    },
+    {
+      "model": "claude-3-sonnet", 
+      "response": "The performance issue stems from...",
+      "tokens": 189,
+      "latency": 980
+    }
+  ],
+  "total_latency": 1247,
+  "total_tokens": 345,
+  "cost": 0.023
+}`}
+                </pre>
+              </div>
+            </div>
+
+            {/* Quick Start Examples */}
+            <div className="lg:col-span-2">
+              <div className="bg-gradient-to-br from-blue-50 to-purple-50/30 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
+                  Quick Start Examples
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Claude Desktop */}
+                  <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+                    <div className="flex items-center mb-4">
+                      <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mr-3">
+                        <span className="text-orange-600 font-bold text-sm">C</span>
+                      </div>
+                      <h4 className="font-semibold text-slate-900 dark:text-white">Claude Desktop</h4>
+                    </div>
+                    <div className="bg-slate-900 rounded-lg p-4 text-sm">
+                      <div className="text-slate-400 text-xs mb-2">config.json</div>
+                      <pre className="text-slate-300 font-mono text-xs overflow-x-auto">
+{`{
+  "mcpServers": {
+    "polydev": {
+      "command": "node",
+      "args": ["path/to/polydev-server.js"],
+      "env": {
+        "POLYDEV_API_URL": "https://polydev.ai/api"
+      }
+    }
+  }
+}`}
+                      </pre>
+                    </div>
+                  </div>
+
+                  {/* Continue */}
+                  <div className="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+                    <div className="flex items-center mb-4">
+                      <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-3">
+                        <span className="text-blue-600 font-bold text-sm">→</span>
+                      </div>
+                      <h4 className="font-semibold text-slate-900 dark:text-white">Continue.dev</h4>
+                    </div>
+                    <div className="bg-slate-900 rounded-lg p-4 text-sm">
+                      <div className="text-slate-400 text-xs mb-2">.continue/config.json</div>
+                      <pre className="text-slate-300 font-mono text-xs overflow-x-auto">
+{`{
+  "experimental": {
+    "modelContextProtocol": true
+  },
+  "mcpServers": {
+    "polydev": {
+      "command": "node",
+      "args": ["./polydev-mcp-server.js"]
+    }
+  }
+}`}
+                      </pre>
+                    </div>
+                  </div>
+
+                  {/* Usage Example */}
+                  <div className="md:col-span-2 bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-4">Usage in Agent</h4>
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <div className="text-slate-400 text-xs mb-2">Tool Call Example</div>
+                      <pre className="text-slate-300 font-mono text-sm overflow-x-auto">
+{`// When your agent gets stuck:
+const result = await callTool({
+  name: "get_perspectives",
+  arguments: {
+    prompt: "React component re-renders excessively, can't find root cause",
+    user_token: "poly_your_token_here",
+    models: ["gpt-4", "claude-3-sonnet", "gemini-pro"]
+  }
+});
+
+// Process multiple perspectives
+const breakthrough = analyzeCommonPatterns(result.perspectives);
+return implementSolution(breakthrough);`}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center mt-8">
+                  <Link
+                    href="/docs"
+                    className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+                  >
+                    View full documentation →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
