@@ -29,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="antialiased">
+    <html lang="en" className="scroll-smooth">
+      <body className="antialiased font-sans text-slate-900 bg-white selection:bg-violet-100 selection:text-violet-900">
         <PostHogProvider>
           <Navigation />
           <main>

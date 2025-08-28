@@ -73,8 +73,10 @@ export default function Documentation() {
     switch (section) {
       case 'getting-started':
         return (
-          <div className="prose max-w-none">
-            <h1>Polydev Perspectives MCP Server</h1>
+          <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:text-3xl prose-h2:tracking-tight prose-h3:text-xl prose-h3:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-code:bg-slate-100 prose-code:text-violet-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-semibold">
+            <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600">
+              Polydev Perspectives MCP Server
+            </h1>
             
             <h2 id="introduction">Introduction</h2>
             <p>
@@ -529,7 +531,7 @@ tail -f ~/.config/claude/mcp_debug.log`}</code></pre>
 
       case 'mcp-protocol':
         return (
-          <div className="prose max-w-none">
+          <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:text-3xl prose-h2:tracking-tight prose-h3:text-xl prose-h3:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-code:bg-slate-100 prose-code:text-violet-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-semibold">
             <h1>Model Context Protocol (MCP)</h1>
             
             <h2 id="mcp-overview">MCP Overview</h2>
@@ -636,7 +638,7 @@ server.registerResource({
 
       case 'multi-llm':
         return (
-          <div className="prose max-w-none">
+          <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:text-3xl prose-h2:tracking-tight prose-h3:text-xl prose-h3:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-code:bg-slate-100 prose-code:text-violet-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-semibold">
             <h1>Multi-LLM Provider Support</h1>
 
             <h2 id="supported-providers">20+ Provider Ecosystem</h2>
@@ -821,7 +823,7 @@ const cacheConfig = {
 
       case 'api-reference':
         return (
-          <div className="prose max-w-none">
+          <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:text-3xl prose-h2:tracking-tight prose-h3:text-xl prose-h3:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-code:bg-slate-100 prose-code:text-violet-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-semibold">
             <h1>MCP Tool Reference</h1>
             <p>Polydev Perspectives provides a single powerful MCP tool for getting multiple AI perspectives. Here's the complete tool specification:</p>
 
@@ -1018,212 +1020,311 @@ func main() {
 
       case 'integrations':
         return (
-          <div className="prose max-w-none">
-            <h1>Integrations</h1>
+          <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:text-3xl prose-h2:tracking-tight prose-h3:text-xl prose-h3:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-code:bg-slate-100 prose-code:text-violet-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-semibold">
+            <h1>MCP Client Integrations</h1>
+            <p>Polydev Perspectives works with any MCP-compatible client. Here are the most popular integrations:</p>
 
-            <h2 id="github">GitHub Integration</h2>
-            <p>Connect your GitHub repositories for code analysis, issue management, and automated workflows.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose mb-8">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3">
+                    C
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900">Claude Desktop</h3>
+                    <p className="text-sm text-gray-600">Anthropic's official desktop app</p>
+                  </div>
+                </div>
+                <p className="text-gray-700 text-sm mb-4">Most popular MCP client with built-in perspectives support. Perfect for interactive AI conversations with multiple model insights.</p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Desktop App</span>
+                  <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Official</span>
+                  <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Easy Setup</span>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-6">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3">
+                    →
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900">Continue.dev</h3>
+                    <p className="text-sm text-gray-600">VSCode AI coding assistant</p>
+                  </div>
+                </div>
+                <p className="text-gray-700 text-sm mb-4">Integrate perspectives directly into your coding workflow. Get multiple AI viewpoints on code reviews, debugging, and architecture decisions.</p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">VSCode Extension</span>
+                  <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Coding Focus</span>
+                  <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Open Source</span>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3">
+                    ⚡
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900">Cursor</h3>
+                    <p className="text-sm text-gray-600">AI-first code editor</p>
+                  </div>
+                </div>
+                <p className="text-gray-700 text-sm mb-4">Transform Cursor into a multi-AI powerhouse. Get diverse perspectives on complex coding challenges without switching contexts.</p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">AI Editor</span>
+                  <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Built-in AI</span>
+                  <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Modern</span>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-xl p-6">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3">
+                    🤖
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900">Cline (VSCode)</h3>
+                    <p className="text-sm text-gray-600">Autonomous coding agent</p>
+                  </div>
+                </div>
+                <p className="text-gray-700 text-sm mb-4">Give Cline access to multiple AI perspectives when it gets stuck. Perfect for complex autonomous coding tasks requiring diverse approaches.</p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">VSCode Extension</span>
+                  <span className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Autonomous</span>
+                  <span className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Agent</span>
+                </div>
+              </div>
+            </div>
 
-            <h3>Setup</h3>
-            <pre><code>{`# Install GitHub MCP server
-polydev mcp install github
-
-# Configure authentication
-polydev mcp configure github \\
-  --token YOUR_GITHUB_TOKEN \\
-  --repositories "owner/repo1,owner/repo2"`}</code></pre>
-
-            <h3>Available Tools</h3>
-            <ul>
-              <li><strong>Repository Management</strong>: List, create, update repositories</li>
-              <li><strong>Issue Tracking</strong>: Create, update, search issues and PRs</li>
-              <li><strong>Code Analysis</strong>: Read files, analyze code structure</li>
-              <li><strong>Commit History</strong>: Access commit logs and diffs</li>
-              <li><strong>Branch Operations</strong>: Create, merge, delete branches</li>
-            </ul>
-
-            <h3>Example Usage</h3>
-            <pre><code>{`// Analyze repository structure
-const analysis = await polydev.tools.github.analyzeRepository({
-  owner: 'polydev-ai',
-  repo: 'platform'
-})
-
-// Create issue from AI conversation
-const issue = await polydev.tools.github.createIssue({
-  owner: 'polydev-ai',
-  repo: 'platform',
-  title: 'Bug: API rate limiting',
-  body: 'Discovered during AI analysis...',
-  labels: ['bug', 'api']
-})`}</code></pre>
-
-            <h2 id="supabase">Supabase Integration</h2>
-            <p>Database operations, authentication, and real-time subscriptions.</p>
-
-            <h3>Configuration</h3>
-            <pre><code>{`# Install Supabase MCP server
-polydev mcp install supabase
-
-# Configure connection
-polydev mcp configure supabase \\
-  --url YOUR_SUPABASE_URL \\
-  --key YOUR_SUPABASE_ANON_KEY \\
-  --service-key YOUR_SERVICE_ROLE_KEY`}</code></pre>
-
-            <h3>Database Operations</h3>
-            <pre><code>{`// Query data
-const users = await polydev.tools.supabase.select({
-  table: 'users',
-  columns: ['id', 'email', 'created_at'],
-  filters: { active: true }
-})
-
-// Insert data
-const newUser = await polydev.tools.supabase.insert({
-  table: 'users',
-  data: {
-    email: 'user@example.com',
-    active: true
-  }
-})
-
-// Real-time subscription
-const subscription = polydev.tools.supabase.subscribe({
-  table: 'messages',
-  event: 'INSERT',
-  callback: (payload) => {
-    console.log('New message:', payload.new)
-  }
-})`}</code></pre>
-
-            <h3>Authentication</h3>
-            <pre><code>{`// Sign up user
-const { user, error } = await polydev.tools.supabase.auth.signUp({
-  email: 'user@example.com',
-  password: 'secure-password'
-})
-
-// Sign in with OAuth
-const { user, session } = await polydev.tools.supabase.auth.signInWithOAuth({
-  provider: 'github'
-})`}</code></pre>
-
-            <h2 id="vercel">Vercel Integration</h2>
-            <p>Deployment management and serverless function orchestration.</p>
-
-            <h3>Setup</h3>
-            <pre><code>{`# Install Vercel MCP server  
-polydev mcp install vercel
-
-# Configure with your team
-polydev mcp configure vercel \\
-  --token YOUR_VERCEL_TOKEN \\
-  --team YOUR_TEAM_ID`}</code></pre>
-
-            <h3>Deployment Management</h3>
-            <pre><code>{`// List deployments
-const deployments = await polydev.tools.vercel.getDeployments({
-  projectId: 'prj_your-project-id'
-})
-
-// Create deployment
-const deployment = await polydev.tools.vercel.createDeployment({
-  name: 'my-app',
-  files: [
-    { file: 'index.js', data: 'console.log("Hello World")' }
-  ],
-  projectSettings: {
-    framework: 'nextjs'
-  }
-})
-
-// Get deployment logs
-const logs = await polydev.tools.vercel.getDeploymentLogs({
-  deploymentId: deployment.id
-})`}</code></pre>
-
-            <h3>Domain Management</h3>
-            <pre><code>{`// Add custom domain
-const domain = await polydev.tools.vercel.addDomain({
-  name: 'myapp.com',
-  projectId: 'prj_your-project-id'
-})
-
-// Configure DNS records
-const dnsRecord = await polydev.tools.vercel.createDNSRecord({
-  domain: 'myapp.com',
-  type: 'CNAME',
-  name: 'api',
-  value: 'api-server.herokuapp.com'
-})`}</code></pre>
-
-            <h2 id="custom-integrations">Custom Integrations</h2>
-            <p>Build your own MCP server for custom tools and APIs.</p>
-
-            <h3>Server Template</h3>
-            <pre><code>{`import { MCPServer, Tool, Resource } from '@polydev/mcp-sdk'
-
-class CustomServer extends MCPServer {
-  constructor() {
-    super({
-      name: 'custom-integration',
-      version: '1.0.0',
-      description: 'My custom MCP server'
-    })
-  }
-
-  async initialize() {
-    // Register tools
-    this.registerTool(new CustomTool())
-    
-    // Register resources
-    this.registerResource(new CustomResource())
-    
-    // Start server
-    await this.start()
-  }
-}
-
-class CustomTool extends Tool {
-  constructor() {
-    super({
-      name: 'custom_action',
-      description: 'Performs a custom action',
-      schema: {
-        type: 'object',
-        properties: {
-          input: { type: 'string' }
-        },
-        required: ['input']
-      }
-    })
-  }
-
-  async execute(params) {
-    // Custom implementation
-    return { result: \`Processed: \${params.input}\` }
+            <h2 id="quick-setup">Quick Setup Guide</h2>
+            <p>All MCP clients follow the same setup pattern after installing Polydev Perspectives:</p>
+            
+            <div className="bg-gray-50 border rounded-lg p-4 mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">1. Install Globally</h3>
+              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-sm overflow-x-auto"><code>npm install -g @polydev/perspectives-mcp</code></pre>
+            </div>
+            
+            <div className="bg-gray-50 border rounded-lg p-4 mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">2. Configure Authentication</h3>
+              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-sm overflow-x-auto"><code>polydev-perspectives --config</code></pre>
+            </div>
+            
+            <div className="bg-gray-50 border rounded-lg p-4 mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">3. Add to MCP Client Config</h3>
+              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-sm overflow-x-auto"><code>{`{
+  "servers": {
+    "polydev-perspectives": {
+      "command": "polydev-perspectives"
+    }
   }
 }`}</code></pre>
+            </div>
+            
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <h4 className="font-semibold text-green-900 mb-2">🎉 That's It!</h4>
+              <p className="text-green-800 text-sm">The <code>get_perspectives</code> tool is now available in your MCP client. Test it with any question or problem that needs multiple AI viewpoints.</p>
+            </div>
 
-            <h3>Publishing Your Server</h3>
-            <pre><code>{`# Package your server
-npm pack
-
-# Publish to MCP registry
-polydev mcp publish ./my-server.tgz
-
-# Install from registry
-polydev mcp install my-custom-server`}</code></pre>
-
-            <h3>Best Practices</h3>
-            <ul>
-              <li><strong>Error Handling</strong>: Implement comprehensive error handling</li>
-              <li><strong>Logging</strong>: Add detailed logging for debugging</li>
-              <li><strong>Testing</strong>: Write unit and integration tests</li>
-              <li><strong>Documentation</strong>: Provide clear API documentation</li>
-              <li><strong>Security</strong>: Validate inputs and secure credentials</li>
+            <h2 id="universal-compatibility">Universal MCP Compatibility</h2>
+            <p>Since Polydev Perspectives follows the standard MCP protocol, it works with any MCP-compatible client:</p>
+            
+            <ul className="space-y-2">
+              <li>✅ <strong>Current MCP Clients:</strong> Claude Desktop, Continue.dev, Cursor, Cline</li>
+              <li>✅ <strong>Future MCP Clients:</strong> Any new client that implements MCP protocol</li>
+              <li>✅ <strong>Custom Clients:</strong> Your own MCP client implementations</li>
+              <li>✅ <strong>Agent Frameworks:</strong> LangChain, AutoGen, CrewAI with MCP support</li>
             </ul>
+            
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+              <h4 className="font-semibold text-blue-900 mb-2">💡 Why MCP?</h4>
+              <p className="text-blue-800 text-sm">MCP (Model Context Protocol) is Anthropic's open standard for AI assistant integrations. By building on MCP, Polydev Perspectives works everywhere MCP does - now and in the future.</p>
+            </div>
+
+            <h2 id="quick-setup">Quick Setup Guide</h2>
+            <p className="text-lg text-gray-600 mb-6">Get started with Polydev Perspectives in any MCP-compatible client in under 5 minutes.</p>
+
+            <div className="bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 rounded-xl p-6 mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                <span className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">1</span>
+                Configure MCP Client
+              </h3>
+              <p className="text-gray-700 mb-4">Add Polydev Perspectives to your MCP client configuration:</p>
+              
+              <div className="bg-white rounded-lg p-4 border border-purple-200">
+                <h4 className="font-semibold text-gray-900 mb-2">Claude Desktop</h4>
+                <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`{
+  "mcpServers": {
+    "polydev-perspectives": {
+      "command": "npx",
+      "args": ["@polydev/mcp-server"],
+      "env": {
+        "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
+      }
+    }
+  }
+}`}</code></pre>
+              </div>
+
+              <div className="bg-white rounded-lg p-4 border border-purple-200 mt-4">
+                <h4 className="font-semibold text-gray-900 mb-2">Continue.dev</h4>
+                <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`// In your .continue/config.json
+{
+  "mcpServers": [
+    {
+      "name": "polydev-perspectives",
+      "command": "npx",
+      "args": ["@polydev/mcp-server"]
+    }
+  ]
+}`}</code></pre>
+              </div>
+
+              <div className="bg-white rounded-lg p-4 border border-purple-200 mt-4">
+                <h4 className="font-semibold text-gray-900 mb-2">Cursor / Cline</h4>
+                <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`# Add to MCP server configuration
+npm install -g @polydev/mcp-server
+# Then configure in your MCP settings`}</code></pre>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                <span className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">2</span>
+                Set Up API Keys
+              </h3>
+              <p className="text-gray-700 mb-4">Configure your LLM provider API keys for best results:</p>
+              
+              <div className="space-y-4">
+                <div className="flex items-center p-3 bg-white rounded-lg border border-green-200">
+                  <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-4">
+                    AI
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">Sign in to Polydev Dashboard</p>
+                    <p className="text-sm text-gray-600">Visit <a href="https://polydev.ai/dashboard/api-keys" className="text-blue-600 hover:underline">polydev.ai/dashboard/api-keys</a></p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center p-3 bg-white rounded-lg border border-green-200">
+                  <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-4">
+                    +
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">Add Your API Keys</p>
+                    <p className="text-sm text-gray-600">OpenAI, Anthropic, Google, Groq, and 16+ more providers</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center p-3 bg-white rounded-lg border border-green-200">
+                  <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-4">
+                    ⚡
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">Ready to Use</p>
+                    <p className="text-sm text-gray-600">Your MCP client can now call multiple LLMs through Polydev</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-xl p-6 mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                <span className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">3</span>
+                Start Using Perspectives
+              </h3>
+              <p className="text-gray-700 mb-4">Use the get_perspectives tool in your MCP client:</p>
+              
+              <div className="bg-white rounded-lg p-4 border border-blue-200">
+                <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`// In Claude Desktop, Continue.dev, or other MCP client:
+{
+  "tool": "get_perspectives",
+  "arguments": {
+    "prompt": "Help me debug this React performance issue...",
+    "models": ["gpt-4", "claude-3-sonnet", "gemini-pro"],
+    "mode": "user_keys"
+  }
+}`}</code></pre>
+              </div>
+              
+              <div className="mt-4 p-3 bg-blue-100 rounded-lg">
+                <p className="text-sm text-blue-800">💡 <strong>Pro tip:</strong> The tool automatically uses your configured API keys and returns perspectives from multiple LLMs in a single response.</p>
+              </div>
+            </div>
+
+            <h2 id="advanced-configuration">Advanced Configuration</h2>
+            <p className="text-lg text-gray-600 mb-6">Customize Polydev Perspectives for your specific workflow needs.</p>
+
+            <div className="space-y-6">
+              <div className="border border-gray-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Project Memory</h3>
+                <p className="text-gray-600 mb-4">Include relevant project context in your perspective requests:</p>
+                <pre className="bg-gray-50 rounded-lg p-4 text-sm overflow-x-auto"><code>{`{
+  "tool": "get_perspectives",
+  "arguments": {
+    "prompt": "How can I optimize this database query?",
+    "project_memory": "full",
+    "project_context": {
+      "root_path": "/workspace/myapp",
+      "includes": ["**/*.sql", "**/*.js"],
+      "excludes": ["node_modules/**", "dist/**"]
+    }
+  }
+}`}</code></pre>
+              </div>
+
+              <div className="border border-gray-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Model Selection</h3>
+                <p className="text-gray-600 mb-4">Choose specific models for specialized tasks:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="font-medium text-gray-900 mb-2">Code & Technical</h4>
+                    <ul className="text-sm text-gray-600 space-y-1">
+                      <li>• gpt-4</li>
+                      <li>• claude-3-sonnet</li>
+                      <li>• llama-3.1-70b-versatile</li>
+                    </ul>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="font-medium text-gray-900 mb-2">Creative & Research</h4>
+                    <ul className="text-sm text-gray-600 space-y-1">
+                      <li>• gemini-pro</li>
+                      <li>• claude-3-opus</li>
+                      <li>• llama-3.1-sonar-large-128k-online</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border border-gray-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Temperature Control</h3>
+                <p className="text-gray-600 mb-4">Fine-tune model creativity for different use cases:</p>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                    <div>
+                      <span className="font-medium text-blue-900">Technical / Debugging</span>
+                      <p className="text-sm text-blue-700">Precise, factual responses</p>
+                    </div>
+                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">0.1 - 0.3</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                    <div>
+                      <span className="font-medium text-green-900">Analysis / Planning</span>
+                      <p className="text-sm text-green-700">Balanced reasoning</p>
+                    </div>
+                    <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">0.4 - 0.6</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                    <div>
+                      <span className="font-medium text-purple-900">Creative / Brainstorming</span>
+                      <p className="text-sm text-purple-700">Diverse ideas and approaches</p>
+                    </div>
+                    <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">0.7 - 0.9</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )
 

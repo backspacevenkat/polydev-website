@@ -108,17 +108,17 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/20 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-violet-600/5 to-purple-600/8"></div>
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-32">
           <div className="text-center">
-            <div className="inline-flex items-center bg-blue-100/60 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-blue-200/60 dark:border-blue-700/60">
-              <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
+            <div className="inline-flex items-center bg-violet-100/80 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-violet-200/60 dark:border-violet-700/60">
+              <span className="w-2 h-2 bg-violet-500 rounded-full mr-2 animate-pulse"></span>
               Model Context Protocol (MCP) Server
             </div>
             
             <h1 className="text-6xl md:text-8xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600">
                 Never get stuck again
               </span>{' '}
               — bring perspectives to every agent
@@ -126,7 +126,7 @@ export default function Home() {
             
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
               When your AI agent hits a roadblock, Polydev fans out to GPT-4, Claude, Gemini, and more — delivering diverse perspectives instantly to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-medium">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600 font-medium">
                 {typedText}
                 <span className="animate-pulse">|</span>
               </span>
@@ -199,7 +199,7 @@ export default function Home() {
           <div className="text-center mb-24">
             <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">
               The MCP server that{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600">
                 never gives up
               </span>
             </h2>
@@ -224,7 +224,7 @@ export default function Home() {
                   <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                     {feature.description}
                   </p>
-                  <div className="inline-flex items-center text-sm font-medium text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 px-3 py-1.5 rounded-lg border border-blue-100 dark:border-blue-800/50">
+                  <div className="inline-flex items-center text-sm font-medium text-violet-700 dark:text-violet-300 bg-violet-50 dark:bg-violet-900/30 px-3 py-1.5 rounded-lg border border-violet-100 dark:border-violet-800/50">
                     {feature.highlight}
                   </div>
                 </div>
