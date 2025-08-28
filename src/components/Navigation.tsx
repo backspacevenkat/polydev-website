@@ -12,7 +12,7 @@ export default function Navigation() {
     { name: 'Home', href: '/' },
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Documentation', href: '/docs' },
-    { name: 'API Explorer', href: '/api' },
+    { name: 'API Explorer', href: '/explorer' },
     { name: 'Chat', href: '/chat' },
     { name: 'Features', href: '/features' },
     { name: 'Pricing', href: '/pricing' },
