@@ -9,7 +9,7 @@ export const redis = new Redis({
 // Cache utility functions
 export const cache = {
   // Store data with optional expiration (in seconds)
-  async set(key: string, value: any, ttl?: number) {
+  async set(key: string, value: unknown, ttl?: number) {
     if (ttl) {
       return await redis.setex(key, ttl, JSON.stringify(value))
     }
@@ -56,7 +56,7 @@ export const cache = {
 // Session management utilities
 export const sessions = {
   // Create/update session
-  async set(sessionId: string, data: any, ttl = 3600) { // 1 hour default
+  async set(sessionId: string, data: unknown, ttl = 3600) { // 1 hour default
     const key = `session:${sessionId}`
     return await cache.set(key, data, ttl)
   },
@@ -83,7 +83,7 @@ export const sessions = {
 // Query caching utilities
 export const queryCache = {
   // Cache query results
-  async set(queryHash: string, result: any, ttl = 300) { // 5 minutes default
+  async set(queryHash: string, result: unknown, ttl = 300) { // 5 minutes default
     const key = `query:${queryHash}`
     return await cache.set(key, result, ttl)
   },
@@ -123,7 +123,7 @@ export const rateLimiting = {
 // Usage analytics caching
 export const analytics = {
   // Cache user usage stats
-  async setUserStats(userId: string, stats: any, ttl = 600) { // 10 minutes
+  async setUserStats(userId: string, stats: unknown, ttl = 600) { // 10 minutes
     const key = `user_stats:${userId}`
     return await cache.set(key, stats, ttl)
   },

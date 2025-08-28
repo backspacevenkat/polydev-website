@@ -15,7 +15,7 @@ export function initPostHog() {
       opt_out_capturing_by_default: false,
       
       // Performance settings
-      loaded: (posthog) => {
+      loaded: () => {
         if (process.env.NODE_ENV === 'development') {
           console.log('PostHog loaded')
         }
@@ -34,14 +34,14 @@ export const analytics = {
   },
 
   // Track user events
-  track: (event: string, properties?: Record<string, any>) => {
+  track: (event: string, properties?: Record<string, unknown>) => {
     if (typeof window !== 'undefined') {
       posthog.capture(event, properties)
     }
   },
 
   // Identify users
-  identify: (userId: string, properties?: Record<string, any>) => {
+  identify: (userId: string, properties?: Record<string, unknown>) => {
     if (typeof window !== 'undefined') {
       posthog.identify(userId, properties)
     }
@@ -55,14 +55,14 @@ export const analytics = {
   },
 
   // Set user properties
-  setPersonProperties: (properties: Record<string, any>) => {
+  setPersonProperties: (properties: Record<string, unknown>) => {
     if (typeof window !== 'undefined') {
       posthog.setPersonProperties(properties)
     }
   },
 
   // Track sign up
-  signUp: (method?: string, properties?: Record<string, any>) => {
+  signUp: (method?: string, properties?: Record<string, unknown>) => {
     analytics.track('user_signed_up', {
       method,
       ...properties
@@ -70,7 +70,7 @@ export const analytics = {
   },
 
   // Track sign in
-  signIn: (method?: string, properties?: Record<string, any>) => {
+  signIn: (method?: string, properties?: Record<string, unknown>) => {
     analytics.track('user_signed_in', {
       method,
       ...properties
@@ -78,7 +78,7 @@ export const analytics = {
   },
 
   // Track query submission
-  querySubmitted: (model: string, provider: string, properties?: Record<string, any>) => {
+  querySubmitted: (model: string, provider: string, properties?: Record<string, unknown>) => {
     analytics.track('query_submitted', {
       model,
       provider,
@@ -113,7 +113,7 @@ export const analytics = {
   },
 
   // Track feature usage
-  featureUsed: (feature: string, properties?: Record<string, any>) => {
+  featureUsed: (feature: string, properties?: Record<string, unknown>) => {
     analytics.track('feature_used', {
       feature_name: feature,
       ...properties
@@ -121,7 +121,7 @@ export const analytics = {
   },
 
   // Track errors
-  error: (error: string, context?: Record<string, any>) => {
+  error: (error: string, context?: Record<string, unknown>) => {
     analytics.track('error_occurred', {
       error_message: error,
       ...context
@@ -129,7 +129,7 @@ export const analytics = {
   },
 
   // Track performance metrics
-  performance: (metric: string, value: number, properties?: Record<string, any>) => {
+  performance: (metric: string, value: number, properties?: Record<string, unknown>) => {
     analytics.track('performance_metric', {
       metric_name: metric,
       value,
