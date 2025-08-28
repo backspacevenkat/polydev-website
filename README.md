@@ -55,4 +55,4 @@ BETTERSTACK_LOGS_TOKEN=your_betterstack_token
 
 ## Health Check
 
-The application includes a health check endpoint at `/api/health` for monitoring purposes.
+The application includes a health check endpoint at `/api/health` for monitoring purposes.# Trigger deployment from new clean repository
