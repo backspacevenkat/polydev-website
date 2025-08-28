@@ -7,39 +7,45 @@ import Link from 'next/link'
 const features = [
   {
     icon: '🚫',
-    title: 'Never Get Stuck',
-    description: 'When your agent hits a wall, instantly get diverse perspectives from multiple AI models to break through',
-    highlight: 'Breakthrough guaranteed'
+    title: 'Break Through Roadblocks',
+    description: 'When your agent gets stuck on complex problems, instantly fan out to multiple AI models for diverse solution approaches',
+    highlight: 'Instant breakthrough',
+    gradient: 'from-red-500 to-orange-500'
   },
   {
     icon: '⚡',
-    title: 'Instant Perspectives',
-    description: 'Parallel queries to GPT-4, Claude, Gemini, and more — get N viewpoints in under 2 seconds',
-    highlight: 'Sub-2s response'
+    title: 'Lightning Fast Responses',
+    description: 'Parallel queries to GPT-4, Claude 3.5, Gemini Pro, and 20+ models return diverse perspectives in under 2 seconds',
+    highlight: 'Sub-2s parallel query',
+    gradient: 'from-yellow-500 to-orange-500'
   },
   {
     icon: '🔌',
-    title: 'Universal MCP Tool',
-    description: 'Single get_perspectives tool works across Claude Desktop, Cursor, Continue, Cline, and any MCP client',
-    highlight: 'One tool everywhere'
+    title: 'Universal MCP Integration',
+    description: 'Works seamlessly with Claude Desktop, Cursor, Continue, Cline — any MCP client gets instant access',
+    highlight: 'Install once, use everywhere',
+    gradient: 'from-blue-500 to-purple-500'
   },
   {
     icon: '🧠',
-    title: 'Project-Aware',
-    description: 'Include your codebase context automatically — perspectives understand your specific problem',
-    highlight: 'Smart context'
+    title: 'Context-Aware Intelligence',
+    description: 'Automatically includes your project files and codebase context for relevant, targeted AI perspectives',
+    highlight: 'Smart project awareness',
+    gradient: 'from-purple-500 to-pink-500'
   },
   {
     icon: '🔑',
-    title: 'Your Keys, Your Control',
-    description: 'Use your own API keys for full access to 20+ providers, or use managed keys for quick start',
-    highlight: 'Complete flexibility'
+    title: 'Your Keys, Your Rules',
+    description: 'Use your own API keys for unlimited access to 20+ providers, or start instantly with managed keys',
+    highlight: 'Complete control',
+    gradient: 'from-green-500 to-teal-500'
   },
   {
-    icon: '💡',
-    title: 'Raw Insights',
-    description: 'Get unfiltered perspectives from each model — your agent decides which insight leads to breakthrough',
-    highlight: 'Pure perspectives'
+    icon: '🎯',
+    title: 'Pure Model Perspectives',
+    description: 'Get unfiltered responses from each AI model — no merging or judging, just raw insights for your agent to choose from',
+    highlight: 'Raw, unbiased output',
+    gradient: 'from-indigo-500 to-blue-500'
   }
 ]
 
@@ -75,6 +81,8 @@ export default function Home() {
   const { user, loading, isAuthenticated } = useAuth()
   const [typedText, setTypedText] = useState('')
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isVisible, setIsVisible] = useState(false)
   
   const words = ['Claude Desktop', 'Cursor', 'Continue', 'Cline', 'Gemini CLI', 'your MCP client']
   
@@ -104,11 +112,96 @@ export default function Home() {
     return () => clearInterval(typingInterval)
   }, [currentWordIndex])
 
+  // Mouse tracking for interactive effects
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY })
+      
+      // Create mouse trail effect
+      const trail = document.createElement('div')
+      trail.className = 'mouse-trail'
+      trail.style.left = e.clientX + 'px'
+      trail.style.top = e.clientY + 'px'
+      document.body.appendChild(trail)
+      
+      setTimeout(() => {
+        trail.style.opacity = '0'
+        trail.style.transform = 'translate(-50%, -50%) scale(0.5)'
+        setTimeout(() => trail.remove(), 200)
+      }, 100)
+      
+      // Magnetic effect for buttons and cards
+      document.querySelectorAll('.magnetic').forEach((element) => {
+        const rect = element.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+        const distance = Math.sqrt(
+          Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
+        )
+        
+        if (distance < 100) {
+          const strength = (100 - distance) / 100
+          const moveX = (e.clientX - centerX) * strength * 0.15
+          const moveY = (e.clientY - centerY) * strength * 0.15
+          
+          ;(element as HTMLElement).style.transform = 
+            `translate(${moveX}px, ${moveY}px) scale(${1 + strength * 0.02})`
+        } else {
+          ;(element as HTMLElement).style.transform = ''
+        }
+      })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  // Intersection Observer for animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in')
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    const elements = document.querySelectorAll('.observe')
+    elements.forEach((el) => observer.observe(el))
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-white dark:bg-slate-900">
+        {/* Animated background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+        
+        {/* Floating orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div 
+            className="absolute w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"
+            style={{
+              left: mousePosition.x * 0.02 + '%',
+              top: mousePosition.y * 0.02 + '%',
+              transition: 'all 0.3s ease-out'
+            }}
+          ></div>
+          <div 
+            className="absolute w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse"
+            style={{
+              right: mousePosition.x * -0.01 + '%',
+              bottom: mousePosition.y * -0.01 + '%',
+              transition: 'all 0.3s ease-out',
+              animationDelay: '1s'
+            }}
+          ></div>
+        </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-32">
           <div className="text-center">
             <div className="inline-flex items-center bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-slate-200 dark:border-slate-700">
@@ -117,15 +210,15 @@ export default function Home() {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
-              Never get stuck again —{' '}
+              Get instant{' '}
               <span className="text-blue-600">
-                bring perspectives
+                AI perspectives
               </span>{' '}
-              to every agent
+              when agents get stuck
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed">
-              When your AI agent hits a roadblock, Polydev fans out to GPT-4, Claude, Gemini, and more — delivering diverse perspectives instantly to{' '}
+              Break through roadblocks with one MCP tool. Query GPT-4, Claude, Gemini, and 20+ models in parallel — get diverse solutions in{' '}
               <span className="text-blue-600 font-medium">
                 {typedText}
                 <span className="animate-pulse">|</span>
@@ -133,7 +226,7 @@ export default function Home() {
             </p>
             
             <div className="mb-12 text-lg text-slate-500 dark:text-slate-400">
-              <span className="font-medium">One MCP tool. Multiple AI minds. Instant breakthroughs.</span>
+              <span className="font-medium">Install once. Use everywhere. Never get stuck again.</span>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
@@ -159,7 +252,7 @@ export default function Home() {
                 <>
                   <Link
                     href="/auth"
-                    className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-slate-900 dark:bg-white dark:text-slate-900 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-slate-900 dark:bg-white dark:text-slate-900 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 btn-enhanced glow magnetic"
                   >
                     <span className="mr-2">Get started for free</span>
                     <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,7 +261,7 @@ export default function Home() {
                   </Link>
                   <Link
                     href="/docs"
-                    className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-200 shadow-sm hover:shadow-md"
+                    className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-200 shadow-sm hover:shadow-md glass-enhanced magnetic"
                   >
                     Read docs
                   </Link>
@@ -179,9 +272,13 @@ export default function Home() {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">
-                    {stat.value}
+                <div key={index} className="observe text-center hover-scale" style={{ transitionDelay: `${index * 150}ms` }}>
+                  <div className="relative">
+                    {/* Pulse ring effect */}
+                    <div className="absolute inset-0 bg-blue-500/20 rounded-full animate-pulse-ring"></div>
+                    <div className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">
+                      {stat.value}
+                    </div>
                   </div>
                   <div className="text-slate-600 dark:text-slate-400 font-medium">
                     {stat.label}
@@ -213,18 +310,31 @@ export default function Home() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300 hover:-translate-y-1"
+                className="observe group relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50 hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-500 hover:-translate-y-2 magnetic hover-scale ripple"
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
+                {/* Gradient background on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-2xl`}></div>
+                
                 <div className="relative">
-                  <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+                  {/* Icon with gradient background */}
+                  <div className="relative mb-6">
+                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity duration-500`}></div>
+                    <div className="relative w-16 h-16 flex items-center justify-center text-4xl transform group-hover:scale-110 transition-transform duration-300">
+                      {feature.icon}
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors duration-300">
                     {feature.title}
                   </h3>
                   <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                     {feature.description}
                   </p>
-                  <div className="inline-flex items-center text-sm font-medium text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 px-3 py-1.5 rounded-lg border border-blue-100 dark:border-blue-800/50">
-                    {feature.highlight}
+                  <div className={`inline-flex items-center text-sm font-medium text-white px-4 py-2 rounded-lg bg-gradient-to-r ${feature.gradient} shadow-sm group-hover:shadow-md transition-shadow duration-300`}>
+                    <span className="relative">
+                      {feature.highlight}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -243,48 +353,48 @@ export default function Home() {
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              <div className="group text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+              <div className="observe group text-center hover-scale magnetic" style={{ transitionDelay: '100ms' }}>
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300 ripple glow">
                   <span className="text-2xl font-bold text-orange-600">C</span>
                 </div>
                 <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Claude Desktop</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">MCP native</p>
               </div>
               
-              <div className="group text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+              <div className="observe group text-center hover-scale magnetic" style={{ transitionDelay: '200ms' }}>
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300 ripple glow">
                   <span className="text-2xl">🖱️</span>
                 </div>
                 <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Cursor</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">AI Code Editor</p>
               </div>
               
-              <div className="group text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+              <div className="observe group text-center hover-scale magnetic" style={{ transitionDelay: '300ms' }}>
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300 ripple glow">
                   <span className="text-2xl font-bold text-blue-600">→</span>
                 </div>
                 <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Continue</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">VS Code extension</p>
               </div>
               
-              <div className="group text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+              <div className="observe group text-center hover-scale magnetic" style={{ transitionDelay: '400ms' }}>
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300 ripple glow">
                   <span className="text-2xl font-bold text-green-600">C</span>
                 </div>
                 <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Cline</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">VS Code agent</p>
               </div>
               
-              <div className="group text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+              <div className="observe group text-center hover-scale magnetic" style={{ transitionDelay: '500ms' }}>
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300 ripple glow">
                   <span className="text-2xl font-bold text-purple-600">G</span>
                 </div>
                 <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Gemini CLI</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Command line</p>
               </div>
               
-              <div className="group text-center">
-                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300">
+              <div className="observe group text-center hover-scale magnetic" style={{ transitionDelay: '600ms' }}>
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-xl transition-shadow duration-300 ripple glow">
                   <span className="text-2xl">🛠️</span>
                 </div>
                 <h4 className="font-semibold text-slate-900 dark:text-white text-sm mb-1">Your Client</h4>
@@ -317,7 +427,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/50 p-2 max-w-5xl mx-auto">
+          <div className="observe bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/50 p-2 max-w-5xl mx-auto glass-enhanced hover-scale animate-shimmer">
             <div className="bg-slate-950 dark:bg-slate-900 rounded-2xl overflow-hidden">
               {/* Terminal Header */}
               <div className="flex items-center justify-between px-6 py-4 bg-slate-800 dark:bg-slate-800 border-b border-slate-700">
@@ -391,7 +501,7 @@ export default function Home() {
           <div className="text-center mt-16">
             <Link
               href={isAuthenticated ? "/chat" : "/auth"}
-              className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-slate-900 dark:bg-white dark:text-slate-900 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mr-4"
+              className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-slate-900 dark:bg-white dark:text-slate-900 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mr-4 btn-enhanced glow magnetic ripple"
             >
               <span className="mr-2">Try it yourself</span>
               <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -428,7 +538,8 @@ export default function Home() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="group relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300 hover:-translate-y-1"
+                className="observe group relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300 hover:-translate-y-1 glass-enhanced hover-scale magnetic ripple"
+                style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <div className="relative">
                   <div className="flex items-center mb-6">

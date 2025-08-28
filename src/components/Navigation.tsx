@@ -13,8 +13,6 @@ export default function Navigation() {
   const publicNavigation = [
     { name: 'Home', href: '/' },
     { name: 'Documentation', href: '/docs' },
-    { name: 'Features', href: '/features' },
-    { name: 'Pricing', href: '/pricing' },
   ]
 
   const authenticatedNavigation = [

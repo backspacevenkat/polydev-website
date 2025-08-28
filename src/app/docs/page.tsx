@@ -114,11 +114,11 @@ export default function Documentation() {
             
             <h3>Step 1: Install the MCP Server</h3>
             <p>Install Polydev Perspectives globally via npm:</p>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`npm install -g @polydev/perspectives-mcp`}</code></pre>
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`npm install -g @polydev/perspectives-mcp`}</code></pre>
             
             <h3>Step 2: Configure Your Authentication</h3>
             <p>Set up your authentication using the configuration wizard:</p>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`polydev-perspectives --config`}</code></pre>
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`polydev-perspectives --config`}</code></pre>
             
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 my-6">
               <h4 className="font-semibold text-blue-900 mb-3">🔐 Authentication Options</h4>
@@ -150,8 +150,8 @@ export default function Documentation() {
               <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
                 <h4 className="font-semibold text-gray-900 mb-3">🖥️ Claude Desktop</h4>
                 <p className="text-sm text-gray-600 mb-3">Edit your configuration file:</p>
-                <code className="text-xs text-gray-500 block mb-2">~/.config/claude/claude_desktop_config.json</code>
-                <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+                <code className="text-sm text-gray-500 block mb-2">~/.config/claude/claude_desktop_config.json</code>
+                <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "mcpServers": {
     "polydev-perspectives": {
       "command": "polydev-perspectives"
@@ -163,8 +163,8 @@ export default function Documentation() {
               <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
                 <h4 className="font-semibold text-gray-900 mb-3">🔄 Continue.dev</h4>
                 <p className="text-sm text-gray-600 mb-3">Add to your config:</p>
-                <code className="text-xs text-gray-500 block mb-2">.continue/config.json</code>
-                <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+                <code className="text-sm text-gray-500 block mb-2">.continue/config.json</code>
+                <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "mcpServers": {
     "polydev-perspectives": {
       "command": "polydev-perspectives"
@@ -176,8 +176,8 @@ export default function Documentation() {
               <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
                 <h4 className="font-semibold text-gray-900 mb-3">🎯 Cursor</h4>
                 <p className="text-sm text-gray-600 mb-3">Configure MCP servers:</p>
-                <code className="text-xs text-gray-500 block mb-2">Settings → MCP servers</code>
-                <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+                <code className="text-sm text-gray-500 block mb-2">Settings → MCP servers</code>
+                <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "mcp": {
     "servers": {
       "polydev-perspectives": {
@@ -191,8 +191,8 @@ export default function Documentation() {
               <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
                 <h4 className="font-semibold text-gray-900 mb-3">🛠️ Cline (VSCode)</h4>
                 <p className="text-sm text-gray-600 mb-3">Extension settings:</p>
-                <code className="text-xs text-gray-500 block mb-2">MCP Server Configuration</code>
-                <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+                <code className="text-sm text-gray-500 block mb-2">MCP Server Configuration</code>
+                <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "command": "polydev-perspectives"
 }`}</code></pre>
               </div>
@@ -207,7 +207,7 @@ export default function Documentation() {
             <p>Restart your MCP client and test the <code>get_perspectives</code> tool:</p>
             
             <h4>With Your Own API Keys (Recommended):</h4>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
   "name": "get_perspectives",
   "arguments": {
     "prompt": "I'm debugging a React performance issue. The component re-renders excessively but I can't pinpoint why. Help me identify potential causes and solutions.",
@@ -218,7 +218,7 @@ export default function Documentation() {
 }`}</code></pre>
 
             <h4>With MCP Token (Legacy):</h4>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
   "name": "get_perspectives",
   "arguments": {
     "prompt": "I'm debugging a React performance issue...",
@@ -230,7 +230,7 @@ export default function Documentation() {
 
             <h3>Complete Tool Schema</h3>
             <p>The <code>get_perspectives</code> tool accepts these parameters:</p>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
   "name": "get_perspectives",
   "description": "Get multiple AI perspectives on a problem to break through roadblocks",
   "inputSchema": {
@@ -307,7 +307,7 @@ export default function Documentation() {
               <li><strong>full</strong>: TF-IDF similarity matching for most relevant code</li>
             </ul>
 
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`{
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
   "prompt": "How can I optimize this database query performance?",
   "mode": "user_keys",
   "project_memory": "full",
@@ -324,7 +324,7 @@ export default function Documentation() {
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 my-4">
               <h4 className="font-semibold text-red-900 mb-2">Scenario: SQL Performance Mystery</h4>
               <p className="text-red-800 text-sm mb-3">Your agent is stuck - the SQL query has indexes but is still slow despite standard optimizations.</p>
-              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "name": "get_perspectives",
   "arguments": {
     "prompt": "My SQL query is slow despite having indexes. I've tried standard optimizations but performance is still poor. The query joins 3 tables and filters by date range. What advanced optimizations am I missing?",
@@ -340,7 +340,7 @@ export default function Documentation() {
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 my-4">
               <h4 className="font-semibold text-blue-900 mb-2">Scenario: Microservices vs Monolith</h4>
               <p className="text-blue-800 text-sm mb-3">Your agent needs expert perspectives on architectural trade-offs for a fintech application.</p>
-              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "name": "get_perspectives",
   "arguments": {
     "prompt": "I'm choosing between microservices and monolith architecture for a fintech app that needs to handle payments, user management, and compliance reporting. I need multiple expert perspectives on trade-offs, security implications, and scalability considerations.",
@@ -355,7 +355,7 @@ export default function Documentation() {
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 my-4">
               <h4 className="font-semibold text-green-900 mb-2">Scenario: Authentication Security Review</h4>
               <p className="text-green-800 text-sm mb-3">Your agent wants multiple security-focused perspectives on an authentication module.</p>
-              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "name": "get_perspectives",
   "arguments": {
     "prompt": "Review this authentication module for security vulnerabilities and suggest improvements. I want multiple security-focused perspectives on JWT handling, password policies, and session management.",
@@ -376,7 +376,7 @@ export default function Documentation() {
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 my-4">
               <h4 className="font-semibold text-yellow-900 mb-2">Scenario: OAuth2 Implementation Issues</h4>
               <p className="text-yellow-800 text-sm mb-3">Your agent is stuck with cryptic OAuth2 PKCE errors and unclear documentation.</p>
-              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-xs overflow-x-auto"><code>{`{
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "name": "get_perspectives",
   "arguments": {
     "prompt": "I'm implementing OAuth2 PKCE flow but getting 'invalid_request' errors. The documentation is unclear about parameter encoding, code_challenge generation, and redirect URI handling. Help me troubleshoot step by step.",
@@ -463,7 +463,7 @@ I'd recommend starting with the React Profiler to get concrete data before optim
             </ul>
 
             <h3>4. Handle Responses Intelligently</h3>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`// Agent logic example
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`// Agent logic example
 const perspectives = await getPerspectives({
   prompt: "How do I fix this memory leak?",
   models: ["gpt-4", "claude-3.5-sonnet", "gemini-1.5-pro"]
@@ -520,7 +520,7 @@ return requestMoreSpecificHelp();`}</code></pre>
             </div>
 
             <h3>Debug Mode</h3>
-            <pre className="bg-slate-900 text-slate-300 p-4 rounded-lg overflow-x-auto"><code>{`# Enable debug logging in MCP server
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`# Enable debug logging in MCP server
 export POLYDEV_DEBUG=1
 node /path/to/polydev/mcp/server.js
 
@@ -558,7 +558,7 @@ tail -f ~/.config/claude/mcp_debug.log`}</code></pre>
             <p>Create custom MCP servers to connect your tools and data sources:</p>
 
             <h3>Basic Server</h3>
-            <pre><code>{`import { Server } from '@polydev/mcp-server'
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`import { Server } from '@polydev/mcp-server'
 
 const server = new Server({
   name: 'my-custom-server',
@@ -594,7 +594,7 @@ server.start()`}</code></pre>
             <h2 id="tool-integration">Tool Integration</h2>
             <p>Connect external tools and APIs to your MCP server:</p>
 
-            <pre><code>{`// Database integration
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`// Database integration
 server.registerTool({
   name: 'query_database',
   description: 'Execute SQL queries',
@@ -617,7 +617,7 @@ server.registerTool({
             <h2 id="resource-management">Resource Management</h2>
             <p>Handle data sources and file systems:</p>
 
-            <pre><code>{`// File system resource
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`// File system resource
 server.registerResource({
   name: 'file',
   description: 'Access file system',
@@ -716,7 +716,7 @@ server.registerResource({
             <h2 id="model-orchestration">Model Orchestration</h2>
             <p>Route requests intelligently across different models:</p>
 
-            <pre><code>{`// Smart routing configuration
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`// Smart routing configuration
 const orchestration = {
   rules: [
     {
@@ -739,7 +739,7 @@ const orchestration = {
 }`}</code></pre>
 
             <h3>Load Balancing</h3>
-            <pre><code>{`// Distribute load across models
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`// Distribute load across models
 const loadBalancer = {
   strategy: 'round_robin', // or 'least_latency', 'least_cost'
   models: [
@@ -752,7 +752,7 @@ const loadBalancer = {
             <h2 id="response-comparison">Response Comparison</h2>
             <p>Compare outputs from multiple models simultaneously:</p>
 
-            <pre><code>{`POST /v1/compare
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`POST /v1/compare
 {
   "models": ["gpt-4", "claude-3-opus", "gemini-pro"],
   "prompt": "Explain quantum computing",
@@ -763,7 +763,7 @@ const loadBalancer = {
 }`}</code></pre>
 
             <h3>Response Format</h3>
-            <pre><code>{`{
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
   "comparison_id": "comp_123456",
   "responses": [
     {
@@ -796,7 +796,7 @@ const loadBalancer = {
             <p>Strategies to minimize API costs while maintaining quality:</p>
 
             <h3>Caching Strategy</h3>
-            <pre><code>{`// Semantic caching
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`// Semantic caching
 const cacheConfig = {
   enabled: true,
   similarity_threshold: 0.95,
@@ -834,17 +834,17 @@ const cacheConfig = {
             </div>
 
             <h3>Base URL</h3>
-            <pre><code>https://api.polydev.ai/v1</code></pre>
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>https://api.polydev.ai/v1</code></pre>
 
             <h3>Authentication</h3>
-            <pre><code>{`Authorization: Bearer YOUR_API_KEY`}</code></pre>
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`Authorization: Bearer YOUR_API_KEY`}</code></pre>
 
             <h3>Chat Completions</h3>
             <div className="bg-green-50 p-4 rounded-lg">
               <strong>POST</strong> <code>/chat/completions</code>
             </div>
 
-            <pre><code>{`curl -X POST https://api.polydev.ai/v1/chat/completions \\
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`curl -X POST https://api.polydev.ai/v1/chat/completions \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -877,7 +877,7 @@ const cacheConfig = {
               <strong>POST</strong> <code>/compare</code>
             </div>
 
-            <pre><code>{`{
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
   "models": ["gpt-4", "claude-3-opus"],
   "prompt": "Explain machine learning",
   "parameters": {
@@ -890,10 +890,10 @@ const cacheConfig = {
             <p>For more complex queries and real-time subscriptions.</p>
 
             <h3>Endpoint</h3>
-            <pre><code>https://api.polydev.ai/graphql</code></pre>
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>https://api.polydev.ai/graphql</code></pre>
 
             <h3>Example Query</h3>
-            <pre><code>{`query GetDashboardData {
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`query GetDashboardData {
   user {
     id
     email
@@ -929,7 +929,7 @@ const cacheConfig = {
 }`}</code></pre>
 
             <h3>Subscriptions</h3>
-            <pre><code>{`subscription SystemHealth {
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`subscription SystemHealth {
   systemStatus {
     timestamp
     mcpServers {
@@ -949,7 +949,7 @@ const cacheConfig = {
             <p>Real-time communication for streaming responses and live updates.</p>
 
             <h3>Connection</h3>
-            <pre><code>{`const ws = new WebSocket('wss://api.polydev.ai/v1/ws');
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`const ws = new WebSocket('wss://api.polydev.ai/v1/ws');
 ws.addEventListener('open', () => {
   ws.send(JSON.stringify({
     type: 'auth',
@@ -958,7 +958,7 @@ ws.addEventListener('open', () => {
 });`}</code></pre>
 
             <h3>Streaming Chat</h3>
-            <pre><code>{`ws.send(JSON.stringify({
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`ws.send(JSON.stringify({
   type: 'chat.stream',
   data: {
     model: 'gpt-4',
@@ -973,7 +973,7 @@ ws.addEventListener('open', () => {
             <p>Official SDKs for popular programming languages.</p>
 
             <h3>JavaScript/TypeScript</h3>
-            <pre><code>{`import { PolydevAI } from '@polydev/sdk'
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`import { PolydevAI } from '@polydev/sdk'
 
 const polydev = new PolydevAI({
   apiKey: process.env.POLYDEV_API_KEY
@@ -985,7 +985,7 @@ const response = await polydev.chat.completions.create({
 })`}</code></pre>
 
             <h3>Python</h3>
-            <pre><code>{`import polydev
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`import polydev
 
 client = polydev.PolydevAI(
     api_key=os.environ.get("POLYDEV_API_KEY")
@@ -997,7 +997,7 @@ response = client.chat.completions.create(
 )`}</code></pre>
 
             <h3>Go</h3>
-            <pre><code>{`package main
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`package main
 
 import (
     "github.com/polydev-ai/go-sdk"
@@ -1103,17 +1103,17 @@ func main() {
             
             <div className="bg-gray-50 border rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">1. Install Globally</h3>
-              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-sm overflow-x-auto"><code>npm install -g @polydev/perspectives-mcp</code></pre>
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>npm install -g @polydev/perspectives-mcp</code></pre>
             </div>
             
             <div className="bg-gray-50 border rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">2. Configure Authentication</h3>
-              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-sm overflow-x-auto"><code>polydev-perspectives --config</code></pre>
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>polydev-perspectives --config</code></pre>
             </div>
             
             <div className="bg-gray-50 border rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">3. Add to MCP Client Config</h3>
-              <pre className="bg-slate-900 text-slate-300 p-3 rounded text-sm overflow-x-auto"><code>{`{
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "servers": {
     "polydev-perspectives": {
       "command": "polydev-perspectives"
@@ -1154,7 +1154,7 @@ func main() {
               
               <div className="bg-white rounded-lg p-4 border border-purple-200">
                 <h4 className="font-semibold text-gray-900 mb-2">Claude Desktop</h4>
-                <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`{
+                <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "mcpServers": {
     "polydev-perspectives": {
       "command": "npx",
@@ -1169,7 +1169,7 @@ func main() {
 
               <div className="bg-white rounded-lg p-4 border border-purple-200 mt-4">
                 <h4 className="font-semibold text-gray-900 mb-2">Continue.dev</h4>
-                <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`// In your .continue/config.json
+                <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`// In your .continue/config.json
 {
   "mcpServers": [
     {
@@ -1183,7 +1183,7 @@ func main() {
 
               <div className="bg-white rounded-lg p-4 border border-purple-200 mt-4">
                 <h4 className="font-semibold text-gray-900 mb-2">Cursor / Cline</h4>
-                <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`# Add to MCP server configuration
+                <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`# Add to MCP server configuration
 npm install -g @polydev/mcp-server
 # Then configure in your MCP settings`}</code></pre>
               </div>
@@ -1237,7 +1237,7 @@ npm install -g @polydev/mcp-server
               <p className="text-gray-700 mb-4">Use the get_perspectives tool in your MCP client:</p>
               
               <div className="bg-white rounded-lg p-4 border border-blue-200">
-                <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`// In Claude Desktop, Continue.dev, or other MCP client:
+                <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`// In Claude Desktop, Continue.dev, or other MCP client:
 {
   "tool": "get_perspectives",
   "arguments": {
@@ -1260,7 +1260,7 @@ npm install -g @polydev/mcp-server
               <div className="border border-gray-200 rounded-lg p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Project Memory</h3>
                 <p className="text-gray-600 mb-4">Include relevant project context in your perspective requests:</p>
-                <pre className="bg-gray-50 rounded-lg p-4 text-sm overflow-x-auto"><code>{`{
+                <pre className="bg-gray-100 text-gray-800 p-4 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "tool": "get_perspectives",
   "arguments": {
     "prompt": "How can I optimize this database query?",
