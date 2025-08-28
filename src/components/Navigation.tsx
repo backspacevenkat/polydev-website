@@ -3,20 +3,30 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useAuth } from '../hooks/useAuth'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const { user, loading, signOut, isAuthenticated } = useAuth()
 
-  const navigation = [
+  const publicNavigation = [
     { name: 'Home', href: '/' },
-    { name: 'Dashboard', href: '/dashboard' },
     { name: 'Documentation', href: '/docs' },
-    { name: 'API Explorer', href: '/explorer' },
-    { name: 'Chat', href: '/chat' },
     { name: 'Features', href: '/features' },
     { name: 'Pricing', href: '/pricing' },
   ]
+
+  const authenticatedNavigation = [
+    { name: 'Dashboard', href: '/dashboard' },
+    { name: 'API Explorer', href: '/explorer' },
+    { name: 'Chat', href: '/chat' },
+    { name: 'Settings', href: '/settings' },
+  ]
+
+  const navigation = isAuthenticated 
+    ? [...publicNavigation.slice(0, 1), ...authenticatedNavigation, ...publicNavigation.slice(1)]
+    : publicNavigation
 
   const isActive = (href: string) => {
     if (href === '/') {
@@ -58,18 +68,36 @@ export default function Navigation() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link
-              href="/auth"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/auth"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-            >
-              Get Started
-            </Link>
+            {loading ? (
+              <div className="w-16 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+            ) : isAuthenticated ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-600 dark:text-gray-300">
+                  {user?.email}
+                </span>
+                <button
+                  onClick={signOut}
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/auth"
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -122,20 +150,43 @@ export default function Navigation() {
                 </Link>
               ))}
               <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-1">
-                <Link
-                  href="/auth"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/auth"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700"
-                >
-                  Get Started
-                </Link>
+                {loading ? (
+                  <div className="px-3 py-2">
+                    <div className="w-24 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                  </div>
+                ) : isAuthenticated ? (
+                  <>
+                    <div className="block px-3 py-2 text-base font-medium text-gray-600 dark:text-gray-300">
+                      {user?.email}
+                    </div>
+                    <button
+                      onClick={() => {
+                        signOut()
+                        setIsOpen(false)
+                      }}
+                      className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/auth"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/auth"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

@@ -1,15 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { createClient } from '../utils/supabase/client'
 
-export default function Auth() {
+function AuthForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
-
+  
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const redirectTo = searchParams.get('redirectTo') || '/dashboard'
   const supabase = createClient()
 
   const handleAuth = async (e: React.FormEvent) => {
@@ -32,7 +36,7 @@ export default function Auth() {
         if (data.user && !data.user.email_confirmed_at) {
           setMessage('Check your email for the confirmation link!')
         } else {
-          window.location.href = '/dashboard'
+          router.push(redirectTo)
         }
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -41,7 +45,7 @@ export default function Auth() {
         })
         
         if (error) throw error
-        window.location.href = '/dashboard'
+        router.push(redirectTo)
       }
     } catch (error: any) {
       setMessage(error.message || 'An error occurred')
@@ -55,7 +59,7 @@ export default function Auth() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
         }
       })
       if (error) throw error
@@ -153,5 +157,17 @@ export default function Auth() {
         </form>
       </div>
     </div>
+  )
+}
+
+export default function Auth() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    }>
+      <AuthForm />
+    </Suspense>
   )
 }
