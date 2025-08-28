@@ -1,0 +1,217 @@
+{
+  "name": "polydev-perspectives",
+  "version": "1.0.0",
+  "description": "Agentic workflow assistant - get diverse perspectives from multiple LLMs when stuck or need enhanced reasoning",
+  "author": "Polydev AI",
+  "license": "MIT",
+  "main": "server.js",
+  "mcpVersion": "1.0",
+  "capabilities": {
+    "tools": true,
+    "resources": false,
+    "prompts": false
+  },
+  "tools": [
+    {
+      "name": "get_perspectives",
+      "description": "When stuck in agentic workflows, get diverse perspectives from multiple LLMs to overcome roadblocks. All models use Polydev-managed API keys - just configure once in dashboard.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "The prompt to get perspectives on",
+            "minLength": 1
+          },
+          "models": {
+            "type": "array",
+            "description": "Array of model names to query (optional, defaults to [gpt-4, claude-3-sonnet, gemini-pro])",
+            "items": {
+              "type": "string",
+              "enum": [
+                "gpt-4",
+                "gpt-3.5-turbo",
+                "claude-3-sonnet", 
+                "claude-3-haiku",
+                "gemini-pro",
+                "gemini-1.5-pro"
+              ]
+            },
+            "default": ["gpt-4", "claude-3-sonnet", "gemini-pro"]
+          },
+          "user_token": {
+            "type": "string",
+            "description": "Polydev user authentication token (get from dashboard)",
+            "minLength": 1
+          },
+          "project_memory": {
+            "type": "string", 
+            "description": "Project context level - 'none', 'light' (recent files), or 'full' (TF-IDF similarity)",
+            "enum": ["none", "light", "full"],
+            "default": "none"
+          },
+          "max_messages": {
+            "type": "integer",
+            "description": "Maximum number of messages to process for tool calls",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 10
+          },
+          "temperature": {
+            "type": "number",
+            "description": "Temperature for model responses",
+            "minimum": 0,
+            "maximum": 2,
+            "default": 0.7
+          },
+          "max_tokens": {
+            "type": "integer",
+            "description": "Maximum tokens per response",
+            "minimum": 100,
+            "maximum": 8000,
+            "default": 2000
+          },
+          "project_context": {
+            "type": "object",
+            "description": "Project context for memory retrieval",
+            "properties": {
+              "root_path": {
+                "type": "string",
+                "description": "Root directory path for project"
+              },
+              "includes": {
+                "type": "array",
+                "description": "File patterns to include",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "excludes": {
+                "type": "array",
+                "description": "File patterns to exclude",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": ["prompt", "user_token"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "array",
+            "description": "Array of responses from different models",
+            "items": {
+              "type": "object",
+              "properties": {
+                "model": {
+                  "type": "string",
+                  "description": "Model name"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "Response content"
+                },
+                "tokens_used": {
+                  "type": "integer",
+                  "description": "Number of tokens used"
+                },
+                "latency_ms": {
+                  "type": "integer",
+                  "description": "Response latency in milliseconds"
+                },
+                "error": {
+                  "type": "string",
+                  "description": "Error message if the request failed"
+                }
+              },
+              "required": ["model", "content"]
+            }
+          },
+          "total_tokens": {
+            "type": "integer",
+            "description": "Total tokens used across all models"
+          },
+          "total_latency_ms": {
+            "type": "integer",
+            "description": "Total latency in milliseconds"
+          },
+          "cached": {
+            "type": "boolean",
+            "description": "Whether the response was cached"
+          }
+        },
+        "required": ["responses"]
+      },
+      "examples": [
+        {
+          "description": "Agent stuck on TypeScript decision",
+          "input": {
+            "prompt": "I'm building a new API and considering TypeScript vs JavaScript. I need multiple perspectives to make the right choice.",
+            "user_token": "poly_abc123..."
+          },
+          "output": {
+            "responses": [
+              {
+                "model": "gpt-4",
+                "content": "TypeScript offers several key advantages over JavaScript: 1) Static type checking catches errors at compile time...",
+                "tokens_used": 150,
+                "latency_ms": 1200
+              },
+              {
+                "model": "claude-3-sonnet", 
+                "content": "TypeScript provides enhanced developer experience through: Type safety, better IDE support...",
+                "tokens_used": 140,
+                "latency_ms": 1100
+              }
+            ],
+            "total_tokens": 290,
+            "total_latency_ms": 1300,
+            "cached": false
+          }
+        },
+        {
+          "description": "Agent debugging performance issue with context",
+          "input": {
+            "prompt": "My React app is slow and I can't figure out why. Help me identify the bottlenecks.",
+            "user_token": "poly_abc123...",
+            "models": ["gpt-4", "claude-3-sonnet"],
+            "project_memory": "full",
+            "project_context": {
+              "root_path": "/workspace/my-react-app",
+              "includes": ["**/*.tsx", "**/*.ts", "**/*.js"],
+              "excludes": ["node_modules/**", "dist/**", "build/**"]
+            }
+          }
+        },
+        {
+          "description": "Agent needs diverse architectural opinions",
+          "input": {
+            "prompt": "I'm designing a microservices architecture for a fintech app. What are the key considerations and potential pitfalls?",
+            "user_token": "poly_abc123...",
+            "models": ["gpt-4", "claude-3-sonnet", "gemini-pro"]
+          }
+        }
+      ]
+    }
+  ],
+  "configuration": {
+    "server_url": "https://polydev.ai/api/perspectives",
+    "dashboard_url": "https://polydev.ai/dashboard/mcp-tools",
+    "auth_required": true,
+    "rate_limits": {
+      "requests_per_minute": 100,
+      "requests_per_hour": 2000,
+      "requests_per_day": 10000
+    },
+    "setup_instructions": {
+      "step_1": "Visit https://polydev.ai/dashboard/mcp-tools",
+      "step_2": "Generate your MCP access token",
+      "step_3": "Configure your preferred models and settings",
+      "step_4": "Use the token in your MCP tool calls"
+    }
+  }
+}

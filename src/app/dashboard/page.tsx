@@ -192,9 +192,10 @@ export default function Dashboard() {
             </div>
             <nav className="hidden md:flex space-x-8">
               <Link href="/dashboard" className="text-blue-600 font-medium">Dashboard</Link>
+              <Link href="/dashboard/api-keys" className="text-gray-500 hover:text-gray-900">API Keys</Link>
+              <Link href="/dashboard/mcp-tools" className="text-gray-500 hover:text-gray-900">MCP Tools</Link>
               <Link href="/docs" className="text-gray-500 hover:text-gray-900">Documentation</Link>
               <Link href="/api-explorer" className="text-gray-500 hover:text-gray-900">API Explorer</Link>
-              <Link href="/pricing" className="text-gray-500 hover:text-gray-900">Pricing</Link>
             </nav>
             <div className="flex items-center space-x-4">
               <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">

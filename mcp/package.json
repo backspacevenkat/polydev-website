@@ -1,0 +1,33 @@
+{
+  "name": "polydev-perspectives-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Polydev AI perspectives tool",
+  "main": "server.js",
+  "bin": {
+    "polydev-perspectives-mcp": "./server.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "llm",
+    "perspectives",
+    "multi-model"
+  ],
+  "author": "Polydev AI",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polydev-ai/perspectives-mcp"
+  }
+}

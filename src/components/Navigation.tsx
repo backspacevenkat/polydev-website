@@ -19,6 +19,7 @@ export default function Navigation() {
 
   const authenticatedNavigation = [
     { name: 'Dashboard', href: '/dashboard' },
+    { name: 'Perspectives', href: '/settings/perspectives' },
     { name: 'API Explorer', href: '/explorer' },
     { name: 'Chat', href: '/chat' },
     { name: 'Settings', href: '/settings' },
