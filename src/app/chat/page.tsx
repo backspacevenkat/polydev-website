@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { useAuth } from '../../hooks/useAuth'
 
 interface Message {
   id: string
@@ -18,6 +19,7 @@ interface ModelConfig {
 }
 
 export default function Chat() {
+  const { user, loading, isAuthenticated } = useAuth()
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -45,54 +47,65 @@ export default function Chat() {
     if (!input.trim() || isLoading) return
 
     const userMessage: Message = {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${user?.id}`,
       role: 'user',
       content: input,
       timestamp: new Date()
     }
 
     setMessages(prev => [...prev, userMessage])
+    const currentInput = input
     setInput('')
     setIsLoading(true)
 
-    // Simulate API calls to multiple models
     try {
-      const responses = await Promise.all(
-        selectedModels.map(async (modelId) => {
-          // Simulate API delay
-          await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000))
-          
-          const model = models.find(m => m.id === modelId)
-          
-          // Simulate different responses based on model
-          let simulatedResponse = ''
-          switch (modelId) {
-            case 'gpt-4':
-              simulatedResponse = `As GPT-4, I can provide a comprehensive analysis of your question: "${input}". This is a detailed response that considers multiple perspectives and provides actionable insights.`
-              break
-            case 'claude-3-sonnet':
-              simulatedResponse = `From Claude 3 Sonnet's perspective: I'll approach "${input}" by breaking it down systematically and providing a thoughtful, nuanced response with clear reasoning.`
-              break
-            case 'gemini-pro':
-              simulatedResponse = `Gemini Pro here: Let me analyze "${input}" from multiple angles and provide you with a structured response that covers the key points effectively.`
-              break
-            default:
-              simulatedResponse = `${model?.name} response to: "${input}". This is a simulated response from the ${model?.provider} model.`
-          }
+      const response = await fetch('/api/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [...messages, userMessage],
+          models: selectedModels,
+          temperature: 0.7
+        }),
+      })
 
-          return {
-            id: `${Date.now()}-${modelId}`,
-            role: 'assistant' as const,
-            content: simulatedResponse,
-            model: model?.name,
-            timestamp: new Date()
-          }
-        })
-      )
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
 
-      setMessages(prev => [...prev, ...responses])
+      const data = await response.json()
+      
+      if (data.error) {
+        throw new Error(data.error)
+      }
+
+      const assistantMessages = data.responses.map((resp: any) => {
+        const model = models.find(m => m.id === resp.model)
+        return {
+          id: `${Date.now()}-${resp.model}-${user?.id}`,
+          role: 'assistant' as const,
+          content: resp.content,
+          model: model?.name || resp.model,
+          timestamp: new Date()
+        }
+      })
+
+      setMessages(prev => [...prev, ...assistantMessages])
     } catch (error) {
       console.error('Error sending message:', error)
+      
+      // Show error message to user
+      const errorMessage: Message = {
+        id: `error-${Date.now()}`,
+        role: 'assistant',
+        content: `Sorry, there was an error processing your request: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`,
+        model: 'System',
+        timestamp: new Date()
+      }
+      
+      setMessages(prev => [...prev, errorMessage])
     } finally {
       setIsLoading(false)
     }
@@ -110,6 +123,35 @@ export default function Chat() {
     setMessages([])
   }
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    )
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Authentication Required
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            Please sign in to access the multi-model chat interface.
+          </p>
+          <a
+            href="/auth"
+            className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Sign In
+          </a>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Sidebar */}
@@ -117,6 +159,12 @@ export default function Chat() {
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Multi-LLM Chat
         </h2>
+        
+        <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+          <p className="text-xs text-blue-600 dark:text-blue-400">
+            Signed in as: {user?.email}
+          </p>
+        </div>
         
         <div className="mb-6">
           <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">

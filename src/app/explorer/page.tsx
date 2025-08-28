@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../../hooks/useAuth'
 
 interface ApiRequest {
   method: string
@@ -17,6 +18,7 @@ interface ApiResponse {
 }
 
 export default function ApiExplorer() {
+  const { user, loading: authLoading, isAuthenticated } = useAuth()
   const [request, setRequest] = useState<ApiRequest>({
     method: 'GET',
     endpoint: '/api/health',
@@ -29,13 +31,14 @@ export default function ApiExplorer() {
   const [loading, setLoading] = useState(false)
 
   const endpoints = [
-    { method: 'GET', path: '/api/health', description: 'System health check' },
-    { method: 'GET', path: '/api/mcp/servers', description: 'List MCP servers' },
-    { method: 'POST', path: '/api/mcp/servers', description: 'Create MCP server' },
-    { method: 'GET', path: '/api/llm/providers', description: 'List LLM providers' },
-    { method: 'POST', path: '/api/llm/chat', description: 'Send chat message' },
-    { method: 'GET', path: '/api/analytics/usage', description: 'Get usage analytics' },
-    { method: 'GET', path: '/api/auth/session', description: 'Get current session' }
+    { method: 'GET', path: '/api/health', description: 'System health check', requiresAuth: false },
+    { method: 'POST', path: '/api/chat/completions', description: 'Multi-model chat completions', requiresAuth: true },
+    { method: 'GET', path: '/api/dashboard/stats', description: 'Get user dashboard statistics', requiresAuth: true },
+    { method: 'GET', path: '/api/user/profile', description: 'Get user profile', requiresAuth: true },
+    { method: 'PUT', path: '/api/user/profile', description: 'Update user profile', requiresAuth: true },
+    { method: 'GET', path: '/api/user/usage', description: 'Get usage analytics', requiresAuth: true },
+    { method: 'GET', path: '/api/models/list', description: 'List available AI models', requiresAuth: false },
+    { method: 'GET', path: '/api/auth/session', description: 'Get current session info', requiresAuth: true }
   ]
 
   const executeRequest = async () => {
@@ -97,6 +100,14 @@ export default function ApiExplorer() {
     }
   }
 
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,6 +118,11 @@ export default function ApiExplorer() {
           <p className="text-gray-600 dark:text-gray-400">
             Test and explore the Polydev AI API endpoints interactively
           </p>
+          {isAuthenticated && (
+            <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+              ✓ Authenticated as {user?.email}
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -126,16 +142,28 @@ export default function ApiExplorer() {
                   <button
                     key={idx}
                     onClick={() => setRequest(prev => ({ ...prev, method: ep.method, endpoint: ep.path }))}
-                    className="block w-full text-left px-3 py-2 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
+                    disabled={ep.requiresAuth && !isAuthenticated}
+                    className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                      ep.requiresAuth && !isAuthenticated 
+                        ? 'bg-gray-50 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
+                        : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    }`}
                   >
-                    <span className={`inline-block w-12 text-xs font-mono ${
-                      ep.method === 'GET' ? 'text-green-600' : 
-                      ep.method === 'POST' ? 'text-blue-600' : 'text-orange-600'
-                    }`}>
-                      {ep.method}
-                    </span>
-                    <span className="text-gray-900 dark:text-white mr-2">{ep.path}</span>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs">{ep.description}</span>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className={`inline-block w-12 text-xs font-mono ${
+                          ep.method === 'GET' ? 'text-green-600' : 
+                          ep.method === 'POST' ? 'text-blue-600' : 'text-orange-600'
+                        }`}>
+                          {ep.method}
+                        </span>
+                        <span className="text-gray-900 dark:text-white mr-2">{ep.path}</span>
+                        <span className="text-gray-500 dark:text-gray-400 text-xs">{ep.description}</span>
+                      </div>
+                      {ep.requiresAuth && (
+                        <span className="text-xs text-yellow-600 dark:text-yellow-400">🔒</span>
+                      )}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -232,9 +260,17 @@ export default function ApiExplorer() {
               </div>
             )}
 
+            {!isAuthenticated && endpoints.find(ep => ep.path === request.endpoint)?.requiresAuth && (
+              <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                <div className="text-sm text-yellow-800 dark:text-yellow-400">
+                  🔒 This endpoint requires authentication. <a href="/auth" className="underline">Sign in</a> to test it.
+                </div>
+              </div>
+            )}
+
             <button
               onClick={executeRequest}
-              disabled={loading}
+              disabled={loading || (!isAuthenticated && endpoints.find(ep => ep.path === request.endpoint)?.requiresAuth)}
               className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-2 px-4 rounded-md font-medium transition-colors"
             >
               {loading ? 'Sending...' : 'Send Request'}

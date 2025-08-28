@@ -72,9 +72,12 @@ export default function Navigation() {
               <div className="w-16 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
             ) : isAuthenticated ? (
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-600 dark:text-gray-300">
+                <Link
+                  href="/profile"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 font-medium"
+                >
                   {user?.email}
-                </span>
+                </Link>
                 <button
                   onClick={signOut}
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium"
@@ -156,9 +159,13 @@ export default function Navigation() {
                   </div>
                 ) : isAuthenticated ? (
                   <>
-                    <div className="block px-3 py-2 text-base font-medium text-gray-600 dark:text-gray-300">
+                    <Link
+                      href="/profile"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-3 py-2 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
                       {user?.email}
-                    </div>
+                    </Link>
                     <button
                       onClick={() => {
                         signOut()
