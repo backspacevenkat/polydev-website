@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { useAuth } from '../../hooks/useAuth'
 import { createClient } from '../utils/supabase/client'
 
@@ -154,19 +155,28 @@ export default function Settings() {
                     </button>
                   </li>
                   <li>
-                    <button className="w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
+                    <Link 
+                      href="/dashboard/api-keys"
+                      className="w-full inline-block text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
                       API Keys
-                    </button>
+                    </Link>
                   </li>
                   <li>
-                    <button className="w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
+                    <Link 
+                      href="/dashboard/billing"
+                      className="w-full inline-block text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
                       Billing
-                    </button>
+                    </Link>
                   </li>
                   <li>
-                    <button className="w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
+                    <Link 
+                      href="/dashboard/security"
+                      className="w-full inline-block text-left px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
                       Security
-                    </button>
+                    </Link>
                   </li>
                 </ul>
               </div>
