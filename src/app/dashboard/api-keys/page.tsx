@@ -415,8 +415,10 @@ export default function ApiKeysPage() {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
                 >
                   <option value="">Select model (optional)</option>
-                  {Object.keys(providers.find(p => p.id === formData.provider)?.models || {}).map(model => (
-                    <option key={model} value={model}>{model}</option>
+                  {(providers.find(p => p.id === formData.provider)?.models || []).map((model: any, index: number) => (
+                    <option key={index} value={typeof model === 'string' ? model : model.id || model.name || `Model ${index + 1}`}>
+                      {typeof model === 'string' ? model : model.name || model.id || `Model ${index + 1}`}
+                    </option>
                   ))}
                 </select>
               </div>

@@ -103,7 +103,7 @@ export interface ProviderConfiguration {
   setupInstructions?: string
 }
 
-// Comprehensive provider definitions based on Cline
+// Comprehensive provider definitions based on Cline's exact configuration
 export const PROVIDERS: Record<string, ProviderConfiguration> = {
   // === ANTHROPIC FAMILY ===
   anthropic: {
@@ -113,15 +113,15 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.anthropic.com',
-    defaultModel: 'claude-3-5-sonnet-20241022',
+    defaultModel: 'claude-sonnet-4-20250514',
     supportedModels: {
-      'claude-opus-4-1-20250805': {
+      'claude-sonnet-4-20250514:1m': {
         maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 15,
-        outputPrice: 75,
-        cacheWritePrice: 18.75,
-        cacheReadPrice: 1.50,
+        contextWindow: 1000000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        cacheWritePrice: 3.75,
+        cacheReadPrice: 0.3,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -130,10 +130,46 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       'claude-sonnet-4-20250514': {
         maxTokens: 8192,
         contextWindow: 200000,
-        inputPrice: 3,
-        outputPrice: 15,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
         cacheWritePrice: 3.75,
-        cacheReadPrice: 0.30,
+        cacheReadPrice: 0.3,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-opus-4-1-20250805': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 15.0,
+        outputPrice: 75.0,
+        cacheWritePrice: 18.75,
+        cacheReadPrice: 1.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-opus-4-20250514': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 15.0,
+        outputPrice: 75.0,
+        cacheWritePrice: 18.75,
+        cacheReadPrice: 1.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-7-sonnet-20250219': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        cacheWritePrice: 3.75,
+        cacheReadPrice: 0.3,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -142,10 +178,10 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       'claude-3-5-sonnet-20241022': {
         maxTokens: 8192,
         contextWindow: 200000,
-        inputPrice: 3,
-        outputPrice: 15,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
         cacheWritePrice: 3.75,
-        cacheReadPrice: 0.30,
+        cacheReadPrice: 0.3,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -154,11 +190,11 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       'claude-3-5-haiku-20241022': {
         maxTokens: 8192,
         contextWindow: 200000,
-        inputPrice: 0.80,
-        outputPrice: 4,
-        cacheWritePrice: 1,
+        inputPrice: 0.8,
+        outputPrice: 4.0,
+        cacheWritePrice: 1.0,
         cacheReadPrice: 0.08,
-        supportsImages: true,
+        supportsImages: false,
         supportsPromptCache: true,
         supportsTools: true,
         supportsStreaming: true
@@ -166,10 +202,22 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       'claude-3-opus-20240229': {
         maxTokens: 4096,
         contextWindow: 200000,
-        inputPrice: 15,
-        outputPrice: 75,
+        inputPrice: 15.0,
+        outputPrice: 75.0,
         cacheWritePrice: 18.75,
-        cacheReadPrice: 1.50,
+        cacheReadPrice: 1.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-haiku-20240307': {
+        maxTokens: 4096,
+        contextWindow: 200000,
+        inputPrice: 0.25,
+        outputPrice: 1.25,
+        cacheWritePrice: 0.3,
+        cacheReadPrice: 0.03,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -196,15 +244,65 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Anthropic Claude via CLI for Pro/Max subscribers',
     category: 'cli',
     authType: 'cli',
-    defaultModel: 'claude-opus-4-1-20250805',
+    defaultModel: 'claude-sonnet-4-20250514',
     supportedModels: {
+      'claude-sonnet-4-20250514': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 0, // Subscription-based
+        outputPrice: 0,
+        supportsImages: false, // CLI doesn't support images
+        supportsPromptCache: false, // CLI doesn't support caching
+        supportsTools: true,
+        supportsStreaming: true
+      },
       'claude-opus-4-1-20250805': {
         maxTokens: 8192,
         contextWindow: 200000,
         inputPrice: 0, // Subscription-based
         outputPrice: 0,
-        supportsImages: true,
-        supportsPromptCache: true,
+        supportsImages: false, // CLI doesn't support images
+        supportsPromptCache: false, // CLI doesn't support caching
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-opus-4-20250514': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 0, // Subscription-based
+        outputPrice: 0,
+        supportsImages: false, // CLI doesn't support images
+        supportsPromptCache: false, // CLI doesn't support caching
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-7-sonnet-20250219': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 0, // Subscription-based
+        outputPrice: 0,
+        supportsImages: false, // CLI doesn't support images
+        supportsPromptCache: false, // CLI doesn't support caching
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-5-sonnet-20241022': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 0, // Subscription-based
+        outputPrice: 0,
+        supportsImages: false, // CLI doesn't support images
+        supportsPromptCache: false, // CLI doesn't support caching
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-5-haiku-20241022': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 0, // Subscription-based
+        outputPrice: 0,
+        supportsImages: false, // CLI doesn't support images
+        supportsPromptCache: false, // CLI doesn't support caching
         supportsTools: true,
         supportsStreaming: true
       }
@@ -212,9 +310,9 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     features: {
       streaming: true,
       tools: true,
-      images: true,
+      images: false, // CLI doesn't support images
       reasoning: true,
-      caching: false
+      caching: false // CLI doesn't support caching
     },
     pricing: {
       type: 'subscription'
@@ -223,24 +321,135 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
   },
 
   // === OPENAI FAMILY ===
+  'openai-native': {
+    id: 'openai-native',
+    name: 'OpenAI Native',
+    description: 'Latest OpenAI models including GPT-5 and O-series reasoning models',
+    category: 'api',
+    authType: 'api_key',
+    baseUrl: 'https://api.openai.com/v1',
+    defaultModel: 'gpt-5-2025-08-07',
+    supportedModels: {
+      'gpt-5-2025-08-07': {
+        maxTokens: 8192,
+        contextWindow: 272000,
+        inputPrice: 1.25,
+        outputPrice: 10,
+        cacheReadPrice: 0.125,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-5-mini-2025-08-07': {
+        maxTokens: 8192,
+        contextWindow: 272000,
+        inputPrice: 0.25,
+        outputPrice: 2,
+        cacheReadPrice: 0.025,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-5-nano-2025-08-07': {
+        maxTokens: 8192,
+        contextWindow: 272000,
+        inputPrice: 0.05,
+        outputPrice: 0.40,
+        cacheReadPrice: 0.005,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'o1': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 15,
+        outputPrice: 60,
+        cacheReadPrice: 7.50,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o1-preview': {
+        maxTokens: 32768,
+        contextWindow: 200000,
+        inputPrice: 15,
+        outputPrice: 60,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o1-mini': {
+        maxTokens: 65536,
+        contextWindow: 200000,
+        inputPrice: 3,
+        outputPrice: 12,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o3': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 2,
+        outputPrice: 8,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o3-mini': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 1.10,
+        outputPrice: 4.40,
+        cacheReadPrice: 0.275,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o4-mini': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 1.10,
+        outputPrice: 4.40,
+        cacheReadPrice: 0.275,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      }
+    },
+    features: {
+      streaming: true,
+      tools: true,
+      images: true,
+      reasoning: true,
+      caching: true
+    },
+    pricing: {
+      type: 'token_based',
+      currency: 'USD'
+    },
+    documentation: 'https://platform.openai.com/docs'
+  },
+
   openai: {
     id: 'openai',
-    name: 'OpenAI',
-    description: 'GPT models including reasoning and multimodal capabilities',
+    name: 'OpenAI Compatible',
+    description: 'OpenAI-compatible models for broader compatibility',
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.openai.com/v1',
     defaultModel: 'gpt-4o',
     supportedModels: {
-      'gpt-5-2025-08-07': {
-        maxTokens: 16384,
-        contextWindow: 272000,
-        inputPrice: 1.25,
-        outputPrice: 10,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
       'gpt-4o': {
         maxTokens: 4096,
         contextWindow: 128000,
@@ -259,44 +468,38 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         supportsTools: true,
         supportsStreaming: true
       },
-      'o3-mini': {
-        maxTokens: 65536,
-        contextWindow: 200000,
-        inputPrice: 2,
-        outputPrice: 8,
+      'gpt-4-turbo': {
+        maxTokens: 4096,
+        contextWindow: 128000,
+        inputPrice: 10,
+        outputPrice: 30,
+        supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       },
-      'o3-mini-high': {
-        maxTokens: 65536,
-        contextWindow: 200000,
-        inputPrice: 4,
-        outputPrice: 16,
+      'gpt-3.5-turbo': {
+        maxTokens: 4096,
+        contextWindow: 16385,
+        inputPrice: 0.50,
+        outputPrice: 1.50,
         supportsTools: true,
         supportsStreaming: true
       },
-      'o1-preview': {
-        maxTokens: 32768,
-        contextWindow: 128000,
-        inputPrice: 15,
-        outputPrice: 60,
-        supportsTools: false,
-        supportsStreaming: false
-      },
-      'o1-mini': {
-        maxTokens: 65536,
-        contextWindow: 128000,
-        inputPrice: 3,
-        outputPrice: 12,
-        supportsTools: false,
-        supportsStreaming: false
+      'gpt-5': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 5.0,
+        outputPrice: 15.0,
+        supportsImages: true,
+        supportsTools: true,
+        supportsStreaming: true
       }
     },
     features: {
       streaming: true,
       tools: true,
       images: true,
-      reasoning: true,
+      reasoning: false,
       caching: false
     },
     pricing: {

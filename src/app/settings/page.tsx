@@ -67,6 +67,7 @@ export default function Settings() {
         .from('profiles')
         .upsert({
           id: user?.id,
+          email: user?.email || formData.email,
           display_name: formData.displayName,
           company: formData.company,
           role: formData.role,
