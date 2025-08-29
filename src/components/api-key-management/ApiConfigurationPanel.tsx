@@ -6,7 +6,6 @@ import { useApiConfiguration } from '@/hooks/useApiConfiguration'
 import { PROVIDERS, ApiProvider } from '@/types/api-configuration'
 import { ProviderSelector } from './ProviderSelector'
 import { ApiKeyField } from './ApiKeyField'
-import { CliProviderConfiguration } from './CliProviderConfiguration'
 
 interface ApiConfigurationPanelProps {
   className?: string
@@ -23,7 +22,7 @@ export function ApiConfigurationPanel({ className = '' }: ApiConfigurationPanelP
     getApiKey,
     getModel,
     hasValidConfig,
-    updateConfiguration
+    updateConfig
   } = useApiConfiguration()
 
   const [expandedProvider, setExpandedProvider] = useState<ApiProvider | null>(
@@ -225,10 +224,9 @@ export function ApiConfigurationPanel({ className = '' }: ApiConfigurationPanelP
 
         {/* CLI Providers Tab */}
         {activeTab === 'cli-providers' && (
-          <CliProviderConfiguration
-            configuration={config}
-            onConfigurationChange={updateConfiguration}
-          />
+          <div className="text-center py-8 text-gray-500">
+            CLI providers configuration coming soon
+          </div>
         )}
       </div>
     </div>

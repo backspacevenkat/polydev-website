@@ -21,17 +21,16 @@ interface ApiKey {
 }
 
 interface ProviderConfig {
-  provider: string
-  display_name: string
-  description: string
-  icon_url?: string
-  default_api_base?: string
-  supports_chat: boolean
-  supports_completion: boolean
-  supports_embedding: boolean
-  supports_function_calling: boolean
-  supports_vision: boolean
-  available_models: string[]
+  id: string
+  provider_name: string
+  base_url?: string
+  api_key_required: boolean
+  supports_streaming: boolean
+  supports_tools: boolean
+  supports_images: boolean
+  supports_prompt_cache: boolean
+  authentication_method: string
+  models: any[]
 }
 
 export default function ApiKeysPage() {
@@ -80,8 +79,7 @@ export default function ApiKeysPage() {
       const { data: providersData, error: providersError } = await supabase
         .from('provider_configurations')
         .select('*')
-        .eq('active', true)
-        .order('display_name')
+        .order('provider_name')
 
       if (providersError) throw providersError
 
@@ -95,18 +93,25 @@ export default function ApiKeysPage() {
   }
 
   const handleProviderChange = (provider: string) => {
-    const providerConfig = providers.find(p => p.provider === provider)
+    const providerConfig = providers.find(p => p.id === provider)
     setFormData(prev => ({
       ...prev,
       provider,
-      api_base: providerConfig?.default_api_base || '',
-      default_model: providerConfig?.available_models[0] || ''
+      api_base: providerConfig?.base_url || '',
+      default_model: providerConfig?.models[0]?.name || ''
     }))
   }
 
   const saveApiKey = async () => {
-    if (!formData.key_name.trim() || !formData.api_key.trim()) {
-      setError('Name and API key are required')
+    const provider = providers.find(p => p.id === formData.provider)
+    
+    if (!formData.key_name.trim()) {
+      setError('Key name is required')
+      return
+    }
+    
+    if (provider?.api_key_required && !formData.api_key.trim()) {
+      setError('API key is required for this provider')
       return
     }
 
@@ -114,10 +119,12 @@ export default function ApiKeysPage() {
       setLoading(true)
       
       // Encrypt the API key (in production, use proper encryption)
-      const encryptedKey = btoa(formData.api_key)
-      const keyPreview = formData.api_key.length > 8 
+      const encryptedKey = formData.api_key ? btoa(formData.api_key) : null
+      const keyPreview = formData.api_key && formData.api_key.length > 8 
         ? `${formData.api_key.slice(0, 8)}...${formData.api_key.slice(-4)}`
-        : `${formData.api_key.slice(0, 4)}***`
+        : formData.api_key 
+        ? `${formData.api_key.slice(0, 4)}***`
+        : `${provider?.authentication_method === 'cli' ? 'CLI' : 'Cloud'} Auth`
 
       const keyData = {
         user_id: user?.id,
@@ -211,9 +218,9 @@ export default function ApiKeysPage() {
   }
 
   const getProviderInfo = (provider: string) => {
-    return providers.find(p => p.provider === provider) || {
-      display_name: provider.charAt(0).toUpperCase() + provider.slice(1),
-      description: 'Custom provider'
+    return providers.find(p => p.id === provider) || {
+      provider_name: provider.charAt(0).toUpperCase() + provider.slice(1),
+      authentication_method: 'api_key'
     }
   }
 
@@ -318,8 +325,8 @@ export default function ApiKeysPage() {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
                 >
                   {providers.map(provider => (
-                    <option key={provider.provider} value={provider.provider}>
-                      {provider.display_name}
+                    <option key={provider.id} value={provider.id}>
+                      {provider.provider_name} {provider.api_key_required ? '' : '(CLI/Cloud)'}
                     </option>
                   ))}
                 </select>
@@ -340,21 +347,47 @@ export default function ApiKeysPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              {/* API Key */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  API Key * {editingKey && <span className="text-xs text-gray-500">(leave empty to keep current)</span>}
-                </label>
-                <input
-                  type="password"
-                  value={formData.api_key}
-                  onChange={(e) => setFormData(prev => ({...prev, api_key: e.target.value}))}
-                  placeholder={editingKey ? "Enter new key to update" : "sk-... or your provider's API key format"}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white font-mono text-sm"
-                />
+            {/* API Key - only show for providers that require it */}
+            {providers.find(p => p.id === formData.provider)?.api_key_required && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    API Key * {editingKey && <span className="text-xs text-gray-500">(leave empty to keep current)</span>}
+                  </label>
+                  <input
+                    type="password"
+                    value={formData.api_key}
+                    onChange={(e) => setFormData(prev => ({...prev, api_key: e.target.value}))}
+                    placeholder={editingKey ? "Enter new key to update" : "sk-... or your provider's API key format"}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white font-mono text-sm"
+                  />
+                </div>
               </div>
-            </div>
+            )}
+            
+            {/* CLI/Cloud Provider Info */}
+            {!providers.find(p => p.id === formData.provider)?.api_key_required && (
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                      {providers.find(p => p.id === formData.provider)?.authentication_method === 'cli' ? 'CLI-based Provider' : 'Cloud-based Provider'}
+                    </h3>
+                    <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+                      {providers.find(p => p.id === formData.provider)?.authentication_method === 'cli' 
+                        ? 'This provider uses CLI authentication. Make sure you have the CLI tool installed and authenticated.'
+                        : 'This provider uses cloud credentials. Configure your cloud authentication separately.'
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               {/* API Base URL */}
@@ -382,7 +415,7 @@ export default function ApiKeysPage() {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
                 >
                   <option value="">Select model (optional)</option>
-                  {providers.find(p => p.provider === formData.provider)?.available_models.map(model => (
+                  {Object.keys(providers.find(p => p.id === formData.provider)?.models || {}).map(model => (
                     <option key={model} value={model}>{model}</option>
                   ))}
                 </select>
@@ -461,14 +494,14 @@ export default function ApiKeysPage() {
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
                           <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                            {providerInfo.display_name.charAt(0)}
+                            {providerInfo.provider_name.charAt(0)}
                           </div>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">
                               {key.key_name}
                             </h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                              {providerInfo.display_name} • {key.key_preview}
+                              {providerInfo.provider_name} • {key.key_preview}
                             </p>
                           </div>
                           <div className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -555,30 +588,32 @@ export default function ApiKeysPage() {
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {providers.map(provider => (
-            <div key={provider.provider} className="bg-white dark:bg-gray-900 p-3 rounded border">
+            <div key={provider.id} className="bg-white dark:bg-gray-900 p-3 rounded border">
               <div className="flex items-center space-x-2 mb-2">
                 <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded flex items-center justify-center text-white font-bold text-xs">
-                  {provider.display_name.charAt(0)}
+                  {provider.provider_name.charAt(0)}
                 </div>
                 <h4 className="font-medium text-gray-900 dark:text-white text-sm">
-                  {provider.display_name}
+                  {provider.provider_name}
                 </h4>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
-                {provider.description}
+                {provider.authentication_method === 'cli' ? 'CLI Authentication' : 
+                 provider.authentication_method === 'cloud' ? 'Cloud Authentication' :
+                 'API Key Authentication'}
               </p>
               <div className="flex flex-wrap gap-1 mt-2">
-                {provider.supports_chat && (
-                  <span className="px-1.5 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-xs rounded">Chat</span>
+                {provider.supports_streaming && (
+                  <span className="px-1.5 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-xs rounded">Stream</span>
                 )}
-                {provider.supports_embedding && (
-                  <span className="px-1.5 py-0.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs rounded">Embed</span>
+                {provider.supports_tools && (
+                  <span className="px-1.5 py-0.5 bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 text-xs rounded">Tools</span>
                 )}
-                {provider.supports_function_calling && (
-                  <span className="px-1.5 py-0.5 bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 text-xs rounded">Functions</span>
+                {provider.supports_images && (
+                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 text-xs rounded">Images</span>
                 )}
-                {provider.supports_vision && (
-                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 text-xs rounded">Vision</span>
+                {provider.supports_prompt_cache && (
+                  <span className="px-1.5 py-0.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs rounded">Cache</span>
                 )}
               </div>
             </div>

@@ -135,37 +135,177 @@ export default function Dashboard() {
   ]
 
   const llmProviders: LLMProvider[] = [
-    {
-      id: 'openai',
-      name: 'OpenAI',
-      model: 'GPT-4o',
-      status: 'active',
-      requests: 1247,
-      cost: '$23.45'
-    },
+    // API-based providers
     {
       id: 'anthropic',
       name: 'Anthropic',
-      model: 'Claude-3.5-Sonnet',
+      model: 'claude-opus-4-1-20250805',
       status: 'active',
       requests: 892,
       cost: '$18.90'
     },
     {
-      id: 'google',
-      name: 'Google AI',
-      model: 'Gemini Pro',
+      id: 'anthropic-sonnet',
+      name: 'Anthropic',
+      model: 'claude-3-5-sonnet-20241022',
       status: 'active',
       requests: 634,
-      cost: '$12.30'
+      cost: '$15.30'
     },
     {
-      id: 'meta',
-      name: 'Meta',
-      model: 'Llama 3.1 70B',
-      status: 'inactive',
+      id: 'anthropic-haiku',
+      name: 'Anthropic',
+      model: 'claude-3-5-haiku-20241022',
+      status: 'active',
+      requests: 423,
+      cost: '$8.45'
+    },
+    {
+      id: 'openai',
+      name: 'OpenAI',
+      model: 'gpt-4o',
+      status: 'active',
+      requests: 1247,
+      cost: '$23.45'
+    },
+    {
+      id: 'openai-mini',
+      name: 'OpenAI',
+      model: 'gpt-4o-mini',
+      status: 'active',
+      requests: 892,
+      cost: '$5.20'
+    },
+    {
+      id: 'openai-o1',
+      name: 'OpenAI',
+      model: 'o1-preview',
+      status: 'active',
       requests: 156,
-      cost: '$3.20'
+      cost: '$45.80'
+    },
+    {
+      id: 'google',
+      name: 'Google AI',
+      model: 'gemini-2.0-flash-exp',
+      status: 'active',
+      requests: 534,
+      cost: '$8.20'
+    },
+    {
+      id: 'google-pro',
+      name: 'Google AI',
+      model: 'gemini-1.5-pro-002',
+      status: 'active',
+      requests: 298,
+      cost: '$12.45'
+    },
+    {
+      id: 'deepseek',
+      name: 'DeepSeek',
+      model: 'deepseek-chat',
+      status: 'active',
+      requests: 423,
+      cost: '$2.15'
+    },
+    {
+      id: 'xai',
+      name: 'xAI',
+      model: 'grok-beta',
+      status: 'active',
+      requests: 312,
+      cost: '$6.80'
+    },
+    {
+      id: 'groq',
+      name: 'Groq',
+      model: 'llama-3.1-70b-versatile',
+      status: 'active',
+      requests: 567,
+      cost: '$3.25'
+    },
+    {
+      id: 'openrouter',
+      name: 'OpenRouter',
+      model: 'anthropic/claude-3.5-sonnet',
+      status: 'active',
+      requests: 234,
+      cost: '$9.80'
+    },
+    // CLI-based providers (subscription)
+    {
+      id: 'codex-cli',
+      name: 'Codex CLI',
+      model: 'gpt-4o (CLI)',
+      status: 'active',
+      requests: 245,
+      cost: 'Subscription'
+    },
+    {
+      id: 'claude-code',
+      name: 'Claude Code',
+      model: 'claude-opus-4-1-20250805 (CLI)',
+      status: 'active',
+      requests: 198,
+      cost: 'Subscription'
+    },
+    {
+      id: 'github-copilot',
+      name: 'GitHub Copilot',
+      model: 'gpt-4o (GitHub)',
+      status: 'active',
+      requests: 156,
+      cost: 'Subscription'
+    },
+    {
+      id: 'gemini-cli',
+      name: 'Gemini CLI',
+      model: 'gemini-2.0-flash-exp (Cloud)',
+      status: 'active',
+      requests: 89,
+      cost: 'Cloud Credits'
+    },
+    // Cloud-based providers
+    {
+      id: 'vertex',
+      name: 'Google Vertex AI',
+      model: 'gemini-1.5-pro-002',
+      status: 'active',
+      requests: 123,
+      cost: 'Cloud Credits'
+    },
+    {
+      id: 'bedrock',
+      name: 'AWS Bedrock',
+      model: 'anthropic.claude-3-5-sonnet-20241022-v2:0',
+      status: 'active',
+      requests: 78,
+      cost: 'AWS Credits'
+    },
+    {
+      id: 'azure',
+      name: 'Azure OpenAI',
+      model: 'gpt-4o',
+      status: 'active',
+      requests: 167,
+      cost: 'Azure Credits'
+    },
+    // Local providers
+    {
+      id: 'ollama',
+      name: 'Ollama',
+      model: 'llama3.2',
+      status: 'active',
+      requests: 445,
+      cost: 'Local/Free'
+    },
+    {
+      id: 'lmstudio',
+      name: 'LM Studio',
+      model: 'local-model',
+      status: 'inactive',
+      requests: 23,
+      cost: 'Local/Free'
     }
   ]
 
