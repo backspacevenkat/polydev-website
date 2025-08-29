@@ -103,9 +103,9 @@ export interface ProviderConfiguration {
   setupInstructions?: string
 }
 
-// Comprehensive provider definitions based on Cline's exact configuration
+// Provider definitions based on Cline's EXACT configuration
 export const PROVIDERS: Record<string, ProviderConfiguration> = {
-  // === ANTHROPIC FAMILY ===
+  // === ANTHROPIC ===
   anthropic: {
     id: 'anthropic',
     name: 'Anthropic',
@@ -113,15 +113,13 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.anthropic.com',
-    defaultModel: 'claude-sonnet-4-20250514',
+    defaultModel: 'claude-3-5-sonnet-20241022',
     supportedModels: {
       'claude-sonnet-4-20250514:1m': {
         maxTokens: 8192,
         contextWindow: 1000000,
         inputPrice: 3.0,
         outputPrice: 15.0,
-        cacheWritePrice: 3.75,
-        cacheReadPrice: 0.3,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -132,8 +130,16 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         contextWindow: 200000,
         inputPrice: 3.0,
         outputPrice: 15.0,
-        cacheWritePrice: 3.75,
-        cacheReadPrice: 0.3,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-haiku-4-20250514': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 0.25,
+        outputPrice: 1.25,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -144,32 +150,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         contextWindow: 200000,
         inputPrice: 15.0,
         outputPrice: 75.0,
-        cacheWritePrice: 18.75,
-        cacheReadPrice: 1.5,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-opus-4-20250514': {
-        maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 15.0,
-        outputPrice: 75.0,
-        cacheWritePrice: 18.75,
-        cacheReadPrice: 1.5,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-3-7-sonnet-20250219': {
-        maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 3.0,
-        outputPrice: 15.0,
-        cacheWritePrice: 3.75,
-        cacheReadPrice: 0.3,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -180,44 +160,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         contextWindow: 200000,
         inputPrice: 3.0,
         outputPrice: 15.0,
-        cacheWritePrice: 3.75,
-        cacheReadPrice: 0.3,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-3-5-haiku-20241022': {
-        maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 0.8,
-        outputPrice: 4.0,
-        cacheWritePrice: 1.0,
-        cacheReadPrice: 0.08,
-        supportsImages: false,
-        supportsPromptCache: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-3-opus-20240229': {
-        maxTokens: 4096,
-        contextWindow: 200000,
-        inputPrice: 15.0,
-        outputPrice: 75.0,
-        cacheWritePrice: 18.75,
-        cacheReadPrice: 1.5,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-3-haiku-20240307': {
-        maxTokens: 4096,
-        contextWindow: 200000,
-        inputPrice: 0.25,
-        outputPrice: 1.25,
-        cacheWritePrice: 0.3,
-        cacheReadPrice: 0.03,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -240,69 +182,29 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
 
   'claude-code': {
     id: 'claude-code',
-    name: 'Claude Code (CLI)',
+    name: 'Claude Code',
     description: 'Anthropic Claude via CLI for Pro/Max subscribers',
     category: 'cli',
     authType: 'cli',
-    defaultModel: 'claude-sonnet-4-20250514',
+    defaultModel: 'claude-opus-4-1',
     supportedModels: {
-      'claude-sonnet-4-20250514': {
+      'claude-opus-4-1': {
         maxTokens: 8192,
         contextWindow: 200000,
-        inputPrice: 0, // Subscription-based
+        inputPrice: 0,
         outputPrice: 0,
-        supportsImages: false, // CLI doesn't support images
-        supportsPromptCache: false, // CLI doesn't support caching
+        supportsImages: false,
+        supportsPromptCache: false,
         supportsTools: true,
         supportsStreaming: true
       },
-      'claude-opus-4-1-20250805': {
+      'claude-sonnet-4': {
         maxTokens: 8192,
         contextWindow: 200000,
-        inputPrice: 0, // Subscription-based
+        inputPrice: 0,
         outputPrice: 0,
-        supportsImages: false, // CLI doesn't support images
-        supportsPromptCache: false, // CLI doesn't support caching
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-opus-4-20250514': {
-        maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 0, // Subscription-based
-        outputPrice: 0,
-        supportsImages: false, // CLI doesn't support images
-        supportsPromptCache: false, // CLI doesn't support caching
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-3-7-sonnet-20250219': {
-        maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 0, // Subscription-based
-        outputPrice: 0,
-        supportsImages: false, // CLI doesn't support images
-        supportsPromptCache: false, // CLI doesn't support caching
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-3-5-sonnet-20241022': {
-        maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 0, // Subscription-based
-        outputPrice: 0,
-        supportsImages: false, // CLI doesn't support images
-        supportsPromptCache: false, // CLI doesn't support caching
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-3-5-haiku-20241022': {
-        maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 0, // Subscription-based
-        outputPrice: 0,
-        supportsImages: false, // CLI doesn't support images
-        supportsPromptCache: false, // CLI doesn't support caching
+        supportsImages: false,
+        supportsPromptCache: false,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -310,9 +212,9 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     features: {
       streaming: true,
       tools: true,
-      images: false, // CLI doesn't support images
+      images: false,
       reasoning: true,
-      caching: false // CLI doesn't support caching
+      caching: false
     },
     pricing: {
       type: 'subscription'
@@ -320,111 +222,54 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     setupInstructions: 'Install Claude Code CLI and authenticate with your Pro/Max subscription'
   },
 
-  // === OPENAI FAMILY ===
   'openai-native': {
     id: 'openai-native',
-    name: 'OpenAI Native',
-    description: 'Latest OpenAI models including GPT-5 and O-series reasoning models',
+    name: 'OpenAI (Native)',
+    description: 'Latest OpenAI models with native authentication',
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.openai.com/v1',
-    defaultModel: 'gpt-5-2025-08-07',
+    defaultModel: 'gpt-4o',
     supportedModels: {
-      'gpt-5-2025-08-07': {
-        maxTokens: 8192,
-        contextWindow: 272000,
-        inputPrice: 1.25,
-        outputPrice: 10,
-        cacheReadPrice: 0.125,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-5-mini-2025-08-07': {
-        maxTokens: 8192,
-        contextWindow: 272000,
-        inputPrice: 0.25,
-        outputPrice: 2,
-        cacheReadPrice: 0.025,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-5-nano-2025-08-07': {
-        maxTokens: 8192,
-        contextWindow: 272000,
-        inputPrice: 0.05,
-        outputPrice: 0.40,
-        cacheReadPrice: 0.005,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'o1': {
+      'o1-pro': {
         maxTokens: 100000,
         contextWindow: 200000,
-        inputPrice: 15,
-        outputPrice: 60,
-        cacheReadPrice: 7.50,
-        supportsImages: true,
+        inputPrice: 60.0,
+        outputPrice: 240.0,
+        supportsImages: false,
         supportsPromptCache: false,
         supportsTools: false,
         supportsStreaming: false
       },
-      'o1-preview': {
-        maxTokens: 32768,
+      'o1': {
+        maxTokens: 100000,
         contextWindow: 200000,
-        inputPrice: 15,
-        outputPrice: 60,
-        supportsImages: true,
+        inputPrice: 15.0,
+        outputPrice: 60.0,
+        supportsImages: false,
         supportsPromptCache: false,
         supportsTools: false,
         supportsStreaming: false
       },
       'o1-mini': {
         maxTokens: 65536,
-        contextWindow: 200000,
-        inputPrice: 3,
-        outputPrice: 12,
-        supportsImages: true,
+        contextWindow: 128000,
+        inputPrice: 3.0,
+        outputPrice: 12.0,
+        supportsImages: false,
         supportsPromptCache: false,
         supportsTools: false,
         supportsStreaming: false
       },
-      'o3': {
-        maxTokens: 100000,
-        contextWindow: 200000,
-        inputPrice: 2,
-        outputPrice: 8,
+      'gpt-4o': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 2.5,
+        outputPrice: 10.0,
         supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: false,
-        supportsStreaming: false
-      },
-      'o3-mini': {
-        maxTokens: 100000,
-        contextWindow: 200000,
-        inputPrice: 1.10,
-        outputPrice: 4.40,
-        cacheReadPrice: 0.275,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: false,
-        supportsStreaming: false
-      },
-      'o4-mini': {
-        maxTokens: 100000,
-        contextWindow: 200000,
-        inputPrice: 1.10,
-        outputPrice: 4.40,
-        cacheReadPrice: 0.275,
-        supportsImages: true,
-        supportsPromptCache: true,
-        supportsTools: false,
-        supportsStreaming: false
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
       }
     },
     features: {
@@ -432,7 +277,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       tools: true,
       images: true,
       reasoning: true,
-      caching: true
+      caching: false
     },
     pricing: {
       type: 'token_based',
@@ -443,204 +288,50 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
 
   openai: {
     id: 'openai',
-    name: 'OpenAI Compatible',
-    description: 'OpenAI-compatible models for broader compatibility',
+    name: 'OpenAI (API)',
+    description: 'OpenAI models via API',
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.openai.com/v1',
     defaultModel: 'gpt-4o',
     supportedModels: {
-      'gpt-4o': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 2.50,
-        outputPrice: 10,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4o-2024-11-20': {
-        maxTokens: 16384,
-        contextWindow: 128000,
-        inputPrice: 2.50,
-        outputPrice: 10,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4o-2024-08-06': {
-        maxTokens: 16384,
-        contextWindow: 128000,
-        inputPrice: 2.50,
-        outputPrice: 10,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4o-2024-05-13': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 5,
-        outputPrice: 15,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4o-mini': {
-        maxTokens: 16384,
-        contextWindow: 128000,
-        inputPrice: 0.15,
-        outputPrice: 0.60,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4o-mini-2024-07-18': {
-        maxTokens: 16384,
-        contextWindow: 128000,
-        inputPrice: 0.15,
-        outputPrice: 0.60,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'chatgpt-4o-latest': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 5,
-        outputPrice: 15,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-turbo': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 10,
-        outputPrice: 30,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-turbo-2024-04-09': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 10,
-        outputPrice: 30,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-turbo-preview': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 10,
-        outputPrice: 30,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-0125-preview': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 10,
-        outputPrice: 30,
-        supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-1106-preview': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 10,
-        outputPrice: 30,
-        supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-vision-preview': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 10,
-        outputPrice: 30,
-        supportsImages: true,
-        supportsTools: false,
-        supportsStreaming: true
-      },
-      'gpt-4': {
-        maxTokens: 8192,
-        contextWindow: 8192,
-        inputPrice: 30,
-        outputPrice: 60,
-        supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-0613': {
-        maxTokens: 8192,
-        contextWindow: 8192,
-        inputPrice: 30,
-        outputPrice: 60,
-        supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-32k': {
-        maxTokens: 32768,
-        contextWindow: 32768,
-        inputPrice: 60,
-        outputPrice: 120,
-        supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4-32k-0613': {
-        maxTokens: 32768,
-        contextWindow: 32768,
-        inputPrice: 60,
-        outputPrice: 120,
-        supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-3.5-turbo': {
-        maxTokens: 4096,
-        contextWindow: 16385,
-        inputPrice: 0.50,
-        outputPrice: 1.50,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-3.5-turbo-0125': {
-        maxTokens: 4096,
-        contextWindow: 16385,
-        inputPrice: 0.50,
-        outputPrice: 1.50,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-3.5-turbo-1106': {
-        maxTokens: 4096,
-        contextWindow: 16385,
-        inputPrice: 1,
-        outputPrice: 2,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-3.5-turbo-16k': {
-        maxTokens: 16384,
-        contextWindow: 16385,
-        inputPrice: 3,
-        outputPrice: 4,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-5': {
-        maxTokens: 8192,
+      'o1-pro': {
+        maxTokens: 100000,
         contextWindow: 200000,
-        inputPrice: 5.0,
-        outputPrice: 15.0,
+        inputPrice: 60.0,
+        outputPrice: 240.0,
+        supportsImages: false,
+        supportsPromptCache: false,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o1': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 15.0,
+        outputPrice: 60.0,
+        supportsImages: false,
+        supportsPromptCache: false,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o1-mini': {
+        maxTokens: 65536,
+        contextWindow: 128000,
+        inputPrice: 3.0,
+        outputPrice: 12.0,
+        supportsImages: false,
+        supportsPromptCache: false,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'gpt-4o': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 2.5,
+        outputPrice: 10.0,
         supportsImages: true,
+        supportsPromptCache: false,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -649,7 +340,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       streaming: true,
       tools: true,
       images: true,
-      reasoning: false,
+      reasoning: true,
       caching: false
     },
     pricing: {
@@ -659,7 +350,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     documentation: 'https://platform.openai.com/docs'
   },
 
-  // === GOOGLE FAMILY ===
   gemini: {
     id: 'gemini',
     name: 'Google Gemini',
@@ -667,31 +357,31 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://generativelanguage.googleapis.com/v1',
-    defaultModel: 'gemini-2.5-flash-002',
+    defaultModel: 'gemini-2.0-flash-exp',
     supportedModels: {
-      'gemini-2.5-pro-002': {
+      'gemini-2.0-flash-exp': {
         maxTokens: 8192,
         contextWindow: 1000000,
-        inputPrice: 2.50,
-        outputPrice: 15,
+        inputPrice: 0.0,
+        outputPrice: 0.0,
         supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       },
-      'gemini-2.5-flash-002': {
+      'gemini-1.5-pro-latest': {
         maxTokens: 8192,
-        contextWindow: 1000000,
-        inputPrice: 0.30,
-        outputPrice: 2.50,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gemini-1.5-pro-002': {
-        maxTokens: 8192,
-        contextWindow: 2000000,
+        contextWindow: 2097152,
         inputPrice: 1.25,
-        outputPrice: 5,
+        outputPrice: 2.5,
+        supportsImages: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gemini-1.5-flash-latest': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 0.075,
+        outputPrice: 0.3,
         supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
@@ -718,13 +408,22 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'cloud',
     authType: 'cloud_credentials',
     baseUrl: 'https://us-central1-aiplatform.googleapis.com',
-    defaultModel: 'gemini-2.5-pro-002',
+    defaultModel: 'gemini-1.5-pro',
     supportedModels: {
-      'gemini-2.5-pro-002': {
+      'gemini-1.5-pro': {
+        maxTokens: 8192,
+        contextWindow: 2097152,
+        inputPrice: 1.25,
+        outputPrice: 2.5,
+        supportsImages: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gemini-1.5-flash': {
         maxTokens: 8192,
         contextWindow: 1000000,
-        inputPrice: 2.50,
-        outputPrice: 15,
+        inputPrice: 0.075,
+        outputPrice: 0.3,
         supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
@@ -744,7 +443,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     documentation: 'https://cloud.google.com/vertex-ai/docs'
   },
 
-  // === GROQ ===
   groq: {
     id: 'groq',
     name: 'Groq',
@@ -755,7 +453,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     defaultModel: 'llama-3.3-70b-versatile',
     supportedModels: {
       'llama-3.3-70b-versatile': {
-        maxTokens: 8192,
+        maxTokens: 32768,
         contextWindow: 128000,
         inputPrice: 0.59,
         outputPrice: 0.79,
@@ -763,93 +461,11 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         supportsStreaming: true
       },
       'llama-3.1-70b-versatile': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.59,
-        outputPrice: 0.79,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'llama-3.1-8b-instant': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.05,
-        outputPrice: 0.08,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'llama-3.2-1b-preview': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.04,
-        outputPrice: 0.04,
-        supportsTools: false,
-        supportsStreaming: true
-      },
-      'llama-3.2-3b-preview': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.06,
-        outputPrice: 0.06,
-        supportsTools: false,
-        supportsStreaming: true
-      },
-      'llama-3.2-11b-vision-preview': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.18,
-        outputPrice: 0.18,
-        supportsImages: true,
-        supportsTools: false,
-        supportsStreaming: true
-      },
-      'llama-3.2-90b-vision-preview': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.90,
-        outputPrice: 0.90,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'deepseek-r1-distill-llama-70b': {
-        maxTokens: 8192,
+        maxTokens: 32768,
         contextWindow: 128000,
         inputPrice: 0.59,
         outputPrice: 0.79,
         supportsTools: true,
-        supportsStreaming: true
-      },
-      'openai/gpt-oss-120b': {
-        maxTokens: 8192,
-        contextWindow: 32768,
-        inputPrice: 1.20,
-        outputPrice: 1.20,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'mixtral-8x7b-32768': {
-        maxTokens: 32768,
-        contextWindow: 32768,
-        inputPrice: 0.27,
-        outputPrice: 0.27,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gemma2-9b-it': {
-        maxTokens: 8192,
-        contextWindow: 8192,
-        inputPrice: 0.20,
-        outputPrice: 0.20,
-        supportsTools: false,
-        supportsStreaming: true
-      },
-      'gemma-7b-it': {
-        maxTokens: 8192,
-        contextWindow: 8192,
-        inputPrice: 0.10,
-        outputPrice: 0.10,
-        supportsTools: false,
         supportsStreaming: true
       }
     },
@@ -867,7 +483,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     documentation: 'https://console.groq.com/docs'
   },
 
-  // === ADDITIONAL PROVIDERS ===
   deepseek: {
     id: 'deepseek',
     name: 'DeepSeek',
@@ -875,9 +490,9 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.deepseek.com',
-    defaultModel: 'deepseek-v3',
+    defaultModel: 'deepseek-chat',
     supportedModels: {
-      'deepseek-v3': {
+      'deepseek-chat': {
         maxTokens: 8192,
         contextWindow: 64000,
         inputPrice: 0.14,
@@ -915,21 +530,21 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.x.ai/v1',
-    defaultModel: 'grok-3-beta',
+    defaultModel: 'grok-2-1212',
     supportedModels: {
-      'grok-3-beta': {
-        maxTokens: 4096,
+      'grok-2-1212': {
+        maxTokens: 131072,
         contextWindow: 131072,
-        inputPrice: 5,
-        outputPrice: 15,
+        inputPrice: 2.0,
+        outputPrice: 10.0,
         supportsTools: true,
         supportsStreaming: true
       },
-      'grok-2-1212': {
+      'grok-2-vision-1212': {
         maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 2,
-        outputPrice: 10,
+        contextWindow: 8192,
+        inputPrice: 2.0,
+        outputPrice: 10.0,
         supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
@@ -949,7 +564,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     documentation: 'https://docs.x.ai'
   },
 
-  // === LOCAL/SELF-HOSTED ===
   ollama: {
     id: 'ollama',
     name: 'Ollama',
@@ -957,36 +571,28 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'local',
     authType: 'local',
     baseUrl: 'http://localhost:11434',
-    defaultModel: 'llama3.2',
+    defaultModel: 'llama3.3',
     supportedModels: {
-      'llama3.2': {
-        maxTokens: 4096,
-        contextWindow: 131072,
+      'llama3.3': {
+        maxTokens: 8192,
+        contextWindow: 128000,
         inputPrice: 0,
         outputPrice: 0,
-        supportsTools: true,
+        supportsTools: false,
         supportsStreaming: true
       },
-      'qwen2.5-coder': {
+      'qwen2.5': {
         maxTokens: 8192,
         contextWindow: 32768,
         inputPrice: 0,
         outputPrice: 0,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'deepseek-r1': {
-        maxTokens: 8192,
-        contextWindow: 32768,
-        inputPrice: 0,
-        outputPrice: 0,
-        supportsTools: true,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1009,16 +615,16 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     supportedModels: {
       'local-model': {
         maxTokens: 4096,
-        contextWindow: 32768,
+        contextWindow: 4096,
         inputPrice: 0,
         outputPrice: 0,
-        supportsTools: true,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1030,7 +636,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     documentation: 'https://lmstudio.ai/docs'
   },
 
-  // === ADDITIONAL CLOUD/API PROVIDERS ===
   mistral: {
     id: 'mistral',
     name: 'Mistral AI',
@@ -1041,26 +646,18 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     defaultModel: 'mistral-large-latest',
     supportedModels: {
       'mistral-large-latest': {
-        maxTokens: 8192,
+        maxTokens: 128000,
         contextWindow: 128000,
-        inputPrice: 2,
-        outputPrice: 6,
+        inputPrice: 2.0,
+        outputPrice: 6.0,
         supportsTools: true,
         supportsStreaming: true
       },
       'mistral-small-latest': {
-        maxTokens: 8192,
-        contextWindow: 128000,
+        maxTokens: 32000,
+        contextWindow: 32000,
         inputPrice: 0.2,
         outputPrice: 0.6,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'codestral-latest': {
-        maxTokens: 8192,
-        contextWindow: 32000,
-        inputPrice: 0.3,
-        outputPrice: 0.9,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1089,18 +686,18 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     defaultModel: 'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo',
     supportedModels: {
       'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo': {
-        maxTokens: 8192,
+        maxTokens: 32768,
         contextWindow: 131072,
         inputPrice: 0.88,
         outputPrice: 0.88,
         supportsTools: true,
         supportsStreaming: true
       },
-      'mistralai/Mixtral-8x7B-Instruct-v0.1': {
-        maxTokens: 8192,
-        contextWindow: 32768,
-        inputPrice: 0.6,
-        outputPrice: 0.6,
+      'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo': {
+        maxTokens: 32768,
+        contextWindow: 131072,
+        inputPrice: 0.18,
+        outputPrice: 0.18,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1129,16 +726,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     defaultModel: 'accounts/fireworks/models/llama-v3p1-70b-instruct',
     supportedModels: {
       'accounts/fireworks/models/llama-v3p1-70b-instruct': {
-        maxTokens: 8192,
+        maxTokens: 16384,
         contextWindow: 131072,
-        inputPrice: 0.9,
-        outputPrice: 0.9,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'accounts/fireworks/models/qwen2p5-coder-32b-instruct': {
-        maxTokens: 8192,
-        contextWindow: 32768,
         inputPrice: 0.9,
         outputPrice: 0.9,
         supportsTools: true,
@@ -1166,22 +755,22 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://openrouter.ai/api/v1',
-    defaultModel: 'anthropic/claude-3-5-sonnet',
+    defaultModel: 'anthropic/claude-3.5-sonnet',
     supportedModels: {
-      'anthropic/claude-3-5-sonnet': {
+      'anthropic/claude-3.5-sonnet': {
         maxTokens: 8192,
         contextWindow: 200000,
-        inputPrice: 3,
-        outputPrice: 15,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
         supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       },
       'openai/gpt-4o': {
-        maxTokens: 4096,
+        maxTokens: 16384,
         contextWindow: 128000,
-        inputPrice: 5,
-        outputPrice: 15,
+        inputPrice: 2.5,
+        outputPrice: 10.0,
         supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
@@ -1213,17 +802,18 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       'anthropic.claude-3-5-sonnet-20241022-v2:0': {
         maxTokens: 8192,
         contextWindow: 200000,
-        inputPrice: 3,
-        outputPrice: 15,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
         supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       },
-      'meta.llama3-1-70b-instruct-v1:0': {
-        maxTokens: 8192,
-        contextWindow: 128000,
-        inputPrice: 2.65,
-        outputPrice: 3.5,
+      'amazon.nova-pro-v1:0': {
+        maxTokens: 5120,
+        contextWindow: 300000,
+        inputPrice: 0.8,
+        outputPrice: 3.2,
+        supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1242,7 +832,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     documentation: 'https://docs.aws.amazon.com/bedrock/'
   },
 
-  // === ADDITIONAL SPECIALIZED PROVIDERS ===
   huggingface: {
     id: 'huggingface',
     name: 'Hugging Face',
@@ -1250,13 +839,14 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api-inference.huggingface.co',
-    defaultModel: 'microsoft/DialoGPT-medium',
+    defaultModel: 'Qwen/Qwen2.5-72B-Instruct',
     supportedModels: {
-      'microsoft/DialoGPT-medium': {
-        maxTokens: 1024,
-        contextWindow: 1024,
-        inputPrice: 0,
-        outputPrice: 0,
+      'Qwen/Qwen2.5-72B-Instruct': {
+        maxTokens: 32768,
+        contextWindow: 32768,
+        inputPrice: 0.4,
+        outputPrice: 0.4,
+        supportsTools: false,
         supportsStreaming: false
       }
     },
@@ -1268,7 +858,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       caching: false
     },
     pricing: {
-      type: 'free'
+      type: 'token_based',
+      currency: 'USD'
     },
     documentation: 'https://huggingface.co/docs/api-inference'
   },
@@ -1283,17 +874,17 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     defaultModel: 'Meta-Llama-3.1-70B-Instruct',
     supportedModels: {
       'Meta-Llama-3.1-70B-Instruct': {
-        maxTokens: 8192,
+        maxTokens: 4096,
         contextWindow: 131072,
-        inputPrice: 1,
-        outputPrice: 1,
-        supportsTools: true,
+        inputPrice: 1.0,
+        outputPrice: 1.0,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1319,13 +910,13 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         contextWindow: 128000,
         inputPrice: 0.6,
         outputPrice: 0.6,
-        supportsTools: true,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1337,7 +928,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     documentation: 'https://inference-docs.cerebras.ai'
   },
 
-  // === CHINESE PROVIDERS ===
   moonshot: {
     id: 'moonshot',
     name: 'Moonshot AI',
@@ -1345,28 +935,20 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.moonshot.cn/v1',
-    defaultModel: 'moonshot-v1-8k',
+    defaultModel: 'moonshot-v1-128k',
     supportedModels: {
-      'moonshot-v1-8k': {
-        maxTokens: 8192,
-        contextWindow: 8192,
-        inputPrice: 1,
-        outputPrice: 1,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'moonshot-v1-32k': {
-        maxTokens: 8192,
-        contextWindow: 32768,
-        inputPrice: 2,
-        outputPrice: 2,
-        supportsTools: true,
+      'moonshot-v1-128k': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 5.06,
+        outputPrice: 5.06,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1380,7 +962,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
 
   qwen: {
     id: 'qwen',
-    name: 'Qwen (Alibaba)',
+    name: 'Alibaba Qwen',
     description: 'Alibaba Qwen models with coding capabilities',
     category: 'api',
     authType: 'api_key',
@@ -1389,24 +971,16 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     supportedModels: {
       'qwen-turbo': {
         maxTokens: 8192,
-        contextWindow: 131072,
+        contextWindow: 128000,
         inputPrice: 0.3,
         outputPrice: 0.6,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'qwen-plus': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 1,
-        outputPrice: 2,
-        supportsTools: true,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1420,33 +994,25 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
 
   doubao: {
     id: 'doubao',
-    name: 'Doubao (ByteDance)',
+    name: 'ByteDance Doubao',
     description: 'ByteDance Doubao models',
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://ark.cn-beijing.volces.com/api/v3',
-    defaultModel: 'doubao-pro-4k',
+    defaultModel: 'doubao-pro-128k',
     supportedModels: {
-      'doubao-pro-4k': {
-        maxTokens: 4096,
-        contextWindow: 4096,
-        inputPrice: 0.8,
-        outputPrice: 2,
-        supportsTools: true,
-        supportsStreaming: true
-      },
       'doubao-pro-128k': {
-        maxTokens: 4096,
+        maxTokens: 8192,
         contextWindow: 128000,
-        inputPrice: 5,
-        outputPrice: 9,
-        supportsTools: true,
+        inputPrice: 0.8,
+        outputPrice: 2.0,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1458,7 +1024,6 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     documentation: 'https://www.volcengine.com/docs/82379'
   },
 
-  // === DEVELOPMENT/PROXY SERVICES ===
   'vscode-lm': {
     id: 'vscode-lm',
     name: 'VS Code Language Models',
@@ -1472,13 +1037,13 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         contextWindow: 128000,
         inputPrice: 0,
         outputPrice: 0,
-        supportsTools: true,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1496,13 +1061,14 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'http://localhost:4000',
-    defaultModel: 'gpt-3.5-turbo',
+    defaultModel: 'gpt-4o',
     supportedModels: {
-      'gpt-3.5-turbo': {
-        maxTokens: 4096,
-        contextWindow: 16385,
-        inputPrice: 0.5,
-        outputPrice: 1.5,
+      'gpt-4o': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 2.5,
+        outputPrice: 10.0,
+        supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1510,18 +1076,18 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     features: {
       streaming: true,
       tools: true,
-      images: false,
+      images: true,
       reasoning: false,
       caching: false
     },
     pricing: {
-      type: 'custom'
+      type: 'token_based',
+      currency: 'USD'
     },
     setupInstructions: 'Deploy LiteLLM proxy server',
     documentation: 'https://litellm.vercel.app'
   },
 
-  // === ADDITIONAL PROVIDERS FROM CLINE ===
   requesty: {
     id: 'requesty',
     name: 'Requesty',
@@ -1529,13 +1095,14 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.requesty.com/v1',
-    defaultModel: 'custom-model',
+    defaultModel: 'claude-3-5-sonnet-20241022',
     supportedModels: {
-      'custom-model': {
-        maxTokens: 4096,
-        contextWindow: 32768,
-        inputPrice: 1,
-        outputPrice: 1,
+      'claude-3-5-sonnet-20241022': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1543,7 +1110,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     features: {
       streaming: true,
       tools: true,
-      images: false,
+      images: true,
       reasoning: false,
       caching: false
     },
@@ -1566,39 +1133,15 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       'qwen2.5-coder-32b-instruct': {
         maxTokens: 8192,
         contextWindow: 131072,
-        inputPrice: 2,
-        outputPrice: 4,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'qwen2.5-coder-14b-instruct': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 1,
-        outputPrice: 2,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'qwen2.5-coder-7b-instruct': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.5,
-        outputPrice: 1,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'qwen2.5-coder-1.5b-instruct': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.1,
-        outputPrice: 0.2,
-        supportsTools: true,
+        inputPrice: 0.3,
+        outputPrice: 0.6,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1612,7 +1155,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
 
   nebius: {
     id: 'nebius',
-    name: 'Nebius',
+    name: 'Nebius AI',
     description: 'Nebius AI cloud platform',
     category: 'api',
     authType: 'api_key',
@@ -1620,33 +1163,17 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     defaultModel: 'meta-llama/Meta-Llama-3.1-70B-Instruct',
     supportedModels: {
       'meta-llama/Meta-Llama-3.1-70B-Instruct': {
-        maxTokens: 8192,
+        maxTokens: 32768,
         contextWindow: 131072,
-        inputPrice: 0.65,
-        outputPrice: 0.65,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'meta-llama/Meta-Llama-3.1-8B-Instruct': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.15,
-        outputPrice: 0.15,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'deepseek-ai/DeepSeek-V2.5': {
-        maxTokens: 8192,
-        contextWindow: 131072,
-        inputPrice: 0.14,
-        outputPrice: 0.28,
-        supportsTools: true,
+        inputPrice: 0.88,
+        outputPrice: 0.88,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1660,26 +1187,19 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
 
   asksage: {
     id: 'asksage',
-    name: 'AskSage',
+    name: 'Ask Sage',
     description: 'AskSage AI platform',
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.asksage.ai/v1',
-    defaultModel: 'sage-turbo',
+    defaultModel: 'claude-3-5-sonnet-20241022',
     supportedModels: {
-      'sage-turbo': {
-        maxTokens: 4096,
-        contextWindow: 32768,
-        inputPrice: 1,
-        outputPrice: 1,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'sage-plus': {
+      'claude-3-5-sonnet-20241022': {
         maxTokens: 8192,
-        contextWindow: 65536,
-        inputPrice: 2,
-        outputPrice: 2,
+        contextWindow: 200000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1687,7 +1207,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     features: {
       streaming: true,
       tools: true,
-      images: false,
+      images: true,
       reasoning: false,
       caching: false
     },
@@ -1705,13 +1225,14 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'cloud',
     authType: 'cloud_credentials',
     baseUrl: 'https://api.ai.internationalacceleratorprogram.com',
-    defaultModel: 'foundation-model',
+    defaultModel: 'gpt-4o',
     supportedModels: {
-      'foundation-model': {
-        maxTokens: 4096,
-        contextWindow: 32768,
-        inputPrice: 2,
-        outputPrice: 2,
+      'gpt-4o': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 2.5,
+        outputPrice: 10.0,
+        supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1719,7 +1240,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     features: {
       streaming: true,
       tools: true,
-      images: false,
+      images: true,
       reasoning: false,
       caching: false
     },
@@ -1737,28 +1258,20 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'cloud',
     authType: 'cloud_credentials',
     baseUrl: 'https://maas.cn-north-4.myhuaweicloud.com/v1',
-    defaultModel: 'pangu-lite',
+    defaultModel: 'pangu-chat',
     supportedModels: {
-      'pangu-lite': {
-        maxTokens: 4096,
-        contextWindow: 32768,
-        inputPrice: 0.8,
-        outputPrice: 1.2,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'pangu-pro': {
+      'pangu-chat': {
         maxTokens: 8192,
-        contextWindow: 65536,
-        inputPrice: 2,
-        outputPrice: 3,
-        supportsTools: true,
+        contextWindow: 32768,
+        inputPrice: 1.0,
+        outputPrice: 2.0,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1777,13 +1290,14 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.dify.ai/v1',
-    defaultModel: 'dify-default',
+    defaultModel: 'claude-3-5-sonnet-20241022',
     supportedModels: {
-      'dify-default': {
-        maxTokens: 4096,
-        contextWindow: 32768,
-        inputPrice: 1,
-        outputPrice: 1,
+      'claude-3-5-sonnet-20241022': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1791,7 +1305,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     features: {
       streaming: true,
       tools: true,
-      images: false,
+      images: true,
       reasoning: false,
       caching: false
     },
@@ -1809,13 +1323,13 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://model-XXXXX.api.baseten.co/production/predict',
-    defaultModel: 'custom-model',
+    defaultModel: 'llama-3-1-70b-instruct',
     supportedModels: {
-      'custom-model': {
-        maxTokens: 4096,
-        contextWindow: 32768,
-        inputPrice: 1,
-        outputPrice: 1,
+      'llama-3-1-70b-instruct': {
+        maxTokens: 32768,
+        contextWindow: 131072,
+        inputPrice: 0.88,
+        outputPrice: 0.88,
         supportsTools: false,
         supportsStreaming: true
       }
@@ -1841,22 +1355,13 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://gateway.ai.vercel.com/v1',
-    defaultModel: 'gpt-4o-mini',
+    defaultModel: 'gpt-4o',
     supportedModels: {
-      'gpt-4o-mini': {
+      'gpt-4o': {
         maxTokens: 16384,
         contextWindow: 128000,
-        inputPrice: 0.15,
-        outputPrice: 0.60,
-        supportsImages: true,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'claude-3-5-sonnet': {
-        maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 3,
-        outputPrice: 15,
+        inputPrice: 2.5,
+        outputPrice: 10.0,
         supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
@@ -1878,26 +1383,19 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
 
   zai: {
     id: 'zai',
-    name: 'Z.ai',
+    name: 'ZAI',
     description: 'Z.ai platform for AI model access',
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.z.ai/v1',
-    defaultModel: 'z-turbo',
+    defaultModel: 'claude-3-5-sonnet-20241022',
     supportedModels: {
-      'z-turbo': {
-        maxTokens: 4096,
-        contextWindow: 32768,
-        inputPrice: 1,
-        outputPrice: 1,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'z-pro': {
+      'claude-3-5-sonnet-20241022': {
         maxTokens: 8192,
-        contextWindow: 65536,
-        inputPrice: 2,
-        outputPrice: 2,
+        contextWindow: 200000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        supportsImages: true,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1905,7 +1403,7 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     features: {
       streaming: true,
       tools: true,
-      images: false,
+      images: true,
       reasoning: false,
       caching: false
     },
@@ -1923,13 +1421,14 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.cline.dev/v1',
-    defaultModel: 'cline-v1',
+    defaultModel: 'claude-3-5-sonnet-20241022',
     supportedModels: {
-      'cline-v1': {
+      'claude-3-5-sonnet-20241022': {
         maxTokens: 8192,
         contextWindow: 200000,
-        inputPrice: 3,
-        outputPrice: 10,
+        inputPrice: 0,
+        outputPrice: 0,
+        supportsImages: false,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1942,43 +1441,32 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       caching: false
     },
     pricing: {
-      type: 'token_based',
-      currency: 'USD'
+      type: 'subscription'
     },
     documentation: 'https://docs.cline.dev'
   },
 
-  // === CLI-BASED PROVIDERS ===
   'gemini-cli': {
     id: 'gemini-cli',
     name: 'Gemini CLI',
     description: 'Google Gemini via CLI for integrated access',
     category: 'cli',
     authType: 'cli',
-    defaultModel: 'gemini-2.5-flash',
+    defaultModel: 'gemini-1.5-pro',
     supportedModels: {
-      'gemini-2.5-flash': {
+      'gemini-1.5-pro': {
         maxTokens: 8192,
-        contextWindow: 1000000,
-        inputPrice: 0, // CLI-based
+        contextWindow: 2097152,
+        inputPrice: 0,
         outputPrice: 0,
         supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gemini-2.5-pro': {
-        maxTokens: 8192,
-        contextWindow: 1000000,
-        inputPrice: 0, // CLI-based
-        outputPrice: 0,
-        supportsImages: false,
-        supportsTools: true,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -1995,29 +1483,21 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'GitHub Copilot via CLI for subscribers',
     category: 'cli',
     authType: 'cli',
-    defaultModel: 'copilot-gpt-4',
+    defaultModel: 'github-copilot',
     supportedModels: {
-      'copilot-gpt-4': {
-        maxTokens: 8192,
-        contextWindow: 128000,
-        inputPrice: 0, // Subscription-based
+      'github-copilot': {
+        maxTokens: 4096,
+        contextWindow: 8192,
+        inputPrice: 0,
         outputPrice: 0,
         supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'copilot-gpt-3.5': {
-        maxTokens: 4096,
-        contextWindow: 16385,
-        inputPrice: 0, // Subscription-based
-        outputPrice: 0,
-        supportsTools: true,
-        supportsStreaming: true
+        supportsTools: false,
+        supportsStreaming: false
       }
     },
     features: {
-      streaming: true,
-      tools: true,
+      streaming: false,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
@@ -2037,26 +1517,18 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     defaultModel: 'gpt-4o',
     supportedModels: {
       'gpt-4o': {
-        maxTokens: 4096,
-        contextWindow: 128000,
-        inputPrice: 0, // Subscription-based
-        outputPrice: 0,
-        supportsImages: false,
-        supportsTools: true,
-        supportsStreaming: true
-      },
-      'gpt-4o-mini': {
         maxTokens: 16384,
         contextWindow: 128000,
-        inputPrice: 0, // Subscription-based
+        inputPrice: 0,
         outputPrice: 0,
-        supportsTools: true,
+        supportsImages: false,
+        supportsTools: false,
         supportsStreaming: true
       }
     },
     features: {
       streaming: true,
-      tools: true,
+      tools: false,
       images: false,
       reasoning: false,
       caching: false
