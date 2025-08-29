@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../../../hooks/useAuth'
 import { createClient } from '../../utils/supabase/client'
 import { Plus, Eye, EyeOff, Edit3, Trash2, Settings, TrendingUp, AlertCircle, Check } from 'lucide-react'
+import { PROVIDERS } from '../../../types/providers'
 
 interface ApiKey {
   id: string
@@ -75,16 +76,30 @@ export default function ApiKeysPage() {
 
       if (keysError) throw keysError
 
-      // Fetch provider configurations
-      const { data: providersData, error: providersError } = await supabase
-        .from('provider_configurations')
-        .select('*')
-        .order('provider_name')
-
-      if (providersError) throw providersError
+      // Convert PROVIDERS to the format expected by the component
+      const providersData = Object.values(PROVIDERS).map(provider => ({
+        id: provider.id,
+        provider_name: provider.id,
+        display_name: provider.name,
+        base_url: provider.baseUrl || '',
+        api_key_required: provider.authType === 'api_key',
+        supports_streaming: provider.features?.streaming !== false,
+        supports_tools: provider.features?.tools === true,
+        supports_images: provider.features?.images === true,
+        supports_prompt_cache: provider.features?.caching === true,
+        authentication_method: provider.authType,
+        models: Object.entries(provider.supportedModels).map(([id, model]) => ({
+          id,
+          name: id.includes('_') ? id.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : id,
+          maxTokens: model.maxTokens || 4096,
+          contextWindow: model.contextWindow || 4096,
+          inputPrice: model.inputPrice || 0,
+          outputPrice: model.outputPrice || 0
+        }))
+      }))
 
       setApiKeys(keysData || [])
-      setProviders(providersData || [])
+      setProviders(providersData)
     } catch (err: any) {
       setError(err.message)
     } finally {
