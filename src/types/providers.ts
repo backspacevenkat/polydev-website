@@ -119,11 +119,14 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     baseUrl: 'https://api.anthropic.com',
     defaultModel: 'claude-3-5-sonnet-20241022',
     supportedModels: {
+      // Claude 4 Series
       'claude-sonnet-4-20250514:1m': {
         maxTokens: 8192,
         contextWindow: 1000000,
         inputPrice: 3.0,
         outputPrice: 15.0,
+        cacheWritePrice: 3.75,
+        cacheReadPrice: 0.3,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -134,6 +137,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         contextWindow: 200000,
         inputPrice: 3.0,
         outputPrice: 15.0,
+        cacheWritePrice: 3.75,
+        cacheReadPrice: 0.3,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -144,6 +149,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         contextWindow: 200000,
         inputPrice: 0.25,
         outputPrice: 1.25,
+        cacheWritePrice: 0.3,
+        cacheReadPrice: 0.025,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -154,16 +161,119 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         contextWindow: 200000,
         inputPrice: 15.0,
         outputPrice: 75.0,
+        cacheWritePrice: 18.75,
+        cacheReadPrice: 1.5,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
         supportsStreaming: true
       },
+      'claude-opus-4-20250514': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 15.0,
+        outputPrice: 75.0,
+        cacheWritePrice: 18.75,
+        cacheReadPrice: 1.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // Claude 3.7 Series
+      'claude-3-7-sonnet-20250219': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        cacheWritePrice: 3.75,
+        cacheReadPrice: 0.3,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // Claude 3.5 Series
       'claude-3-5-sonnet-20241022': {
         maxTokens: 8192,
         contextWindow: 200000,
         inputPrice: 3.0,
         outputPrice: 15.0,
+        cacheWritePrice: 3.75,
+        cacheReadPrice: 0.3,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-5-haiku-20241022': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 0.25,
+        outputPrice: 1.25,
+        cacheWritePrice: 0.3,
+        cacheReadPrice: 0.025,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-5-sonnet-20240620': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        cacheWritePrice: 3.75,
+        cacheReadPrice: 0.3,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-5-haiku-20240307': {
+        maxTokens: 4096,
+        contextWindow: 200000,
+        inputPrice: 0.25,
+        outputPrice: 1.25,
+        cacheWritePrice: 0.3,
+        cacheReadPrice: 0.025,
+        supportsImages: false,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // Claude 3 Series
+      'claude-3-opus-20240229': {
+        maxTokens: 4096,
+        contextWindow: 200000,
+        inputPrice: 15.0,
+        outputPrice: 75.0,
+        cacheWritePrice: 18.75,
+        cacheReadPrice: 1.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-sonnet-20240229': {
+        maxTokens: 4096,
+        contextWindow: 200000,
+        inputPrice: 3.0,
+        outputPrice: 15.0,
+        cacheWritePrice: 3.75,
+        cacheReadPrice: 0.3,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'claude-3-haiku-20240307': {
+        maxTokens: 4096,
+        contextWindow: 200000,
+        inputPrice: 0.25,
+        outputPrice: 1.25,
+        cacheWritePrice: 0.3,
+        cacheReadPrice: 0.025,
         supportsImages: true,
         supportsPromptCache: true,
         supportsTools: true,
@@ -237,53 +347,183 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     tags: ['core', 'reasoning', 'vision', 'coding'],
     tier: 'premium',
     baseUrl: 'https://api.openai.com/v1',
-    defaultModel: 'gpt-5',
+    defaultModel: 'gpt-5-2025-08-07',
     supportedModels: {
-      'gpt-5': {
+      // GPT-5 Series
+      'gpt-5-2025-08-07': {
         maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 10.0,
-        outputPrice: 30.0,
+        contextWindow: 272000,
+        inputPrice: 1.25,
+        outputPrice: 10.0,
+        cacheReadPrice: 0.125,
         supportsImages: true,
-        supportsPromptCache: false,
+        supportsPromptCache: true,
         supportsTools: true,
         supportsStreaming: true
       },
-      'o1-pro': {
+      'gpt-5-mini-2025-08-07': {
+        maxTokens: 8192,
+        contextWindow: 272000,
+        inputPrice: 0.25,
+        outputPrice: 2.0,
+        cacheReadPrice: 0.025,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-5-nano-2025-08-07': {
+        maxTokens: 8192,
+        contextWindow: 272000,
+        inputPrice: 0.05,
+        outputPrice: 0.4,
+        cacheReadPrice: 0.005,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-5-chat-latest': {
+        maxTokens: 8192,
+        contextWindow: 400000,
+        inputPrice: 1.25,
+        outputPrice: 10,
+        cacheReadPrice: 0.125,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // GPT-4.1 Series
+      'gpt-4.1': {
+        maxTokens: 32768,
+        contextWindow: 1047576,
+        inputPrice: 2,
+        outputPrice: 8,
+        cacheReadPrice: 0.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-4.1-mini': {
+        maxTokens: 32768,
+        contextWindow: 1047576,
+        inputPrice: 0.4,
+        outputPrice: 1.6,
+        cacheReadPrice: 0.1,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-4.1-nano': {
+        maxTokens: 32768,
+        contextWindow: 1047576,
+        inputPrice: 0.1,
+        outputPrice: 0.4,
+        cacheReadPrice: 0.025,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // o3 Series (New reasoning models)
+      'o3': {
         maxTokens: 100000,
         contextWindow: 200000,
-        inputPrice: 60.0,
-        outputPrice: 240.0,
+        inputPrice: 2.0,
+        outputPrice: 8.0,
+        cacheReadPrice: 0.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o3-mini': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 1.1,
+        outputPrice: 4.4,
+        cacheReadPrice: 0.55,
         supportsImages: false,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o4-mini': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 1.1,
+        outputPrice: 4.4,
+        cacheReadPrice: 0.275,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      // o1 Series
+      'o1': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 15,
+        outputPrice: 60,
+        cacheReadPrice: 7.5,
+        supportsImages: true,
         supportsPromptCache: false,
         supportsTools: false,
         supportsStreaming: false
       },
-      'o1': {
-        maxTokens: 100000,
-        contextWindow: 200000,
-        inputPrice: 15.0,
-        outputPrice: 60.0,
-        supportsImages: false,
-        supportsPromptCache: false,
+      'o1-preview': {
+        maxTokens: 32768,
+        contextWindow: 128000,
+        inputPrice: 15,
+        outputPrice: 60,
+        cacheReadPrice: 7.5,
+        supportsImages: true,
+        supportsPromptCache: true,
         supportsTools: false,
         supportsStreaming: false
       },
       'o1-mini': {
         maxTokens: 65536,
         contextWindow: 128000,
-        inputPrice: 3.0,
-        outputPrice: 12.0,
-        supportsImages: false,
-        supportsPromptCache: false,
+        inputPrice: 1.1,
+        outputPrice: 4.4,
+        cacheReadPrice: 0.55,
+        supportsImages: true,
+        supportsPromptCache: true,
         supportsTools: false,
         supportsStreaming: false
       },
+      // GPT-4o Series
       'gpt-4o': {
-        maxTokens: 16384,
+        maxTokens: 4096,
         contextWindow: 128000,
         inputPrice: 2.5,
-        outputPrice: 10.0,
+        outputPrice: 10,
+        cacheReadPrice: 1.25,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-4o-mini': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 0.15,
+        outputPrice: 0.6,
+        cacheReadPrice: 0.075,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'chatgpt-4o-latest': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 5,
+        outputPrice: 15,
         supportsImages: true,
         supportsPromptCache: false,
         supportsTools: true,
@@ -313,53 +553,183 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     tags: ['core', 'reasoning', 'vision', 'coding'],
     tier: 'premium',
     baseUrl: 'https://api.openai.com/v1',
-    defaultModel: 'gpt-5',
+    defaultModel: 'gpt-5-2025-08-07',
     supportedModels: {
-      'gpt-5': {
+      // GPT-5 Series
+      'gpt-5-2025-08-07': {
         maxTokens: 8192,
-        contextWindow: 200000,
-        inputPrice: 10.0,
-        outputPrice: 30.0,
+        contextWindow: 272000,
+        inputPrice: 1.25,
+        outputPrice: 10.0,
+        cacheReadPrice: 0.125,
         supportsImages: true,
-        supportsPromptCache: false,
+        supportsPromptCache: true,
         supportsTools: true,
         supportsStreaming: true
       },
-      'o1-pro': {
+      'gpt-5-mini-2025-08-07': {
+        maxTokens: 8192,
+        contextWindow: 272000,
+        inputPrice: 0.25,
+        outputPrice: 2.0,
+        cacheReadPrice: 0.025,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-5-nano-2025-08-07': {
+        maxTokens: 8192,
+        contextWindow: 272000,
+        inputPrice: 0.05,
+        outputPrice: 0.4,
+        cacheReadPrice: 0.005,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-5-chat-latest': {
+        maxTokens: 8192,
+        contextWindow: 400000,
+        inputPrice: 1.25,
+        outputPrice: 10,
+        cacheReadPrice: 0.125,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // GPT-4.1 Series
+      'gpt-4.1': {
+        maxTokens: 32768,
+        contextWindow: 1047576,
+        inputPrice: 2,
+        outputPrice: 8,
+        cacheReadPrice: 0.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-4.1-mini': {
+        maxTokens: 32768,
+        contextWindow: 1047576,
+        inputPrice: 0.4,
+        outputPrice: 1.6,
+        cacheReadPrice: 0.1,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-4.1-nano': {
+        maxTokens: 32768,
+        contextWindow: 1047576,
+        inputPrice: 0.1,
+        outputPrice: 0.4,
+        cacheReadPrice: 0.025,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // o3 Series (New reasoning models)
+      'o3': {
         maxTokens: 100000,
         contextWindow: 200000,
-        inputPrice: 60.0,
-        outputPrice: 240.0,
+        inputPrice: 2.0,
+        outputPrice: 8.0,
+        cacheReadPrice: 0.5,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o3-mini': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 1.1,
+        outputPrice: 4.4,
+        cacheReadPrice: 0.55,
         supportsImages: false,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      'o4-mini': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 1.1,
+        outputPrice: 4.4,
+        cacheReadPrice: 0.275,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: false,
+        supportsStreaming: false
+      },
+      // o1 Series
+      'o1': {
+        maxTokens: 100000,
+        contextWindow: 200000,
+        inputPrice: 15,
+        outputPrice: 60,
+        cacheReadPrice: 7.5,
+        supportsImages: true,
         supportsPromptCache: false,
         supportsTools: false,
         supportsStreaming: false
       },
-      'o1': {
-        maxTokens: 100000,
-        contextWindow: 200000,
-        inputPrice: 15.0,
-        outputPrice: 60.0,
-        supportsImages: false,
-        supportsPromptCache: false,
+      'o1-preview': {
+        maxTokens: 32768,
+        contextWindow: 128000,
+        inputPrice: 15,
+        outputPrice: 60,
+        cacheReadPrice: 7.5,
+        supportsImages: true,
+        supportsPromptCache: true,
         supportsTools: false,
         supportsStreaming: false
       },
       'o1-mini': {
         maxTokens: 65536,
         contextWindow: 128000,
-        inputPrice: 3.0,
-        outputPrice: 12.0,
-        supportsImages: false,
-        supportsPromptCache: false,
+        inputPrice: 1.1,
+        outputPrice: 4.4,
+        cacheReadPrice: 0.55,
+        supportsImages: true,
+        supportsPromptCache: true,
         supportsTools: false,
         supportsStreaming: false
       },
+      // GPT-4o Series
       'gpt-4o': {
-        maxTokens: 16384,
+        maxTokens: 4096,
         contextWindow: 128000,
         inputPrice: 2.5,
-        outputPrice: 10.0,
+        outputPrice: 10,
+        cacheReadPrice: 1.25,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gpt-4o-mini': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 0.15,
+        outputPrice: 0.6,
+        cacheReadPrice: 0.075,
+        supportsImages: true,
+        supportsPromptCache: true,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'chatgpt-4o-latest': {
+        maxTokens: 16384,
+        contextWindow: 128000,
+        inputPrice: 5,
+        outputPrice: 15,
         supportsImages: true,
         supportsPromptCache: false,
         supportsTools: true,
@@ -391,21 +761,35 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     baseUrl: 'https://generativelanguage.googleapis.com/v1',
     defaultModel: 'gemini-2.0-flash-exp',
     supportedModels: {
+      // Gemini 2.0 Series
       'gemini-2.0-flash-exp': {
         maxTokens: 8192,
         contextWindow: 1000000,
         inputPrice: 0.0,
         outputPrice: 0.0,
         supportsImages: true,
+        supportsPromptCache: false,
         supportsTools: true,
         supportsStreaming: true
       },
+      'gemini-2.0-flash-thinking-exp-01-21': {
+        maxTokens: 32768,
+        contextWindow: 1000000,
+        inputPrice: 0.0,
+        outputPrice: 0.0,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // Gemini 1.5 Series
       'gemini-1.5-pro-latest': {
         maxTokens: 8192,
         contextWindow: 2097152,
         inputPrice: 1.25,
         outputPrice: 2.5,
         supportsImages: true,
+        supportsPromptCache: false,
         supportsTools: true,
         supportsStreaming: true
       },
@@ -415,6 +799,78 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
         inputPrice: 0.075,
         outputPrice: 0.3,
         supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gemini-1.5-flash-8b-latest': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 0.0375,
+        outputPrice: 0.15,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gemini-1.5-pro-exp-0827': {
+        maxTokens: 8192,
+        contextWindow: 2097152,
+        inputPrice: 0.0,
+        outputPrice: 0.0,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gemini-1.5-flash-exp-0827': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 0.0,
+        outputPrice: 0.0,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gemini-1.5-flash-8b-exp-0827': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 0.0,
+        outputPrice: 0.0,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      // Versioned models
+      'gemini-1.5-pro-002': {
+        maxTokens: 8192,
+        contextWindow: 2097152,
+        inputPrice: 1.25,
+        outputPrice: 2.5,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gemini-1.5-flash-002': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 0.075,
+        outputPrice: 0.3,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'gemini-1.5-flash-8b': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 0.0375,
+        outputPrice: 0.15,
+        supportsImages: true,
+        supportsPromptCache: false,
         supportsTools: true,
         supportsStreaming: true
       }
@@ -1583,7 +2039,76 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
       type: 'subscription'
     },
     setupInstructions: 'Install Codex CLI and authenticate with Pro subscription'
-  }
+  },
+
+
+  'qwen-international': {
+    id: 'qwen-international',
+    name: 'Qwen (International)',
+    description: 'Alibaba Qwen models for international markets',
+    category: 'api',
+    authType: 'api_key',
+    tags: ['open-source', 'coding', 'fast-inference'],
+    tier: 'standard',
+    baseUrl: 'https://dashscope-intl.aliyuncs.com/api/v1',
+    defaultModel: 'qwen-max',
+    supportedModels: {
+      'qwen-max': {
+        maxTokens: 8192,
+        contextWindow: 30720,
+        inputPrice: 2.0,
+        outputPrice: 6.0,
+        supportsImages: false,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'qwen-max-longcontext': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 2.0,
+        outputPrice: 6.0,
+        supportsImages: false,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'qwen-plus': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 0.5,
+        outputPrice: 1.5,
+        supportsImages: false,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
+      'qwen-turbo': {
+        maxTokens: 8192,
+        contextWindow: 1000000,
+        inputPrice: 0.3,
+        outputPrice: 0.6,
+        supportsImages: false,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      }
+    },
+    features: {
+      streaming: true,
+      tools: true,
+      images: false,
+      reasoning: true,
+      caching: false
+    },
+    pricing: {
+      type: 'token_based',
+      currency: 'USD'
+    },
+    documentation: 'https://help.aliyun.com/zh/model-studio/getting-started/'
+  },
+
+
 }
 
 export type ProviderId = keyof typeof PROVIDERS

@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../../hooks/useAuth'
 import { createClient } from '../../utils/supabase/client'
-import { Plus, Eye, EyeOff, Edit3, Trash2, Settings, TrendingUp, AlertCircle, Check } from 'lucide-react'
-import { PROVIDERS } from '../../../types/providers'
+import { Plus, Eye, EyeOff, Edit3, Trash2, Settings, TrendingUp, AlertCircle, Check, Filter } from 'lucide-react'
+import { PROVIDERS, filterProviders, PROVIDER_CATEGORIES, ProviderTag } from '../../../types/providers'
 
 interface ApiKey {
   id: string
@@ -44,6 +44,16 @@ export default function ApiKeysPage() {
   const [editingKey, setEditingKey] = useState<ApiKey | null>(null)
   const [showApiKey, setShowApiKey] = useState<{[keyId: string]: boolean}>({})
   
+  // Filter state
+  const [categoryFilter, setCategoryFilter] = useState<string>('all')
+  const [tierFilter, setTierFilter] = useState<string>('all')
+  const [authFilter, setAuthFilter] = useState<string>('all')
+  const [tagFilter, setTagFilter] = useState<string>('all')
+  const [showFilters, setShowFilters] = useState(false)
+  
+  // Validation state
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({})
+
   // Form state
   const [formData, setFormData] = useState({
     provider: 'openai',
@@ -56,6 +66,108 @@ export default function ApiKeysPage() {
   })
 
   const supabase = createClient()
+
+  // API Key validation functions
+  const validateApiKey = (provider: string, apiKey: string): string | null => {
+    if (!apiKey || !apiKey.trim()) {
+      return null // Empty keys are handled elsewhere
+    }
+
+    const key = apiKey.trim()
+    
+    // Provider-specific validation patterns
+    switch (provider) {
+      case 'openai':
+      case 'openai-native':
+        if (!key.startsWith('sk-') && !key.startsWith('sk-proj-')) {
+          return 'OpenAI API keys should start with "sk-" or "sk-proj-"'
+        }
+        if (key.length < 20) {
+          return 'OpenAI API keys should be at least 20 characters long'
+        }
+        break
+        
+      case 'anthropic':
+        if (!key.startsWith('sk-ant-')) {
+          return 'Anthropic API keys should start with "sk-ant-"'
+        }
+        if (key.length < 30) {
+          return 'Anthropic API keys should be at least 30 characters long'
+        }
+        break
+        
+      case 'gemini':
+      case 'google':
+        if (key.length < 20) {
+          return 'Google API keys should be at least 20 characters long'
+        }
+        if (!/^[A-Za-z0-9_-]+$/.test(key)) {
+          return 'Google API keys should contain only letters, numbers, hyphens, and underscores'
+        }
+        break
+        
+      case 'groq':
+        if (!key.startsWith('gsk_')) {
+          return 'Groq API keys should start with "gsk_"'
+        }
+        if (key.length < 20) {
+          return 'Groq API keys should be at least 20 characters long'
+        }
+        break
+        
+      case 'deepseek':
+        if (!key.startsWith('sk-')) {
+          return 'DeepSeek API keys should start with "sk-"'
+        }
+        if (key.length < 20) {
+          return 'DeepSeek API keys should be at least 20 characters long'
+        }
+        break
+        
+      case 'xai':
+        if (!key.startsWith('xai-')) {
+          return 'xAI API keys should start with "xai-"'
+        }
+        if (key.length < 20) {
+          return 'xAI API keys should be at least 20 characters long'
+        }
+        break
+        
+      default:
+        // Generic validation for unknown providers
+        if (key.length < 10) {
+          return 'API key seems too short (minimum 10 characters)'
+        }
+        if (key.length > 200) {
+          return 'API key seems too long (maximum 200 characters)'
+        }
+        if (!/^[A-Za-z0-9_.-]+$/.test(key)) {
+          return 'API key contains invalid characters'
+        }
+        break
+    }
+    
+    return null // Valid
+  }
+
+  const handleApiKeyChange = (value: string) => {
+    setFormData(prev => ({...prev, api_key: value}))
+    
+    // Clear existing validation error
+    if (validationErrors.api_key) {
+      setValidationErrors(prev => ({...prev, api_key: ''}))
+    }
+    
+    // Validate on change (with debounce-like effect)
+    if (value.trim()) {
+      setTimeout(() => {
+        const error = validateApiKey(formData.provider, value)
+        if (error) {
+          setValidationErrors(prev => ({...prev, api_key: error}))
+        }
+      }, 500)
+    }
+  }
 
   useEffect(() => {
     if (user) {
@@ -115,6 +227,8 @@ export default function ApiKeysPage() {
       api_base: providerConfig?.base_url || '',
       default_model: providerConfig?.models[0]?.name || ''
     }))
+    // Clear validation errors when provider changes
+    setValidationErrors({})
   }
 
   const saveApiKey = async () => {
@@ -128,6 +242,16 @@ export default function ApiKeysPage() {
     if (provider?.api_key_required && !formData.api_key.trim()) {
       setError('API key is required for this provider')
       return
+    }
+
+    // Validate API key format if provided
+    if (formData.api_key.trim()) {
+      const validationError = validateApiKey(formData.provider, formData.api_key)
+      if (validationError) {
+        setError(`Invalid API key: ${validationError}`)
+        setValidationErrors(prev => ({...prev, api_key: validationError}))
+        return
+      }
     }
 
     try {
@@ -372,10 +496,20 @@ export default function ApiKeysPage() {
                   <input
                     type="password"
                     value={formData.api_key}
-                    onChange={(e) => setFormData(prev => ({...prev, api_key: e.target.value}))}
+                    onChange={(e) => handleApiKeyChange(e.target.value)}
                     placeholder={editingKey ? "Enter new key to update" : "sk-... or your provider's API key format"}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white font-mono text-sm"
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 dark:bg-gray-800 dark:text-white font-mono text-sm ${
+                      validationErrors.api_key 
+                        ? 'border-red-300 dark:border-red-600 focus:ring-red-500' 
+                        : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500'
+                    }`}
                   />
+                  {validationErrors.api_key && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center space-x-1">
+                      <AlertCircle className="w-4 h-4" />
+                      <span>{validationErrors.api_key}</span>
+                    </p>
+                  )}
                 </div>
               </div>
             )}
@@ -470,7 +604,7 @@ export default function ApiKeysPage() {
             <div className="flex space-x-3">
               <button
                 onClick={saveApiKey}
-                disabled={!formData.key_name.trim() || (!formData.api_key.trim() && !editingKey)}
+                disabled={!formData.key_name.trim() || (!formData.api_key.trim() && !editingKey) || !!validationErrors.api_key}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center space-x-2"
               >
                 <Check className="w-4 h-4" />
@@ -599,43 +733,193 @@ export default function ApiKeysPage() {
 
       {/* Provider Support Info */}
       <div className="mt-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
-          <TrendingUp className="w-5 h-5" />
-          <span>Supported Providers ({providers.length})</span>
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-          {providers.map(provider => (
-            <div key={provider.id} className="bg-white dark:bg-gray-900 p-3 rounded border">
-              <div className="flex items-center space-x-2 mb-2">
-                <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded flex items-center justify-center text-white font-bold text-xs">
-                  {provider.provider_name.charAt(0)}
-                </div>
-                <h4 className="font-medium text-gray-900 dark:text-white text-sm">
-                  {provider.provider_name}
-                </h4>
+        {(() => {
+          let filteredProviders = Object.values(filterProviders(PROVIDERS, { 
+            category: categoryFilter === 'all' ? undefined : [categoryFilter],
+            tier: tierFilter === 'all' ? undefined : [tierFilter],
+            tags: tagFilter === 'all' ? undefined : [tagFilter as ProviderTag]
+          }));
+          
+          // Apply auth type filter manually since it's not in the original filter
+          if (authFilter !== 'all') {
+            filteredProviders = filteredProviders.filter(provider => provider.authType === authFilter);
+          }
+          
+          return (
+            <>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
+                  <TrendingUp className="w-5 h-5" />
+                  <span>Supported Providers ({filteredProviders.length})</span>
+                </h3>
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="flex items-center space-x-2 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-lg hover:border-gray-400 transition-colors"
+                >
+                  <Filter className="w-4 h-4" />
+                  <span>Filter</span>
+                </button>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
-                {provider.authentication_method === 'cli' ? 'CLI Authentication' : 
-                 provider.authentication_method === 'cloud' ? 'Cloud Authentication' :
-                 'API Key Authentication'}
-              </p>
-              <div className="flex flex-wrap gap-1 mt-2">
-                {provider.supports_streaming && (
-                  <span className="px-1.5 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-xs rounded">Stream</span>
-                )}
-                {provider.supports_tools && (
-                  <span className="px-1.5 py-0.5 bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 text-xs rounded">Tools</span>
-                )}
-                {provider.supports_images && (
-                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 text-xs rounded">Images</span>
-                )}
-                {provider.supports_prompt_cache && (
-                  <span className="px-1.5 py-0.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs rounded">Cache</span>
-                )}
+
+        {showFilters && (
+          <div className="mb-6 p-4 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
+                <select 
+                  value={categoryFilter} 
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                >
+                  <option value="all">All Categories</option>
+                  <option value="api">API</option>
+                  <option value="cli">CLI</option>
+                  <option value="local">Local</option>
+                  <option value="cloud">Cloud</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Tier</label>
+                <select 
+                  value={tierFilter} 
+                  onChange={(e) => setTierFilter(e.target.value)}
+                  className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                >
+                  <option value="all">All Tiers</option>
+                  <option value="premium">Premium</option>
+                  <option value="standard">Standard</option>
+                  <option value="community">Community</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Auth Type</label>
+                <select 
+                  value={authFilter} 
+                  onChange={(e) => setAuthFilter(e.target.value)}
+                  className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                >
+                  <option value="all">All Auth Types</option>
+                  <option value="api_key">API Key</option>
+                  <option value="oauth">OAuth</option>
+                  <option value="cli">CLI</option>
+                  <option value="local">Local</option>
+                  <option value="cloud_credentials">Cloud Credentials</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Tag</label>
+                <select 
+                  value={tagFilter} 
+                  onChange={(e) => setTagFilter(e.target.value)}
+                  className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                >
+                  <option value="all">All Tags</option>
+                  <option value="core">Core</option>
+                  <option value="fast-inference">Fast Inference</option>
+                  <option value="enterprise">Enterprise</option>
+                  <option value="open-source">Open Source</option>
+                  <option value="reasoning">Reasoning</option>
+                  <option value="vision">Vision</option>
+                  <option value="coding">Coding</option>
+                  <option value="experimental">Experimental</option>
+                  <option value="local">Local</option>
+                  <option value="privacy">Privacy</option>
+                  <option value="cli">CLI</option>
+                  <option value="cloud">Cloud</option>
+                </select>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                {filteredProviders.map(provider => (
+            <div key={provider.id} className="bg-white dark:bg-gray-900 p-3 rounded border">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded flex items-center justify-center text-white font-bold text-xs">
+                    {provider.name.charAt(0)}
+                  </div>
+                  <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+                    {provider.name}
+                  </h4>
+                </div>
+                <div className="flex items-center space-x-1">
+                  {/* Tier badge */}
+                  <span className={`px-1.5 py-0.5 text-xs rounded font-medium ${
+                    provider.tier === 'premium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                    provider.tier === 'standard' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                  }`}>
+                    {provider.tier}
+                  </span>
+                  {/* Category badge */}
+                  <span className={`px-1.5 py-0.5 text-xs rounded font-medium ${
+                    provider.category === 'api' ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200' :
+                    provider.category === 'cli' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
+                    provider.category === 'local' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' :
+                    'bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200'
+                  }`}>
+                    {provider.category}
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+                {provider.authType === 'cli' ? 'CLI Authentication' : 
+                 provider.authType === 'cloud_credentials' ? 'Cloud Authentication' :
+                 provider.authType === 'oauth' ? 'OAuth Authentication' :
+                 provider.authType === 'local' ? 'Local Authentication' :
+                 'API Key Authentication'}
+              </p>
+              {/* Tags */}
+              {provider.tags && provider.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1 mb-2">
+                  {provider.tags.slice(0, 3).map(tag => (
+                    <span key={tag} className="px-1.5 py-0.5 bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 text-xs rounded">
+                      {tag}
+                    </span>
+                  ))}
+                  {provider.tags.length > 3 && (
+                    <span className="px-1.5 py-0.5 bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 text-xs rounded">
+                      +{provider.tags.length - 3} more
+                    </span>
+                  )}
+                </div>
+              )}
+              <div className="flex flex-wrap gap-1 mt-2">
+                {provider.features?.streaming !== false && (
+                  <span className="px-1.5 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-xs rounded">Stream</span>
+                )}
+                {provider.features?.tools === true && (
+                  <span className="px-1.5 py-0.5 bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 text-xs rounded">Tools</span>
+                )}
+                {provider.features?.images === true && (
+                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 text-xs rounded">Images</span>
+                )}
+                {provider.features?.caching === true && (
+                  <span className="px-1.5 py-0.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs rounded">Cache</span>
+                )}
+                {provider.features?.reasoning === true && (
+                  <span className="px-1.5 py-0.5 bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 text-xs rounded">Reasoning</span>
+                )}
+                {provider.authType === 'cli' && (
+                  <span className="px-1.5 py-0.5 bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 text-xs rounded">CLI</span>
+                )}
+                {provider.authType === 'local' && (
+                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 text-xs rounded">Local</span>
+                )}
+                <span className="px-1.5 py-0.5 bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 text-xs rounded">
+                  {Object.keys(provider.supportedModels).length} models
+                </span>
+              </div>
+            </div>
+                ))}
+              </div>
+            </>
+          );
+        })()}
       </div>
     </div>
   )
