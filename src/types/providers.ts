@@ -85,6 +85,8 @@ export interface ProviderConfiguration {
   description: string
   category: 'api' | 'cli' | 'local' | 'cloud'
   authType: 'api_key' | 'oauth' | 'cli' | 'local' | 'cloud_credentials'
+  tags?: string[] // For filtering: 'core', 'fast-inference', 'enterprise', 'open-source', 'reasoning', 'vision', 'coding', 'experimental'
+  tier?: 'premium' | 'standard' | 'community'
   baseUrl?: string
   defaultModel?: string
   supportedModels: Record<string, ModelInfo>
@@ -112,6 +114,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Claude models with advanced reasoning capabilities',
     category: 'api',
     authType: 'api_key',
+    tags: ['core', 'reasoning', 'vision', 'coding'],
+    tier: 'premium',
     baseUrl: 'https://api.anthropic.com',
     defaultModel: 'claude-3-5-sonnet-20241022',
     supportedModels: {
@@ -229,8 +233,18 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.openai.com/v1',
-    defaultModel: 'gpt-4o',
+    defaultModel: 'gpt-5',
     supportedModels: {
+      'gpt-5': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 10.0,
+        outputPrice: 30.0,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
       'o1-pro': {
         maxTokens: 100000,
         contextWindow: 200000,
@@ -293,8 +307,18 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     category: 'api',
     authType: 'api_key',
     baseUrl: 'https://api.openai.com/v1',
-    defaultModel: 'gpt-4o',
+    defaultModel: 'gpt-5',
     supportedModels: {
+      'gpt-5': {
+        maxTokens: 8192,
+        contextWindow: 200000,
+        inputPrice: 10.0,
+        outputPrice: 30.0,
+        supportsImages: true,
+        supportsPromptCache: false,
+        supportsTools: true,
+        supportsStreaming: true
+      },
       'o1-pro': {
         maxTokens: 100000,
         contextWindow: 200000,
