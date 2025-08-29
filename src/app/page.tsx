@@ -15,7 +15,7 @@ const features = [
   {
     icon: '⚡',
     title: 'Lightning Fast Responses',
-    description: 'Parallel queries to GPT-4, Claude 3.5, Gemini Pro, and 20+ models return diverse perspectives in under 2 seconds',
+    description: 'Parallel queries to GPT-4, Claude 3.5, Gemini Pro, and 20+ models return breakthrough insights in under 2 seconds',
     highlight: 'Sub-2s parallel query',
     gradient: 'from-yellow-500 to-orange-500'
   },
@@ -29,7 +29,7 @@ const features = [
   {
     icon: '🧠',
     title: 'Context-Aware Intelligence',
-    description: 'Automatically includes your project files and codebase context for relevant, targeted AI perspectives',
+    description: 'Automatically includes your project files and codebase context for relevant, targeted AI breakthroughs',
     highlight: 'Smart project awareness',
     gradient: 'from-purple-500 to-pink-500'
   },
@@ -42,7 +42,7 @@ const features = [
   },
   {
     icon: '🎯',
-    title: 'Pure Model Perspectives',
+    title: 'Pure Model Breakthroughs',
     description: 'Get unfiltered responses from each AI model — no merging or judging, just raw insights for your agent to choose from',
     highlight: 'Raw, unbiased output',
     gradient: 'from-indigo-500 to-blue-500'
@@ -54,24 +54,24 @@ const testimonials = [
     name: 'Alex Chen',
     role: 'AI Agent Developer',
     avatar: 'AC',
-    quote: 'Added Polydev MCP server once to Claude Desktop. Now every agent can get second opinions from multiple models with one tool call.'
+    quote: 'Added Polydev MCP server once to Claude Desktop. Now every agent can get breakthrough insights from multiple models with one tool call.'
   },
   {
     name: 'Marcus Rivera',
     role: 'Senior Engineer',
     avatar: 'MR',
-    quote: 'Polydev bridges the gap perfectly. Same get_perspectives tool works in Cursor, Continue, and Cline—one key, all clients.'
+    quote: 'Polydev bridges the gap perfectly. Same get_breakthroughs tool works in Cursor, Continue, and Cline—one key, all clients.'
   },
   {
     name: 'Sam Thompson',
     role: 'DevOps Engineer',
     avatar: 'ST',
-    quote: 'Game changer for our team. Agents stay in control but get N raw perspectives to choose from. No hidden judging or merging.'
+    quote: 'Game changer for our team. Agents stay in control but get N raw breakthrough insights to choose from. No hidden judging or merging.'
   }
 ]
 
 const stats = [
-  { value: '100K+', label: 'Perspectives Generated' },
+  { value: '100K+', label: 'Breakthroughs Generated' },
   { value: '500+', label: 'MCP Clients Connected' },
   { value: '22+', label: 'AI Providers Supported' },
   { value: '< 2s', label: 'Bridge Response Time' }
@@ -112,44 +112,10 @@ export default function Home() {
     return () => clearInterval(typingInterval)
   }, [currentWordIndex])
 
-  // Mouse tracking for interactive effects
+  // Mouse tracking for interactive effects (simplified)
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
-      
-      // Create mouse trail effect
-      const trail = document.createElement('div')
-      trail.className = 'mouse-trail'
-      trail.style.left = e.clientX + 'px'
-      trail.style.top = e.clientY + 'px'
-      document.body.appendChild(trail)
-      
-      setTimeout(() => {
-        trail.style.opacity = '0'
-        trail.style.transform = 'translate(-50%, -50%) scale(0.5)'
-        setTimeout(() => trail.remove(), 200)
-      }, 100)
-      
-      // Magnetic effect for buttons and cards
-      document.querySelectorAll('.magnetic').forEach((element) => {
-        const rect = element.getBoundingClientRect()
-        const centerX = rect.left + rect.width / 2
-        const centerY = rect.top + rect.height / 2
-        const distance = Math.sqrt(
-          Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
-        )
-        
-        if (distance < 100) {
-          const strength = (100 - distance) / 100
-          const moveX = (e.clientX - centerX) * strength * 0.15
-          const moveY = (e.clientY - centerY) * strength * 0.15
-          
-          ;(element as HTMLElement).style.transform = 
-            `translate(${moveX}px, ${moveY}px) scale(${1 + strength * 0.02})`
-        } else {
-          ;(element as HTMLElement).style.transform = ''
-        }
-      })
     }
 
     window.addEventListener('mousemove', handleMouseMove)
@@ -210,15 +176,14 @@ export default function Home() {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
-              Get instant{' '}
+              Turn AI agent roadblocks into{' '}
               <span className="text-blue-600">
-                AI perspectives
-              </span>{' '}
-              when agents get stuck
+                instant breakthroughs
+              </span>
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto mb-12 leading-relaxed">
-              Break through roadblocks with one MCP tool. Query GPT-4, Claude, Gemini, and 20+ models in parallel — get diverse solutions in{' '}
+              One MCP tool that queries 20+ AI models in parallel when your agents hit walls. From Claude to GPT-4 to Gemini — get breakthrough insights in under 2 seconds through{' '}
               <span className="text-blue-600 font-medium">
                 {typedText}
                 <span className="animate-pulse">|</span>
@@ -423,7 +388,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto font-light mb-12">
-              See how agents call our MCP tool to get breakthrough perspectives from multiple AI models in real-time.
+              See how agents call our MCP tool to get breakthrough insights from multiple AI models in real-time.
             </p>
           </div>
 
@@ -446,12 +411,12 @@ export default function Home() {
               <div className="p-6 font-mono text-sm space-y-3 text-white">
                 <div className="flex items-start space-x-3">
                   <span className="text-blue-400 shrink-0">Agent</span>
-                  <span className="text-slate-300">Calling MCP tool get_perspectives...</span>
+                  <span className="text-gray-100">Calling MCP tool get_breakthroughs...</span>
                 </div>
                 
                 <div className="flex items-start space-x-3">
                   <span className="text-green-400 shrink-0">✓</span>
-                  <span className="text-slate-300">Connected to Polydev Perspectives server</span>
+                  <span className="text-gray-100">Connected to Polydev Breakthroughs server</span>
                 </div>
                 
                 <div className="bg-slate-800/50 rounded-lg p-4 my-4">
@@ -462,7 +427,7 @@ export default function Home() {
                 <div className="space-y-3">
                   <div className="flex items-start space-x-3">
                     <span className="text-purple-400 shrink-0 font-semibold">GPT-4</span>
-                    <div className="text-slate-300">
+                    <div className="text-gray-100">
                       <div className="mb-1">Check useMemo dependencies and props spreading patterns...</div>
                       <div className="text-xs text-slate-500">•••</div>
                     </div>
@@ -470,7 +435,7 @@ export default function Home() {
                   
                   <div className="flex items-start space-x-3">
                     <span className="text-cyan-400 shrink-0 font-semibold">Claude</span>
-                    <div className="text-slate-300">
+                    <div className="text-gray-100">
                       <div className="mb-1">Look for object recreations in parent component renders...</div>
                       <div className="text-xs text-slate-500">•••</div>
                     </div>
@@ -478,7 +443,7 @@ export default function Home() {
                   
                   <div className="flex items-start space-x-3">
                     <span className="text-yellow-400 shrink-0 font-semibold">Groq</span>
-                    <div className="text-slate-300">
+                    <div className="text-gray-100">
                       <div className="mb-1">Consider React.memo and callback optimization patterns...</div>
                       <div className="text-xs text-slate-500">•••</div>
                     </div>
@@ -491,7 +456,7 @@ export default function Home() {
                 </div>
                 
                 <div className="flex items-center justify-between text-xs text-slate-500 pt-2">
-                  <span>3 perspectives • 847 tokens • $0.023</span>
+                  <span>3 breakthrough insights • 847 tokens • $0.023</span>
                   <span className="text-green-400">●  Connected</span>
                 </div>
               </div>
@@ -774,12 +739,12 @@ export default function Home() {
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
-                  <span className="text-xs text-slate-400">get_perspectives</span>
+                  <span className="text-xs text-slate-400">get_breakthroughs</span>
                 </div>
-                <pre className="p-6 text-sm text-slate-300 font-mono leading-relaxed overflow-x-auto">
+                <pre className="p-6 text-sm text-gray-100 font-mono leading-relaxed overflow-x-auto">
 {`{
-  "name": "get_perspectives",
-  "description": "Get diverse perspectives from multiple LLMs",
+  "name": "get_breakthroughs",
+  "description": "Get breakthrough insights from multiple LLMs",
   "inputSchema": {
     "type": "object",
     "properties": {
@@ -816,9 +781,9 @@ export default function Home() {
                   </div>
                   <span className="text-xs text-slate-400">JSON response</span>
                 </div>
-                <pre className="p-6 text-sm text-slate-300 font-mono leading-relaxed overflow-x-auto">
+                <pre className="p-6 text-sm text-gray-100 font-mono leading-relaxed overflow-x-auto">
 {`{
-  "perspectives": [
+  "insights": [
     {
       "model": "gpt-4",
       "response": "Your React component is likely...",
@@ -858,7 +823,7 @@ export default function Home() {
                     </div>
                     <div className="bg-slate-900 rounded-lg p-4 text-sm">
                       <div className="text-slate-400 text-xs mb-2">config.json</div>
-                      <pre className="text-slate-300 font-mono text-xs overflow-x-auto">
+                      <pre className="text-gray-100 font-mono text-xs overflow-x-auto">
 {`{
   "mcpServers": {
     "polydev": {
@@ -884,7 +849,7 @@ export default function Home() {
                     </div>
                     <div className="bg-slate-900 rounded-lg p-4 text-sm">
                       <div className="text-slate-400 text-xs mb-2">.continue/config.json</div>
-                      <pre className="text-slate-300 font-mono text-xs overflow-x-auto">
+                      <pre className="text-gray-100 font-mono text-xs overflow-x-auto">
 {`{
   "experimental": {
     "modelContextProtocol": true
@@ -905,10 +870,10 @@ export default function Home() {
                     <h4 className="font-semibold text-slate-900 dark:text-white mb-4">Usage in Agent</h4>
                     <div className="bg-slate-900 rounded-lg p-4">
                       <div className="text-slate-400 text-xs mb-2">Tool Call Example</div>
-                      <pre className="text-slate-300 font-mono text-sm overflow-x-auto">
+                      <pre className="text-gray-100 font-mono text-sm overflow-x-auto">
 {`// When your agent gets stuck:
 const result = await callTool({
-  name: "get_perspectives",
+  name: "get_breakthroughs",
   arguments: {
     prompt: "React component re-renders excessively, can't find root cause",
     user_token: "poly_your_token_here",
@@ -916,8 +881,8 @@ const result = await callTool({
   }
 });
 
-// Process multiple perspectives
-const breakthrough = analyzeCommonPatterns(result.perspectives);
+// Process multiple breakthrough insights
+const breakthrough = analyzeCommonPatterns(result.insights);
 return implementSolution(breakthrough);`}
                       </pre>
                     </div>
@@ -957,7 +922,7 @@ return implementSolution(breakthrough);`}
             </h2>
             
             <p className="text-xl md:text-2xl text-slate-300 max-w-4xl mx-auto mb-12 font-light leading-relaxed">
-              Give your AI agents the superpower of multiple perspectives. 
+              Give your AI agents the superpower of breakthrough insights. 
               <br className="hidden md:block" />
               Integrate our MCP server and never hit a roadblock again.
             </p>

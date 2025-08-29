@@ -5,8 +5,8 @@ import Navigation from '../components/Navigation'
 
 export const metadata: Metadata = {
   title: 'Polydev - MCP Router for Multiple AI Perspectives',
-  description: 'MCP server that fans out queries to multiple LLMs in parallel. Get diverse perspectives from GPT-4, Claude, Gemini and more. Works with Claude Desktop, Cursor, Continue, Cline.',
-  keywords: 'MCP, Model Context Protocol, Multi-LLM, AI perspectives, Claude Desktop, Cursor, Continue, Cline, AI agents, perspectives, breakthrough',
+  description: 'MCP server that fans out queries to multiple LLMs in parallel. Get diverse breakthroughs from GPT-4, Claude, Gemini and more. Works with Claude Desktop, Cursor, Continue, Cline.',
+  keywords: 'MCP, Model Context Protocol, Multi-LLM, AI breakthroughs, Claude Desktop, Cursor, Continue, Cline, AI agents, breakthroughs, breakthrough',
   authors: [{ name: 'Polydev' }],
   viewport: 'width=device-width, initial-scale=1',
   openGraph: {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Polydev - MCP Router for Multiple AI Perspectives',
-    description: 'Get diverse perspectives from multiple LLMs. Works with all major MCP clients.',
+    description: 'Get diverse breakthroughs from multiple LLMs. Works with all major MCP clients.',
   }
 }
 

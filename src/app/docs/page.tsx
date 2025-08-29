@@ -59,12 +59,12 @@ export default function Documentation() {
     },
     {
       id: 'integrations',
-      title: 'Integrations',
+      title: 'MCP Clients',
       items: [
-        { title: 'GitHub', href: '#github', description: 'Repository and code management' },
-        { title: 'Supabase', href: '#supabase', description: 'Database and auth integration' },
-        { title: 'Vercel', href: '#vercel', description: 'Deployment platform' },
-        { title: 'Custom Integrations', href: '#custom-integrations', description: 'Build your own' }
+        { title: 'Claude Desktop', href: '#claude-desktop', description: 'Anthropic\'s native MCP client' },
+        { title: 'Cursor', href: '#cursor', description: 'AI code editor with MCP support' },
+        { title: 'Continue', href: '#continue', description: 'VS Code extension for AI coding' },
+        { title: 'Cline', href: '#cline', description: 'VS Code AI agent' }
       ]
     }
   ]
@@ -75,20 +75,20 @@ export default function Documentation() {
         return (
           <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:text-3xl prose-h2:tracking-tight prose-h3:text-xl prose-h3:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-code:bg-slate-100 prose-code:text-violet-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-semibold">
             <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600">
-              Polydev Perspectives MCP Server
+              Polydev Breakthroughs MCP Server
             </h1>
             
             <h2 id="introduction">Introduction</h2>
             <p>
-              <strong>Never get stuck again.</strong> Polydev Perspectives is an MCP (Model Context Protocol) server that 
-              eliminates agent roadblocks by providing instant access to multiple AI perspectives. When your agent encounters 
-              a difficult problem, decision paralysis, or complex challenge, our <code>get_perspectives</code> tool fans out 
+              <strong>Never get stuck again.</strong> Polydev Breakthroughs is an MCP (Model Context Protocol) server that 
+              eliminates agent roadblocks by providing instant access to multiple AI breakthroughs. When your agent encounters 
+              a difficult problem, decision paralysis, or complex challenge, our <code>get_breakthroughs</code> tool fans out 
               queries to GPT-4, Claude 3.5 Sonnet, Gemini Pro, and 20+ other models in parallel, returning diverse expert 
               viewpoints to help break through.
             </p>
             
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6 my-8">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">Why Multiple AI Perspectives?</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">Why Multiple AI Breakthroughs?</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-blue-800 font-medium mb-2">Different models have different strengths:</p>
@@ -103,7 +103,7 @@ export default function Documentation() {
                   <ul className="space-y-1 text-blue-700">
                     <li>✅ Break through decision paralysis</li>
                     <li>✅ Get diverse approaches to complex problems</li>
-                    <li>✅ Validate solutions across different AI perspectives</li>
+                    <li>✅ Validate solutions across different AI breakthroughs</li>
                     <li>✅ Discover blind spots in reasoning</li>
                   </ul>
                 </div>
@@ -114,11 +114,11 @@ export default function Documentation() {
             
             <h3>Step 1: Install the MCP Server</h3>
             <p>Install Polydev Perspectives globally via npm:</p>
-            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`npm install -g @polydev/perspectives-mcp`}</code></pre>
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`npm install -g @polydev/breakthroughs-mcp`}</code></pre>
             
             <h3>Step 2: Configure Your Authentication</h3>
             <p>Set up your authentication using the configuration wizard:</p>
-            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`polydev-perspectives --config`}</code></pre>
+            <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`polydev-breakthroughs --config`}</code></pre>
             
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 my-6">
               <h4 className="font-semibold text-blue-900 mb-3">🔐 Authentication Options</h4>
@@ -153,8 +153,8 @@ export default function Documentation() {
                 <code className="text-sm text-gray-500 block mb-2">~/.config/claude/claude_desktop_config.json</code>
                 <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "mcpServers": {
-    "polydev-perspectives": {
-      "command": "polydev-perspectives"
+    "polydev-breakthroughs": {
+      "command": "polydev-breakthroughs"
     }
   }
 }`}</code></pre>
@@ -166,8 +166,8 @@ export default function Documentation() {
                 <code className="text-sm text-gray-500 block mb-2">.continue/config.json</code>
                 <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "mcpServers": {
-    "polydev-perspectives": {
-      "command": "polydev-perspectives"
+    "polydev-breakthroughs": {
+      "command": "polydev-breakthroughs"
     }
   }
 }`}</code></pre>
@@ -180,8 +180,8 @@ export default function Documentation() {
                 <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "mcp": {
     "servers": {
-      "polydev-perspectives": {
-        "command": "polydev-perspectives"
+      "polydev-breakthroughs": {
+        "command": "polydev-breakthroughs"
       }
     }
   }
@@ -193,22 +193,22 @@ export default function Documentation() {
                 <p className="text-sm text-gray-600 mb-3">Extension settings:</p>
                 <code className="text-sm text-gray-500 block mb-2">MCP Server Configuration</code>
                 <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
-  "command": "polydev-perspectives"
+  "command": "polydev-breakthroughs"
 }`}</code></pre>
               </div>
             </div>
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
               <h4 className="font-semibold text-green-900 mb-2">💡 Pro Tip</h4>
-              <p className="text-green-800 text-sm">The global installation approach means no path configuration needed! The <code>polydev-perspectives</code> command is available system-wide after installation.</p>
+              <p className="text-green-800 text-sm">The global installation approach means no path configuration needed! The <code>polydev-breakthroughs</code> command is available system-wide after installation.</p>
             </div>
 
             <h3>Step 4: Test the Integration</h3>
-            <p>Restart your MCP client and test the <code>get_perspectives</code> tool:</p>
+            <p>Restart your MCP client and test the <code>get_breakthroughs</code> tool:</p>
             
             <h4>With Your Own API Keys (Recommended):</h4>
             <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
-  "name": "get_perspectives",
+  "name": "get_breakthroughs",
   "arguments": {
     "prompt": "I'm debugging a React performance issue. The component re-renders excessively but I can't pinpoint why. Help me identify potential causes and solutions.",
     "mode": "user_keys",
@@ -219,7 +219,7 @@ export default function Documentation() {
 
             <h4>With MCP Token (Legacy):</h4>
             <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
-  "name": "get_perspectives",
+  "name": "get_breakthroughs",
   "arguments": {
     "prompt": "I'm debugging a React performance issue...",
     "user_token": "poly_your_token_here",
@@ -229,16 +229,16 @@ export default function Documentation() {
 }`}</code></pre>
 
             <h3>Complete Tool Schema</h3>
-            <p>The <code>get_perspectives</code> tool accepts these parameters:</p>
+            <p>The <code>get_breakthroughs</code> tool accepts these parameters:</p>
             <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`{
-  "name": "get_perspectives",
-  "description": "Get multiple AI perspectives on a problem to break through roadblocks",
+  "name": "get_breakthroughs",
+  "description": "Get multiple AI breakthroughs on a problem to break through roadblocks",
   "inputSchema": {
     "type": "object",
     "properties": {
       "prompt": {
         "type": "string", 
-        "description": "The problem or question to get perspectives on"
+        "description": "The problem or question to get breakthroughs on"
       },
       "mode": {
         "type": "string",
@@ -300,7 +300,7 @@ export default function Documentation() {
             </ul>
 
             <h3>Project Memory Integration</h3>
-            <p>Enhance perspectives with your project context:</p>
+            <p>Enhance breakthroughs with your project context:</p>
             <ul className="space-y-2">
               <li><strong>none</strong>: No project context (fastest)</li>
               <li><strong>light</strong>: Include recently modified files</li>
@@ -325,7 +325,7 @@ export default function Documentation() {
               <h4 className="font-semibold text-red-900 mb-2">Scenario: SQL Performance Mystery</h4>
               <p className="text-red-800 text-sm mb-3">Your agent is stuck - the SQL query has indexes but is still slow despite standard optimizations.</p>
               <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
-  "name": "get_perspectives",
+  "name": "get_breakthroughs",
   "arguments": {
     "prompt": "My SQL query is slow despite having indexes. I've tried standard optimizations but performance is still poor. The query joins 3 tables and filters by date range. What advanced optimizations am I missing?",
     "mode": "user_keys",
@@ -339,11 +339,11 @@ export default function Documentation() {
             <h3>🏗️ Architecture Decisions</h3>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 my-4">
               <h4 className="font-semibold text-blue-900 mb-2">Scenario: Microservices vs Monolith</h4>
-              <p className="text-blue-800 text-sm mb-3">Your agent needs expert perspectives on architectural trade-offs for a fintech application.</p>
+              <p className="text-blue-800 text-sm mb-3">Your agent needs expert breakthroughs on architectural trade-offs for a fintech application.</p>
               <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
-  "name": "get_perspectives",
+  "name": "get_breakthroughs",
   "arguments": {
-    "prompt": "I'm choosing between microservices and monolith architecture for a fintech app that needs to handle payments, user management, and compliance reporting. I need multiple expert perspectives on trade-offs, security implications, and scalability considerations.",
+    "prompt": "I'm choosing between microservices and monolith architecture for a fintech app that needs to handle payments, user management, and compliance reporting. I need multiple expert breakthroughs on trade-offs, security implications, and scalability considerations.",
     "mode": "user_keys",
     "models": ["gpt-4", "claude-3-opus", "llama-3.1-405b-reasoning"],
     "temperature": 0.4
@@ -354,11 +354,11 @@ export default function Documentation() {
             <h3>🔍 Code Review & Security</h3>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 my-4">
               <h4 className="font-semibold text-green-900 mb-2">Scenario: Authentication Security Review</h4>
-              <p className="text-green-800 text-sm mb-3">Your agent wants multiple security-focused perspectives on an authentication module.</p>
+              <p className="text-green-800 text-sm mb-3">Your agent wants multiple security-focused breakthroughs on an authentication module.</p>
               <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
-  "name": "get_perspectives",
+  "name": "get_breakthroughs",
   "arguments": {
-    "prompt": "Review this authentication module for security vulnerabilities and suggest improvements. I want multiple security-focused perspectives on JWT handling, password policies, and session management.",
+    "prompt": "Review this authentication module for security vulnerabilities and suggest improvements. I want multiple security-focused breakthroughs on JWT handling, password policies, and session management.",
     "mode": "user_keys",
     "models": ["gpt-4", "claude-3.5-sonnet", "gemini-1.5-pro"],
     "project_memory": "full",
@@ -377,7 +377,7 @@ export default function Documentation() {
               <h4 className="font-semibold text-yellow-900 mb-2">Scenario: OAuth2 Implementation Issues</h4>
               <p className="text-yellow-800 text-sm mb-3">Your agent is stuck with cryptic OAuth2 PKCE errors and unclear documentation.</p>
               <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
-  "name": "get_perspectives",
+  "name": "get_breakthroughs",
   "arguments": {
     "prompt": "I'm implementing OAuth2 PKCE flow but getting 'invalid_request' errors. The documentation is unclear about parameter encoding, code_challenge generation, and redirect URI handling. Help me troubleshoot step by step.",
     "mode": "user_keys",
@@ -388,11 +388,11 @@ export default function Documentation() {
             </div>
 
             <h2 id="response-format">Response Format</h2>
-            <p>Polydev returns formatted perspectives that your agent can directly process:</p>
+            <p>Polydev returns formatted breakthroughs that your agent can directly process:</p>
             <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 my-4">
               <pre className="text-sm"><code>{`# Multiple AI Perspectives
 
-Got 3 perspectives in 1247ms using 892 tokens.
+Got 3 breakthroughs in 1247ms using 892 tokens.
 
 ## GPT-4 Perspective
 
@@ -449,7 +449,7 @@ I'd recommend starting with the React Profiler to get concrete data before optim
 
             <h3>2. Choose the Right Models</h3>
             <ul className="space-y-3">
-              <li><strong>All models</strong> - For diverse perspectives and creative solutions</li>
+              <li><strong>All models</strong> - For diverse breakthroughs and creative solutions</li>
               <li><strong>GPT-4 + Claude 3.5 Sonnet</strong> - For technical accuracy and analysis</li>
               <li><strong>Gemini + Perplexity Sonar</strong> - For research and latest information</li>
               <li><strong>Llama 3.1 405B</strong> - For complex reasoning and mathematical problems</li>
@@ -464,14 +464,14 @@ I'd recommend starting with the React Profiler to get concrete data before optim
 
             <h3>4. Handle Responses Intelligently</h3>
             <pre className="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm font-mono border"><code>{`// Agent logic example
-const perspectives = await getPerspectives({
+const breakthroughs = await getPerspectives({
   prompt: "How do I fix this memory leak?",
   models: ["gpt-4", "claude-3.5-sonnet", "gemini-1.5-pro"]
 });
 
 // Extract common themes across responses
-const commonSolutions = findCommonAdvice(perspectives.responses);
-const quickWins = findImmediateSolutions(perspectives.responses);
+const commonSolutions = findCommonAdvice(breakthroughs.responses);
+const quickWins = findImmediateSolutions(breakthroughs.responses);
 
 // Prioritize solutions mentioned by multiple models
 if (commonSolutions.length > 0) {
@@ -499,7 +499,7 @@ return requestMoreSpecificHelp();`}</code></pre>
               </div>
 
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <h4 className="font-semibold text-yellow-900 mb-2">⚠️ "No perspectives received"</h4>
+                <h4 className="font-semibold text-yellow-900 mb-2">⚠️ "No breakthroughs received"</h4>
                 <ul className="text-yellow-800 text-sm space-y-1">
                   <li>• Check internet connectivity</li>
                   <li>• Verify prompt isn't empty</li>
@@ -825,12 +825,12 @@ const cacheConfig = {
         return (
           <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:text-3xl prose-h2:tracking-tight prose-h3:text-xl prose-h3:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-code:bg-slate-100 prose-code:text-violet-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-semibold">
             <h1>MCP Tool Reference</h1>
-            <p>Polydev Perspectives provides a single powerful MCP tool for getting multiple AI perspectives. Here's the complete tool specification:</p>
+            <p>Polydev Perspectives provides a single powerful MCP tool for getting multiple AI breakthroughs. Here's the complete tool specification:</p>
 
-            <h2 id="get-perspectives-tool">get_perspectives Tool</h2>
+            <h2 id="get-breakthroughs-tool">get_breakthroughs Tool</h2>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold text-blue-900 mb-2">🎯 Core Purpose</h3>
-              <p className="text-blue-800">Fan out a single prompt to multiple LLM providers simultaneously and get back diverse perspectives. Perfect for breaking through agent roadblocks and decision paralysis.</p>
+              <p className="text-blue-800">Fan out a single prompt to multiple LLM providers simultaneously and get back diverse breakthroughs. Perfect for breaking through agent roadblocks and decision paralysis.</p>
             </div>
 
             <h3>Base URL</h3>
@@ -1035,7 +1035,7 @@ func main() {
                     <p className="text-sm text-gray-600">Anthropic's official desktop app</p>
                   </div>
                 </div>
-                <p className="text-gray-700 text-sm mb-4">Most popular MCP client with built-in perspectives support. Perfect for interactive AI conversations with multiple model insights.</p>
+                <p className="text-gray-700 text-sm mb-4">Most popular MCP client with built-in breakthroughs support. Perfect for interactive AI conversations with multiple model insights.</p>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Desktop App</span>
                   <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Official</span>
@@ -1053,7 +1053,7 @@ func main() {
                     <p className="text-sm text-gray-600">VSCode AI coding assistant</p>
                   </div>
                 </div>
-                <p className="text-gray-700 text-sm mb-4">Integrate perspectives directly into your coding workflow. Get multiple AI viewpoints on code reviews, debugging, and architecture decisions.</p>
+                <p className="text-gray-700 text-sm mb-4">Integrate breakthroughs directly into your coding workflow. Get multiple AI viewpoints on code reviews, debugging, and architecture decisions.</p>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">VSCode Extension</span>
                   <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Coding Focus</span>
@@ -1071,7 +1071,7 @@ func main() {
                     <p className="text-sm text-gray-600">AI-first code editor</p>
                   </div>
                 </div>
-                <p className="text-gray-700 text-sm mb-4">Transform Cursor into a multi-AI powerhouse. Get diverse perspectives on complex coding challenges without switching contexts.</p>
+                <p className="text-gray-700 text-sm mb-4">Transform Cursor into a multi-AI powerhouse. Get diverse breakthroughs on complex coding challenges without switching contexts.</p>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">AI Editor</span>
                   <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Built-in AI</span>
@@ -1089,7 +1089,7 @@ func main() {
                     <p className="text-sm text-gray-600">Autonomous coding agent</p>
                   </div>
                 </div>
-                <p className="text-gray-700 text-sm mb-4">Give Cline access to multiple AI perspectives when it gets stuck. Perfect for complex autonomous coding tasks requiring diverse approaches.</p>
+                <p className="text-gray-700 text-sm mb-4">Give Cline access to multiple AI breakthroughs when it gets stuck. Perfect for complex autonomous coding tasks requiring diverse approaches.</p>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">VSCode Extension</span>
                   <span className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Autonomous</span>
@@ -1103,20 +1103,20 @@ func main() {
             
             <div className="bg-gray-50 border rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">1. Install Globally</h3>
-              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>npm install -g @polydev/perspectives-mcp</code></pre>
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>npm install -g @polydev/breakthroughs-mcp</code></pre>
             </div>
             
             <div className="bg-gray-50 border rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">2. Configure Authentication</h3>
-              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>polydev-perspectives --config</code></pre>
+              <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>polydev-breakthroughs --config</code></pre>
             </div>
             
             <div className="bg-gray-50 border rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">3. Add to MCP Client Config</h3>
               <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "servers": {
-    "polydev-perspectives": {
-      "command": "polydev-perspectives"
+    "polydev-breakthroughs": {
+      "command": "polydev-breakthroughs"
     }
   }
 }`}</code></pre>
@@ -1124,7 +1124,7 @@ func main() {
             
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <h4 className="font-semibold text-green-900 mb-2">🎉 That's It!</h4>
-              <p className="text-green-800 text-sm">The <code>get_perspectives</code> tool is now available in your MCP client. Test it with any question or problem that needs multiple AI viewpoints.</p>
+              <p className="text-green-800 text-sm">The <code>get_breakthroughs</code> tool is now available in your MCP client. Test it with any question or problem that needs multiple AI viewpoints.</p>
             </div>
 
             <h2 id="universal-compatibility">Universal MCP Compatibility</h2>
@@ -1156,11 +1156,11 @@ func main() {
                 <h4 className="font-semibold text-gray-900 mb-2">Claude Desktop</h4>
                 <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`{
   "mcpServers": {
-    "polydev-perspectives": {
+    "polydev-breakthroughs": {
       "command": "npx",
       "args": ["@polydev/mcp-server"],
       "env": {
-        "POLYDEV_API_URL": "https://polydev.ai/api/perspectives"
+        "POLYDEV_API_URL": "https://polydev.ai/api/breakthroughs"
       }
     }
   }
@@ -1173,7 +1173,7 @@ func main() {
 {
   "mcpServers": [
     {
-      "name": "polydev-perspectives",
+      "name": "polydev-breakthroughs",
       "command": "npx",
       "args": ["@polydev/mcp-server"]
     }
@@ -1234,12 +1234,12 @@ npm install -g @polydev/mcp-server
                 <span className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">3</span>
                 Start Using Perspectives
               </h3>
-              <p className="text-gray-700 mb-4">Use the get_perspectives tool in your MCP client:</p>
+              <p className="text-gray-700 mb-4">Use the get_breakthroughs tool in your MCP client:</p>
               
               <div className="bg-white rounded-lg p-4 border border-blue-200">
                 <pre className="bg-gray-100 text-gray-800 p-3 rounded text-sm font-mono border overflow-x-auto"><code>{`// In Claude Desktop, Continue.dev, or other MCP client:
 {
-  "tool": "get_perspectives",
+  "tool": "get_breakthroughs",
   "arguments": {
     "prompt": "Help me debug this React performance issue...",
     "models": ["gpt-4", "claude-3-sonnet", "gemini-pro"],
@@ -1249,7 +1249,7 @@ npm install -g @polydev/mcp-server
               </div>
               
               <div className="mt-4 p-3 bg-blue-100 rounded-lg">
-                <p className="text-sm text-blue-800">💡 <strong>Pro tip:</strong> The tool automatically uses your configured API keys and returns perspectives from multiple LLMs in a single response.</p>
+                <p className="text-sm text-blue-800">💡 <strong>Pro tip:</strong> The tool automatically uses your configured API keys and returns breakthroughs from multiple LLMs in a single response.</p>
               </div>
             </div>
 
@@ -1261,7 +1261,7 @@ npm install -g @polydev/mcp-server
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Project Memory</h3>
                 <p className="text-gray-600 mb-4">Include relevant project context in your perspective requests:</p>
                 <pre className="bg-gray-100 text-gray-800 p-4 rounded text-sm font-mono border overflow-x-auto"><code>{`{
-  "tool": "get_perspectives",
+  "tool": "get_breakthroughs",
   "arguments": {
     "prompt": "How can I optimize this database query?",
     "project_memory": "full",
