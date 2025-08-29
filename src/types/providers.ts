@@ -190,6 +190,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Anthropic Claude via CLI for Pro/Max subscribers',
     category: 'cli',
     authType: 'cli',
+    tags: ['core', 'cli', 'coding', 'reasoning'],
+    tier: 'premium',
     defaultModel: 'claude-opus-4-1',
     supportedModels: {
       'claude-opus-4-1': {
@@ -232,6 +234,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Latest OpenAI models with native authentication',
     category: 'api',
     authType: 'api_key',
+    tags: ['core', 'reasoning', 'vision', 'coding'],
+    tier: 'premium',
     baseUrl: 'https://api.openai.com/v1',
     defaultModel: 'gpt-5',
     supportedModels: {
@@ -306,6 +310,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'OpenAI models via API',
     category: 'api',
     authType: 'api_key',
+    tags: ['core', 'reasoning', 'vision', 'coding'],
+    tier: 'premium',
     baseUrl: 'https://api.openai.com/v1',
     defaultModel: 'gpt-5',
     supportedModels: {
@@ -380,6 +386,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Google Gemini models with large context windows',
     category: 'api',
     authType: 'api_key',
+    tags: ['core', 'vision', 'experimental'],
+    tier: 'standard',
     baseUrl: 'https://generativelanguage.googleapis.com/v1',
     defaultModel: 'gemini-2.0-flash-exp',
     supportedModels: {
@@ -431,6 +439,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Google Cloud Vertex AI platform with enterprise features',
     category: 'cloud',
     authType: 'cloud_credentials',
+    tags: ['enterprise', 'cloud', 'vision'],
+    tier: 'standard',
     baseUrl: 'https://us-central1-aiplatform.googleapis.com',
     defaultModel: 'gemini-1.5-pro',
     supportedModels: {
@@ -473,6 +483,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Ultra-fast inference with Groq hardware acceleration',
     category: 'api',
     authType: 'api_key',
+    tags: ['fast-inference', 'open-source'],
+    tier: 'standard',
     baseUrl: 'https://api.groq.com/openai/v1',
     defaultModel: 'llama-3.3-70b-versatile',
     supportedModels: {
@@ -513,6 +525,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Advanced reasoning models from DeepSeek',
     category: 'api',
     authType: 'api_key',
+    tags: ['reasoning', 'coding'],
+    tier: 'standard',
     baseUrl: 'https://api.deepseek.com',
     defaultModel: 'deepseek-chat',
     supportedModels: {
@@ -553,6 +567,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Grok models by xAI with real-time information access',
     category: 'api',
     authType: 'api_key',
+    tags: ['experimental', 'reasoning'],
+    tier: 'standard',
     baseUrl: 'https://api.x.ai/v1',
     defaultModel: 'grok-2-1212',
     supportedModels: {
@@ -594,6 +610,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Local model serving with Ollama',
     category: 'local',
     authType: 'local',
+    tags: ['local', 'open-source', 'privacy'],
+    tier: 'community',
     baseUrl: 'http://localhost:11434',
     defaultModel: 'llama3.3',
     supportedModels: {
@@ -634,6 +652,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'Local model serving with LM Studio',
     category: 'local',
     authType: 'local',
+    tags: ['local', 'privacy'],
+    tier: 'community',
     baseUrl: 'http://localhost:1234/v1',
     defaultModel: 'local-model',
     supportedModels: {
@@ -666,6 +686,8 @@ export const PROVIDERS: Record<string, ProviderConfiguration> = {
     description: 'European AI company with efficient models',
     category: 'api',
     authType: 'api_key',
+    tags: ['core', 'coding'],
+    tier: 'standard',
     baseUrl: 'https://api.mistral.ai/v1',
     defaultModel: 'mistral-large-latest',
     supportedModels: {
@@ -1617,4 +1639,75 @@ export interface StreamChunk {
     completion_tokens: number
     total_tokens: number
   }
+}
+
+// Provider categorization and filtering
+export type ProviderTag = 
+  | 'core'           // Main providers (OpenAI, Anthropic, Google)
+  | 'fast-inference' // High-speed providers (Groq, Cerebras)
+  | 'enterprise'     // Enterprise-focused (Vertex, Bedrock, SAP)
+  | 'open-source'    // Open source models
+  | 'reasoning'      // Strong reasoning capabilities
+  | 'vision'         // Image processing capabilities
+  | 'coding'         // Optimized for coding tasks
+  | 'experimental'   // Experimental or new models
+  | 'local'          // Local/offline providers
+  | 'privacy'        // Privacy-focused providers
+  | 'cli'            // CLI-based access
+  | 'cloud'          // Cloud platform integrations
+
+export interface ProviderFilter {
+  category?: string[]
+  tags?: ProviderTag[]
+  tier?: string[]
+  features?: {
+    streaming?: boolean
+    tools?: boolean
+    images?: boolean
+    reasoning?: boolean
+    caching?: boolean
+  }
+}
+
+// Helper functions for provider categorization
+export const PROVIDER_CATEGORIES = {
+  'Core Providers': ['anthropic', 'openai', 'openai-native', 'gemini'],
+  'Fast Inference': ['groq', 'cerebras', 'fireworks', 'together'],
+  'Enterprise': ['vertex', 'bedrock', 'sapaicore', 'huawei-cloud-maas'],
+  'Open Source': ['ollama', 'lmstudio', 'huggingface', 'together'],
+  'CLI Tools': ['claude-code', 'gemini-cli', 'github-copilot', 'vscode-lm'],
+  'Local/Privacy': ['ollama', 'lmstudio'],
+  'Experimental': ['xai', 'gemini', 'deepseek']
+} as const
+
+export function filterProviders(providers: Record<string, ProviderConfiguration>, filter: ProviderFilter): Record<string, ProviderConfiguration> {
+  return Object.fromEntries(
+    Object.entries(providers).filter(([_, provider]) => {
+      // Category filter
+      if (filter.category && filter.category.length > 0) {
+        if (!filter.category.includes(provider.category)) return false
+      }
+
+      // Tags filter
+      if (filter.tags && filter.tags.length > 0) {
+        if (!provider.tags || !filter.tags.some(tag => provider.tags!.includes(tag))) return false
+      }
+
+      // Tier filter
+      if (filter.tier && filter.tier.length > 0) {
+        if (!provider.tier || !filter.tier.includes(provider.tier)) return false
+      }
+
+      // Features filter
+      if (filter.features) {
+        if (filter.features.streaming !== undefined && provider.features.streaming !== filter.features.streaming) return false
+        if (filter.features.tools !== undefined && provider.features.tools !== filter.features.tools) return false
+        if (filter.features.images !== undefined && provider.features.images !== filter.features.images) return false
+        if (filter.features.reasoning !== undefined && provider.features.reasoning !== filter.features.reasoning) return false
+        if (filter.features.caching !== undefined && provider.features.caching !== filter.features.caching) return false
+      }
+
+      return true
+    })
+  )
 }
