@@ -1,0 +1,6 @@
+{
+  "multi-llm-platform": {
+    "command": "python3",
+    "args": ["/Users/venkat/Documents/jarvis/multi-llm-platform/client/thin_mcp_client.py"]
+  }
+}
