@@ -17,7 +17,7 @@ export class GeminiCLIHandler implements ApiHandler {
       await execAsync('which gcloud')
       
       // Convert messages to a simple prompt format
-      const prompt = this.messagesToPrompt(messages)
+      const prompt = this.messagesToPrompt(messages || [])
       
       // Execute the gcloud AI command (this is a conceptual implementation)
       const command = `gcloud ai models predict ${model || 'gemini-2.0-flash-exp'} --prompt="${prompt}"`

@@ -17,7 +17,7 @@ export class GitHubCopilotHandler implements ApiHandler {
       await execAsync('which gh')
       
       // Convert messages to a simple prompt format
-      const prompt = this.messagesToPrompt(messages)
+      const prompt = this.messagesToPrompt(messages || [])
       
       // Execute the GitHub Copilot CLI command
       const command = `gh copilot suggest "${prompt}"`

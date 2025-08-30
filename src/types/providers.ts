@@ -1,5 +1,3 @@
-import type { LanguageModelChatSelector } from "../core/api/providers/types"
-
 export type ApiProvider =
 	| "anthropic"
 	| "claude-code"
@@ -39,6 +37,12 @@ export type ApiProvider =
 
 export interface ApiHandlerOptions {
 	// Global configuration (not mode-specific)
+	model?: string // The model ID to use for requests
+	messages?: Array<{role: string, content: any}> // Chat messages
+	maxTokens?: number // Maximum tokens to generate
+	temperature?: number // Response temperature
+	stream?: boolean // Whether to stream responses
+	tools?: Array<any> // Available tools for the request
 	apiKey?: string // anthropic
 	clineAccountId?: string
 	ulid?: string // Used to identify the task in API requests
@@ -116,7 +120,7 @@ export interface ApiHandlerOptions {
 	planModeApiModelId?: string
 	planModeThinkingBudgetTokens?: number
 	planModeReasoningEffort?: string
-	planModeVsCodeLmModelSelector?: LanguageModelChatSelector
+	planModeVsCodeLmModelSelector?: any
 	planModeAwsBedrockCustomSelected?: boolean
 	planModeAwsBedrockCustomModelBaseId?: BedrockModelId
 	planModeOpenRouterModelId?: string
@@ -147,7 +151,7 @@ export interface ApiHandlerOptions {
 	actModeApiModelId?: string
 	actModeThinkingBudgetTokens?: number
 	actModeReasoningEffort?: string
-	actModeVsCodeLmModelSelector?: LanguageModelChatSelector
+	actModeVsCodeLmModelSelector?: any
 	actModeAwsBedrockCustomSelected?: boolean
 	actModeAwsBedrockCustomModelBaseId?: BedrockModelId
 	actModeOpenRouterModelId?: string
@@ -901,7 +905,7 @@ export const vertexModels = {
 } as const satisfies Record<string, ModelInfo>
 
 export const vertexGlobalModels: Record<string, ModelInfo> = Object.fromEntries(
-	Object.entries(vertexModels).filter(([_k, v]) => Object.hasOwn(v, "supportsGlobalEndpoint")),
+	Object.entries(vertexModels).filter(([_k, v]) => v.hasOwnProperty("supportsGlobalEndpoint")),
 ) as Record<string, ModelInfo>
 
 export const openAiModelInfoSaneDefaults: OpenAiCompatibleModelInfo = {

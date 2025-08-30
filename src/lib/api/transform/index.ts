@@ -37,7 +37,7 @@ export class OpenAITransformer implements MessageTransformer {
   transformRequest(options: ApiHandlerOptions): any {
     const { messages, model, maxTokens, temperature, tools } = options
     
-    const openAIMessages = messages.map(msg => ({
+    const openAIMessages = (messages || []).map(msg => ({
       role: msg.role,
       content: this.transformMessageContent(msg.content)
     }))
@@ -136,7 +136,7 @@ export class AnthropicTransformer implements MessageTransformer {
     
     // Separate system message from other messages
     let systemMessage = ''
-    const anthropicMessages = messages
+    const anthropicMessages = (messages || [])
       .filter(msg => {
         if (msg.role === 'system') {
           systemMessage = typeof msg.content === 'string' ? msg.content : msg.content[0]?.text || ''
@@ -236,7 +236,7 @@ export class GoogleTransformer implements MessageTransformer {
     const { messages, model, maxTokens, temperature, tools } = options
     
     // Convert messages to Google format
-    const contents = messages.map(msg => ({
+    const contents = (messages || []).map(msg => ({
       role: msg.role === 'assistant' ? 'model' : 'user',
       parts: this.transformMessageContent(msg.content)
     }))

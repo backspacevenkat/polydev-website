@@ -13,7 +13,7 @@ export class CodexCLIHandler implements ApiHandler {
     const { messages, model, maxTokens, temperature } = options
     
     // Convert messages to a simple prompt format
-    const prompt = this.messagesToPrompt(messages)
+    const prompt = this.messagesToPrompt(messages || [])
     
     try {
       // Check if codex CLI is available

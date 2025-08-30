@@ -21,7 +21,7 @@ export class ClaudeCodeHandler implements ApiHandler {
       
       // Create a temporary file with the conversation
       const tempFile = join(tmpdir(), `claude-prompt-${Date.now()}.txt`)
-      const prompt = this.messagesToPrompt(messages)
+      const prompt = this.messagesToPrompt(messages || [])
       writeFileSync(tempFile, prompt)
       
       try {
