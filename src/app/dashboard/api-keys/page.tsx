@@ -4,19 +4,15 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../../../hooks/useAuth'
 import { createClient } from '../../utils/supabase/client'
 import { Plus, Eye, EyeOff, Edit3, Trash2, Settings, TrendingUp, AlertCircle, Check, Filter } from 'lucide-react'
-import { PROVIDERS, filterProviders, PROVIDER_CATEGORIES, ProviderTag } from '../../../types/providers'
+import { PROVIDERS, ProviderTag } from '../../../types/providers-extension'
 
 interface ApiKey {
   id: string
   provider: string
-  key_name: string
   key_preview: string
   active: boolean
   api_base?: string
   default_model?: string
-  monthly_budget?: number
-  current_usage?: number
-  rate_limit_rpm?: number
   created_at: string
   last_used_at?: string
 }
@@ -57,12 +53,9 @@ export default function ApiKeysPage() {
   // Form state
   const [formData, setFormData] = useState({
     provider: 'openai',
-    key_name: '',
     api_key: '',
     api_base: '',
-    default_model: '',
-    monthly_budget: '',
-    rate_limit_rpm: '60'
+    default_model: ''
   })
 
   const supabase = createClient()
@@ -194,11 +187,11 @@ export default function ApiKeysPage() {
         provider_name: provider.id,
         display_name: provider.name,
         base_url: provider.baseUrl || '',
-        api_key_required: provider.authType === 'api_key',
+        api_key_required: provider.authType === 'api-key',
         supports_streaming: provider.features?.streaming !== false,
         supports_tools: provider.features?.tools === true,
         supports_images: provider.features?.images === true,
-        supports_prompt_cache: provider.features?.caching === true,
+        supports_prompt_cache: false, // TODO: Add caching support to features interface
         authentication_method: provider.authType,
         models: Object.entries(provider.supportedModels).map(([id, model]) => ({
           id,
@@ -219,27 +212,14 @@ export default function ApiKeysPage() {
     }
   }
 
-  const handleProviderChange = (provider: string) => {
-    const providerConfig = providers.find(p => p.id === provider)
-    setFormData(prev => ({
-      ...prev,
-      provider,
-      api_base: providerConfig?.base_url || '',
-      default_model: providerConfig?.models[0]?.name || ''
-    }))
-    // Clear validation errors when provider changes
-    setValidationErrors({})
-  }
+  // Removed old handleProviderChange - using new one below
 
   const saveApiKey = async () => {
-    const provider = providers.find(p => p.id === formData.provider)
+    const provider = PROVIDERS[formData.provider]
     
-    if (!formData.key_name.trim()) {
-      setError('Key name is required')
-      return
-    }
+    // Remove key name validation
     
-    if (provider?.api_key_required && !formData.api_key.trim()) {
+    if (provider?.authType === 'api-key' && !formData.api_key.trim()) {
       setError('API key is required for this provider')
       return
     }
@@ -263,18 +243,15 @@ export default function ApiKeysPage() {
         ? `${formData.api_key.slice(0, 8)}...${formData.api_key.slice(-4)}`
         : formData.api_key 
         ? `${formData.api_key.slice(0, 4)}***`
-        : `${provider?.authentication_method === 'cli' ? 'CLI' : 'Cloud'} Auth`
+        : `${provider?.authType === 'cli' ? 'CLI' : 'Cloud'} Auth`
 
       const keyData = {
         user_id: user?.id,
         provider: formData.provider,
-        key_name: formData.key_name,
         encrypted_key: encryptedKey,
         key_preview: keyPreview,
         api_base: formData.api_base || null,
         default_model: formData.default_model || null,
-        monthly_budget: formData.monthly_budget ? parseFloat(formData.monthly_budget) : null,
-        rate_limit_rpm: parseInt(formData.rate_limit_rpm) || 60,
         active: true
       }
 
@@ -297,12 +274,9 @@ export default function ApiKeysPage() {
       setEditingKey(null)
       setFormData({
         provider: 'openai',
-        key_name: '',
         api_key: '',
         api_base: '',
-        default_model: '',
-        monthly_budget: '',
-        rate_limit_rpm: '60'
+        default_model: ''
       })
       await fetchData()
     } catch (err: any) {
@@ -346,21 +320,30 @@ export default function ApiKeysPage() {
     setEditingKey(key)
     setFormData({
       provider: key.provider,
-      key_name: key.key_name,
       api_key: '', // Don't populate for security
       api_base: key.api_base || '',
-      default_model: key.default_model || '',
-      monthly_budget: key.monthly_budget?.toString() || '',
-      rate_limit_rpm: key.rate_limit_rpm?.toString() || '60'
+      default_model: key.default_model || ''
     })
     setShowAddForm(true)
   }
 
   const getProviderInfo = (provider: string) => {
-    return providers.find(p => p.id === provider) || {
-      provider_name: provider.charAt(0).toUpperCase() + provider.slice(1),
-      authentication_method: 'api_key'
+    return PROVIDERS[provider] || {
+      name: provider.charAt(0).toUpperCase() + provider.slice(1),
+      authType: 'api_key'
     }
+  }
+
+  const handleProviderChange = (providerId: string) => {
+    const providerConfig = PROVIDERS[providerId]
+    setFormData(prev => ({
+      ...prev,
+      provider: providerId,
+      api_base: providerConfig?.baseUrl || '',
+      default_model: providerConfig?.defaultModel || ''
+    }))
+    // Clear validation errors when provider changes
+    setValidationErrors({})
   }
 
   const getUsageColor = (current: number, budget: number) => {
@@ -391,6 +374,95 @@ export default function ApiKeysPage() {
           Manage your API keys for all supported LLM providers. These keys are encrypted and used securely across Polydev services.
         </p>
         
+        {/* Filter Section */}
+        <div className="flex justify-between items-center mb-6">
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="flex items-center space-x-2 px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
+          >
+            <Filter className="w-4 h-4" />
+            <span>Filter Providers</span>
+          </button>
+        </div>
+
+        {showFilters && (
+          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Category
+                </label>
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
+                >
+                  <option value="all">All Categories</option>
+                  <option value="api">API Providers</option>
+                  <option value="cli">CLI Providers</option>
+                  <option value="local">Local Providers</option>
+                  <option value="cloud">Cloud Providers</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Tier
+                </label>
+                <select
+                  value={tierFilter}
+                  onChange={(e) => setTierFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
+                >
+                  <option value="all">All Tiers</option>
+                  <option value="premium">Premium</option>
+                  <option value="standard">Standard</option>
+                  <option value="community">Community</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Authentication
+                </label>
+                <select
+                  value={authFilter}
+                  onChange={(e) => setAuthFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
+                >
+                  <option value="all">All Auth Types</option>
+                  <option value="api_key">API Key</option>
+                  <option value="cli">CLI</option>
+                  <option value="oauth">OAuth</option>
+                  <option value="local">Local</option>
+                  <option value="cloud_credentials">Cloud Credentials</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Features
+                </label>
+                <select
+                  value={tagFilter}
+                  onChange={(e) => setTagFilter(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
+                >
+                  <option value="all">All Features</option>
+                  <option value="core">Core</option>
+                  <option value="reasoning">Reasoning</option>
+                  <option value="vision">Vision</option>
+                  <option value="coding">Coding</option>
+                  <option value="fast-inference">Fast Inference</option>
+                  <option value="enterprise">Enterprise</option>
+                  <option value="open-source">Open Source</option>
+                  <option value="experimental">Experimental</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
           <div className="flex items-start space-x-3">
             <AlertCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
@@ -430,12 +502,9 @@ export default function ApiKeysPage() {
               setEditingKey(null)
               setFormData({
                 provider: 'openai',
-                key_name: '',
                 api_key: '',
                 api_base: '',
-                default_model: '',
-                monthly_budget: '',
-                rate_limit_rpm: '60'
+                default_model: ''
               })
             }}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2"
@@ -463,31 +532,25 @@ export default function ApiKeysPage() {
                   onChange={(e) => handleProviderChange(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
                 >
-                  {providers.map(provider => (
-                    <option key={provider.id} value={provider.id}>
-                      {provider.provider_name} {provider.api_key_required ? '' : '(CLI/Cloud)'}
+                  {Object.entries(PROVIDERS).filter(([id, config]) => {
+                    if (categoryFilter !== 'all' && config.category !== categoryFilter) return false
+                    if (tierFilter !== 'all' && config.tier !== tierFilter) return false
+                    if (authFilter !== 'all' && config.authType !== authFilter) return false
+                    if (tagFilter !== 'all' && !config.tags?.includes(tagFilter as ProviderTag)) return false
+                    return true
+                  }).map(([id, config]) => (
+                    <option key={id} value={id}>
+                      {config.name} ({config.category})
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* Key Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Key Name *
-                </label>
-                <input
-                  type="text"
-                  value={formData.key_name}
-                  onChange={(e) => setFormData(prev => ({...prev, key_name: e.target.value}))}
-                  placeholder="e.g., Production OpenAI, Dev Claude"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-                />
-              </div>
+              {/* Removed Key Name field */}
             </div>
 
             {/* API Key - only show for providers that require it */}
-            {providers.find(p => p.id === formData.provider)?.api_key_required && (
+            {PROVIDERS[formData.provider]?.authType === 'api-key' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -515,7 +578,7 @@ export default function ApiKeysPage() {
             )}
             
             {/* CLI/Cloud Provider Info */}
-            {!providers.find(p => p.id === formData.provider)?.api_key_required && (
+            {PROVIDERS[formData.provider]?.authType !== 'api-key' && (
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
@@ -564,47 +627,23 @@ export default function ApiKeysPage() {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
                 >
                   <option value="">Select model (optional)</option>
-                  {(providers.find(p => p.id === formData.provider)?.models || []).map((model: any, index: number) => (
-                    <option key={index} value={typeof model === 'string' ? model : model.id || model.name || `Model ${index + 1}`}>
-                      {typeof model === 'string' ? model : model.name || model.id || `Model ${index + 1}`}
+                  {Object.entries(PROVIDERS[formData.provider]?.supportedModels || {}).map(([modelId, modelInfo]) => (
+                    <option key={modelId} value={modelId}>
+                      {modelId}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* Rate Limit */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Rate Limit (RPM)
-                </label>
-                <input
-                  type="number"
-                  value={formData.rate_limit_rpm}
-                  onChange={(e) => setFormData(prev => ({...prev, rate_limit_rpm: e.target.value}))}
-                  placeholder="60"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
-                />
-              </div>
+              {/* Removed Rate Limit field */}
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Monthly Budget (USD)
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                value={formData.monthly_budget}
-                onChange={(e) => setFormData(prev => ({...prev, monthly_budget: e.target.value}))}
-                placeholder="100.00"
-                className="w-full md:w-48 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
-              />
-            </div>
+            {/* Removed Monthly Budget field */}
 
             <div className="flex space-x-3">
               <button
                 onClick={saveApiKey}
-                disabled={!formData.key_name.trim() || (!formData.api_key.trim() && !editingKey) || !!validationErrors.api_key}
+                disabled={(!formData.api_key.trim() && !editingKey) || !!validationErrors.api_key}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center space-x-2"
               >
                 <Check className="w-4 h-4" />
@@ -637,7 +676,6 @@ export default function ApiKeysPage() {
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {apiKeys.map((key) => {
                 const providerInfo = getProviderInfo(key.provider)
-                const usagePercentage = key.monthly_budget ? (key.current_usage || 0) / key.monthly_budget * 100 : 0
                 
                 return (
                   <div key={key.id} className="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -645,14 +683,14 @@ export default function ApiKeysPage() {
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
                           <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                            {providerInfo.provider_name.charAt(0)}
+                            {providerInfo.name.charAt(0)}
                           </div>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">
-                              {key.key_name}
+                              {providerInfo.name} API Key
                             </h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                              {providerInfo.provider_name} • {key.key_preview}
+                              {providerInfo.name} • {key.key_preview}
                             </p>
                           </div>
                           <div className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -667,22 +705,6 @@ export default function ApiKeysPage() {
                         <div className="flex items-center space-x-6 text-sm text-gray-600 dark:text-gray-400">
                           {key.default_model && (
                             <span>Model: {key.default_model}</span>
-                          )}
-                          {key.rate_limit_rpm && (
-                            <span>Rate: {key.rate_limit_rpm} RPM</span>
-                          )}
-                          {key.monthly_budget && (
-                            <div className="flex items-center space-x-2">
-                              <span className={`px-2 py-1 rounded text-xs ${getUsageColor(key.current_usage || 0, key.monthly_budget)}`}>
-                                ${(key.current_usage || 0).toFixed(2)} / ${key.monthly_budget}
-                              </span>
-                              <div className="w-20 h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
-                                <div 
-                                  className="h-2 bg-gradient-to-r from-green-400 to-blue-500 rounded-full transition-all duration-300"
-                                  style={{ width: `${Math.min(usagePercentage, 100)}%` }}
-                                />
-                              </div>
-                            </div>
                           )}
                           <span>
                             Added {new Date(key.created_at).toLocaleDateString()}
@@ -734,16 +756,29 @@ export default function ApiKeysPage() {
       {/* Provider Support Info */}
       <div className="mt-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
         {(() => {
-          let filteredProviders = Object.values(filterProviders(PROVIDERS, { 
-            category: categoryFilter === 'all' ? undefined : [categoryFilter],
-            tier: tierFilter === 'all' ? undefined : [tierFilter],
-            tags: tagFilter === 'all' ? undefined : [tagFilter as ProviderTag]
-          }));
-          
-          // Apply auth type filter manually since it's not in the original filter
-          if (authFilter !== 'all') {
-            filteredProviders = filteredProviders.filter(provider => provider.authType === authFilter);
-          }
+          let filteredProviders = Object.values(PROVIDERS).filter(provider => {
+            // Category filter
+            if (categoryFilter !== 'all' && provider.category !== categoryFilter) {
+              return false;
+            }
+            
+            // Tier filter  
+            if (tierFilter !== 'all' && provider.tier !== tierFilter) {
+              return false;
+            }
+            
+            // Auth type filter
+            if (authFilter !== 'all' && provider.authType !== authFilter) {
+              return false;
+            }
+            
+            // Tag filter
+            if (tagFilter !== 'all' && !provider.tags?.includes(tagFilter as ProviderTag)) {
+              return false;
+            }
+            
+            return true;
+          });
           
           return (
             <>
@@ -850,7 +885,7 @@ export default function ApiKeysPage() {
                   {/* Tier badge */}
                   <span className={`px-1.5 py-0.5 text-xs rounded font-medium ${
                     provider.tier === 'premium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                    provider.tier === 'standard' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                    provider.tier === 'enterprise' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
                     'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                   }`}>
                     {provider.tier}
@@ -868,7 +903,7 @@ export default function ApiKeysPage() {
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
                 {provider.authType === 'cli' ? 'CLI Authentication' : 
-                 provider.authType === 'cloud_credentials' ? 'Cloud Authentication' :
+                 provider.authType === 'api-key' ? 'API Key Authentication' :
                  provider.authType === 'oauth' ? 'OAuth Authentication' :
                  provider.authType === 'local' ? 'Local Authentication' :
                  'API Key Authentication'}
@@ -898,9 +933,7 @@ export default function ApiKeysPage() {
                 {provider.features?.images === true && (
                   <span className="px-1.5 py-0.5 bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200 text-xs rounded">Images</span>
                 )}
-                {provider.features?.caching === true && (
-                  <span className="px-1.5 py-0.5 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs rounded">Cache</span>
-                )}
+                {/* TODO: Add caching feature support */}
                 {provider.features?.reasoning === true && (
                   <span className="px-1.5 py-0.5 bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 text-xs rounded">Reasoning</span>
                 )}

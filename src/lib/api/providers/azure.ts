@@ -6,7 +6,7 @@ export class AzureHandler implements ApiHandler {
   private transformer = new OpenAITransformer()
   
   async createMessage(options: ApiHandlerOptions): Promise<Response> {
-    const { azureApiKey: apiKey, azureBaseUrl: azureEndpoint, azureApiVersion = '2023-12-01-preview' } = options
+    const { openAiApiKey: apiKey, openAiBaseUrl: azureEndpoint, azureApiVersion = '2023-12-01-preview' } = options
     
     if (!apiKey || !azureEndpoint) {
       throw new Error('API key and Azure endpoint are required for Azure OpenAI')
@@ -33,7 +33,7 @@ export class AzureHandler implements ApiHandler {
   }
   
   async streamMessage(options: ApiHandlerOptions): Promise<ReadableStream> {
-    const { azureApiKey: apiKey, azureBaseUrl: azureEndpoint, azureApiVersion = '2023-12-01-preview' } = options
+    const { openAiApiKey: apiKey, openAiBaseUrl: azureEndpoint, azureApiVersion = '2023-12-01-preview' } = options
     
     if (!apiKey || !azureEndpoint) {
       throw new Error('API key and Azure endpoint are required for Azure OpenAI')
